@@ -10,17 +10,21 @@
         /* Custom styles to mimic the ledger paper look and feel */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            background-color: #fdfaf5; /* very light warm cream */
             direction: rtl; /* Ensure RTL flow for Urdu */
+                        color: #3c2f2f;
+
         }
         .ledger-page {
             width: 100%;
             max-width: 400px; /* Width similar to a typical receipt/ledger book page */
             background-color: white;
             padding: 1.0rem;
-            margin: 2rem auto 1rem; /* Adjust margin for button below */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            border: 1px solid #000; /* Stronger border for better export look */
+            margin: 1rem auto 1rem; /* Adjust margin for button below */
+            box-shadow: 0 6px 16px rgba(139, 69, 19, 0.12);
+            border: 1px solid #c89f5e; /* warm golden-brown border */
+                        border-radius: 8px;
+
         }
         .main-table, .footer-table, .extra-products-table {
             border-collapse: collapse;
@@ -30,13 +34,14 @@
         
         /* Combined table styling for ledger cells */
         .main-table th, .main-table td, .footer-table td, .extra-products-table td {
-            border: 1px solid #000;
+            border: 1px solid #c89f5e;
             padding: 0.2rem 0.4rem;
             height: 1.5rem; /* Standard row height */
             text-align: center;
         }
         .main-table th {
-            background-color: #a3c2d1;
+           background-color: #f9e8d2; /* soft warm peach */
+            color: #5c3f1e;
             font-weight: bold;
         }
         /* Style for the editable cells */
@@ -49,6 +54,8 @@
         .numeric-cell {
             text-align: left; /* Align numbers to the left for better readability (optional) */
             direction: ltr; /* Display numbers in LTR format */
+                        font-family: 'Segoe UI', monospace;
+
         }
         .whatsapp-icon {
             color: #25D366; 
@@ -84,6 +91,12 @@
         .hide-on-export {
             display: none !important;
         }
+          h1 {
+            color: #5c3f1e;
+        }
+        .text-important {
+            color: #7c2d12;
+        }
 
         @media (max-width: 640px) {
             .ledger-page {
@@ -104,7 +117,7 @@
         <h3 class="text-lg font-bold text-center mb-2">خودکار حساب کتاب</h3>
         <div class="flex justify-between items-center text-sm mb-3">
             <span class="font-bold ml-2">فی کلو ریٹ:</span>
-            <span contenteditable="true" id="milkRate" class="border border-red-500 bg-white px-2 py-1 min-w-[60px] text-left numeric-cell rounded">200</span>
+            <span contenteditable="true" id="milkRate" class="border border-amber-400 bg-white px-3 py-1 min-w-[70px] text-right numeric-cell rounded">200</span>
             <button id="calculateBtn" class="calculate-btn">
                 کل حساب لگائیں
             </button>
@@ -115,8 +128,8 @@
     </div>
     
     <div class="ledger-page" id="ledgerContent">
-        <div class="text-center mb-2">
-            <h1 class="text-xl font-bold border-b-2 border-black inline-block px-6">
+        <div class="text-center mb-3">
+            <h1 class="text-2xl font-bold border-b-2 border-[#c89f5e] inline-block px-8 pb-1">
                 رانا احمد ملک شاپ
             </h1> 
             
@@ -148,28 +161,28 @@
             
             <div class="flex justify-between text-sm mt-3 border-b border-black pb-1">
                 <div class="flex items-center">
-                    <span class="font-bold ml-2">بل نمبر:</span>
-                    <span id="invoiceNumber" class="border-b border-dashed border-gray-400 px-2 min-w-[120px]"></span>
+                    <span class="font-bold ml-2 text-important">بل نمبر:</span>
+                    <span id="invoiceNumber" class="border-b border-dashed border-amber-400 px-2 min-w-[120px]"></span>
 
                 </div>
                 <div class="flex items-center">
-                    <span class="font-bold ml-2">مہینہ:</span>
-        <span contenteditable="true" class="border-b border-dashed border-gray-400 px-2 min-w-[60px] numeric-cell"></span>
+                <span class="font-bold ml-2 text-important">مہینہ:</span>
+        <span contenteditable="true" class="border-b border-dashed border-amber-400 2 min-w-[60px] numeric-cell"></span>
                 </div>
             </div>
 
             <div class="flex justify-start text-sm mt-2 pb-1 border-b border-black">
-                <span class="font-bold ml-2"> نام خریدار:</span>
-                <span contenteditable="true" class="border-b border-dashed border-gray-400 px-2 min-w-[200px] flex-grow text-right"></span>
+                <span class="font-bold ml-2 text-important"> نام خریدار:</span>
+                <span contenteditable="true" class="border-b border-dashed border-amber-400  px-2 min-w-[200px] flex-grow text-right"></span>
             </div>
             <div class="flex justify-between text-sm mt-2 pb-1 border-b border-black">
     <div class="flex items-center">
-        <span class="font-bold ml-2">  ریٹ:</span>
-        <span contenteditable="true" id="displayRate" class="border-b border-dashed border-gray-400 px-2 min-w-[40px] numeric-cell"></span>
+        <span class="font-bold ml-2 text-important">  ریٹ:</span>
+        <span contenteditable="true" id="displayRate" class="border-b border-dashed border-amber-400  px-2 min-w-[40px] numeric-cell"></span>
     </div>
     <div class="flex items-center">
-        <span class="font-bold ml-2">  موبائل نمبر:</span>
-        <span contenteditable="true" class="border-b border-dashed border-gray-400 px-2 min-w-[120px] numeric-cell"></span>
+        <span class="font-bold ml-2 text-important">  موبائل نمبر:</span>
+        <span contenteditable="true" class="border-b border-dashed border-amber-400 px-2 min-w-[120px] numeric-cell"></span>
         
         
     </div>
@@ -209,7 +222,7 @@
                     </tr>
                     <tr>
                         <td class="font-bold w-1/2">ٹوٹل رقم</td>
-                        <td contenteditable="true" id="grandTotalAmount" class="w-1/2 bg-gray-200 font-bold numeric-cell"></td>
+                        <td contenteditable="true" id="grandTotalAmount" class="w-1/2 bg-gray-200 font-bold numeric-cell  text-[#7c2d12]"></td>
                     </tr>
                 </table>
                 <div class="bill-footer">
@@ -222,10 +235,12 @@
             class="h-10 mx-auto mb-1"
             crossorigin="anonymous"
         >
-        <div class="border-t border-black w-32 mx-auto"></div>
-        <div class="text-xs mt-1 font-bold">Authorized Signatory </div>
+                        <div class="border-t border-[#c89f5e] w-32 mx-auto"></div>
+                        <div class="text-xs mt-1 font-bold text-important">Authorized Signatory</div>
          <!-- Date & Time -->
-    <div id="issueDateTime" class="mt-0 text-[10px]"></div>
+    <div id="issueDateTime" class="mt-0 text-[10px]">
+
+    </div>
 
     </div>
 </div>
@@ -236,8 +251,8 @@
             </div>
 
             <div class="w-3/5 mr-2 flex flex-col justify-end">
-                <div class="text-xs p-2 border border-black mb-2 h-full">
-                    <div class="text-center font-bold mt-2">
+                <div class="text-xs p-3 border border-amber-300 rounded bg-amber-50/50 mb-3">
+                    <div class="text-center font-medium">
                         دودھ لے جا کر فورا گرم کر لیں
                         <br>
                         تمام مصنوعات خالص دودھ سے تیار کی جاتی ہیں۔
@@ -247,21 +262,17 @@
                 
                 <table class="extra-products-table">
                     <tr>
-                        <td class="font-bold w-1/2 bg-yellow-100">دیسی گھی</td>
-<td contenteditable="true" class="w-1/2 numeric-cell bg-yellow-50 text-right extra-item"></td>
-                    </tr>
+                     <tr><td class="font-bold bg-amber-50">دیسی گھی</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
+
                     <tr>
-                        <td class="font-bold w-1/2 bg-yellow-100">دہی</td>
-<td contenteditable="true" class="w-1/2 numeric-cell bg-yellow-50 text-right extra-item"></td>
-                    </tr>
+                                          <tr><td class="font-bold bg-amber-50">دہی</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
+
                     <tr>
-                        <td class="font-bold w-1/2 bg-yellow-100">مکھن</td>
-<td contenteditable="true" class="w-1/2 numeric-cell bg-yellow-50 text-right extra-item"></td>
-                    </tr>
+                                            <tr><td class="font-bold bg-amber-50">مکھن</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
+
                     <tr>
-                        <td class="font-bold w-1/2 bg-yellow-100">کریم</td>
-<td contenteditable="true" class="w-1/2 numeric-cell bg-yellow-50 text-right extra-item"></td>
-                    </tr>
+                                            <tr><td class="font-bold bg-amber-50">کریم</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
+
                 </table>
                 
             </div>
