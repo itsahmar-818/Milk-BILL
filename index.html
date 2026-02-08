@@ -366,6 +366,8 @@ document.querySelectorAll('.extra-item, #previousBalance').forEach(el => {
         
         document.getElementById('calculateBtn').addEventListener('click', function() {
             let totalKg = 0;
+            const rate = parseFloat(document.getElementById('milkRate').textContent) || 0;
+            document.getElementById('displayRate').textContent = rate;
             
             // 1. Get Rate
             const rateElement = document.getElementById('milkRate');
@@ -532,3 +534,4 @@ const invoiceNumber = `RAM-${month}${year}-${formattedSerial}`;
 
 </body>
 </html>
+
