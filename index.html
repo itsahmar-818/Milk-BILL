@@ -120,16 +120,14 @@
 <body class="p-6">
 
     <div class="max-w-[400px] mx-auto mb-4 border border-red-500 p-3 rounded bg-red-50 text-red-800" id="calculationBox">
-        <h3 class="text-lg font-bold text-center mb-2">خودکار حساب کتاب</h3>
+        <h3 class="text-lg font-bold text-center mb-2">  Ledger Bill</h3>
         <div class="flex justify-between items-center text-sm mb-3">
-            <span class="font-bold ml-2">فی کلو ریٹ:</span>
+            <span class="font-bold ml-2">  Rate/Kg:</span>
             <span contenteditable="true" id="milkRate" class="border border-amber-400 bg-white px-3 py-1 min-w-[70px] text-right numeric-cell rounded"></span>
             <button id="calculateBtn" class="calculate-btn">
-                کل حساب لگائیں
-            </button>
+Calculate Total          </button>
         </div>
         <div class="text-xs text-center opacity-80">
-            نوٹ: یہ ریٹ گاہک کو بل پر نظر نہیں آئے گا۔
         </div>
     </div>
     
@@ -171,7 +169,7 @@
                 </div>
                 <div class="data-entry-box">
                     <span class="font-bold ml-2 text-important">ریٹ:</span>
-                    <span id="displayRate" class="flex-grow text-center numeric-cell ">200</span>
+                    <span id="displayRate" class="flex-grow text-center numeric-cell "></span>
                 </div>
                 <div class="data-entry-box">
                     <span class="font-bold ml-2 text-important">موبائل:</span>
@@ -212,22 +210,22 @@
                         <td id="grandTotalAmount" class="w-1/2 bg-gray-200 font-bold numeric-cell text-[#7c2d12]"></td>
                     </tr>
                 </table>
-                <div class="mt-8 text-center">
-                    <img src="sign.jpg" class="h-12 mx-auto mb-1 opacity-80">
+                <div class="mt-2 text-center">
+                    <img src="sign.jpg" class="h-12 mx-auto mb-1 opacity-100">
                     <div class="border-t border-[#c89f5e] w-32 mx-auto"></div>
                     <div class="text-[10px] mt-1 font-bold text-important">Authorized Signatory</div>
-                    <div id="issueDateTime" class="mt-1 text-[8px] text-gray-500"></div>
+                    <div id="issueDateTime" class="mt-0 text-[8px] text-gray-500"></div>
                 </div>
             </div>
 
-            <div class="w-2/4 mr-2 flex flex-col justify-end">
+            <div class="w-2/4 mr-1 flex flex-col justify-end">
                  <table class="extra-products-table">
                     <tr><td class="font-bold bg-amber-50">دیسی گھی</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
                     <tr><td class="font-bold bg-amber-50">دہی</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
                     <tr><td class="font-bold bg-amber-50">مکھن/کھویا</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
                     <tr><td class="font-bold bg-amber-50">کریم</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
                 </table>
-                <div class="text-xs p-3 border border- mr 2amber-300 rounded bg-amber-50/50 mb-4">
+                <div class="text-xs p-3 border border- mr 2amber-300 rounded bg-amber-50/50 mb-1">
                     <div class="text-center font-medium">
                         دودھ لے جا کر فورا گرم کر لیں
                         <br>
@@ -244,8 +242,7 @@
     
     <div class="max-w-md mx-auto p-4 text-center">
         <button id="exportBtn" class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg w-full">
-            تصویر بنا کر ڈاؤن لوڈ کریں
-        </button>
+Download         </button>
         <div id="statusMessage" class="mt-3 text-sm font-medium text-gray-700 hidden"></div>
     </div>
 
@@ -342,4 +339,3 @@ document.getElementById("issueDateTime").innerText = "Issued: " + now.toLocaleSt
 </script>
 </body>
 </html>
-
