@@ -7,70 +7,28 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* ===================== GMAIL-STYLE SPLASH SCREEN ===================== */
         #startup-screen {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: #ffffff;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #ffffff; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px;
             transition: opacity 0.6s ease, visibility 0.6s ease;
         }
-        #startup-screen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        /* Logo Box */
+        #startup-screen.fade-out { opacity: 0; visibility: hidden; }
         .splash-logo-box {
-            width: 80px; height: 80px;
-            border-radius: 20px;
+            width: 80px; height: 80px; border-radius: 20px;
             background: linear-gradient(135deg, #7c2d12 0%, #c89f5e 100%);
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 8px 24px rgba(124, 45, 18, 0.35);
             animation: logoEntrance 0.5s ease forwards;
         }
-        .splash-logo-box span {
-            font-size: 2rem; font-weight: 800;
-            color: white; letter-spacing: -1px;
-            font-family: Georgia, serif;
-        }
-        @keyframes logoEntrance {
-            from { transform: scale(0.6); opacity: 0; }
-            to   { transform: scale(1);   opacity: 1; }
-        }
-
-        /* Shop Name with Pulse */
-        .splash-shop-name {
-            font-size: 1.4rem; font-weight: 700;
-            color: #5c3f1e;
-            font-family: 'Segoe UI', sans-serif;
-            animation: pulseName 2s ease-in-out infinite;
-        }
-        @keyframes pulseName {
-            0%, 100% { opacity: 1; }
-            50%       { opacity: 0.55; }
-        }
-
-        /* Gmail-style Progress Bar */
-        .splash-progress-wrap {
-            width: 220px; height: 3px;
-            background: #e8ddd0;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 6px;
-        }
+        .splash-logo-box span { font-size: 2rem; font-weight: 800; color: white; letter-spacing: -1px; font-family: Georgia, serif; }
+        @keyframes logoEntrance { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .splash-shop-name { font-size: 1.4rem; font-weight: 700; color: #5c3f1e; font-family: 'Segoe UI', sans-serif; animation: pulseName 2s ease-in-out infinite; }
+        @keyframes pulseName { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+        .splash-progress-wrap { width: 220px; height: 3px; background: #e8ddd0; border-radius: 2px; overflow: hidden; margin-top: 6px; }
         .splash-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #7c2d12, #c89f5e, #7c2d12);
-            background-size: 200% 100%;
-            border-radius: 2px;
-            animation: gmailProgress 2s linear forwards;
+            height: 100%; background: linear-gradient(90deg, #7c2d12, #c89f5e, #7c2d12);
+            background-size: 200% 100%; border-radius: 2px; animation: gmailProgress 2s linear forwards;
         }
         @keyframes gmailProgress {
             0%   { width: 0%;   background-position: 0% 50%; }
@@ -78,154 +36,62 @@
             90%  { width: 92%;  background-position: 0% 50%; }
             100% { width: 100%; background-position: 100% 50%; }
         }
-        /* ====================================================================== */
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fdfaf5;
-            direction: rtl;
-            color: #3c2f2f;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #fdfaf5; direction: rtl; color: #3c2f2f; }
         .ledger-page {
-            width: 100%;
-            max-width: 400px;
-            background-color: white;
-            padding: 1.0rem;
-            margin: 1rem auto 1rem;
-            box-shadow: 0 6px 16px rgba(139, 69, 19, 0.12);
-            border: 1px solid #c89f5e;
-            border-radius: 8px;
+            width: 100%; max-width: 400px; background-color: white; padding: 1.0rem;
+            margin: 1rem auto 1rem; box-shadow: 0 6px 16px rgba(139, 69, 19, 0.12);
+            border: 1px solid #c89f5e; border-radius: 8px;
         }
-        .main-table, .footer-table, .extra-products-table {
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 0.8rem;
-        }
+        .main-table, .footer-table, .extra-products-table { border-collapse: collapse; width: 100%; font-size: 0.8rem; }
         .main-table th, .main-table td, .footer-table td, .extra-products-table td {
-            border: 1px solid #c89f5e;
-            padding: 0.2rem 0.4rem;
-            height: 1.5rem;
-            text-align: center;
+            border: 1px solid #c89f5e; padding: 0.2rem 0.4rem; height: 1.5rem; text-align: center;
         }
-        .main-table th {
-            background-color: #f9e8d2;
-            color: #5c3f1e;
-            font-weight: bold;
-        }
-        [contenteditable="true"]:focus {
-            outline: 1px dashed #000;
-            outline-offset: -1px;
-            background-color: #fffbeb;
-        }
-        .numeric-cell {
-            text-align: left;
-            direction: ltr;
-            font-family: 'Segoe UI', monospace;
-        }
+        .main-table th { background-color: #f9e8d2; color: #5c3f1e; font-weight: bold; }
+        [contenteditable="true"]:focus { outline: 1px dashed #000; outline-offset: -1px; background-color: #fffbeb; }
+        .numeric-cell { text-align: left; direction: ltr; font-family: 'Segoe UI', monospace; }
+
+        /* ── HD WhatsApp icon — replaces old .whatsapp-icon ── */
         .whatsapp-icon {
-            color: #25D366;
             display: inline-block;
             vertical-align: middle;
             margin-left: 0.2rem;
             margin-right: 0.1rem;
-            width: 25px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
         }
-        .export-button {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s;
-        }
-        .calculate-btn {
-            background-color: #7c2d12;
-            color: white;
-            padding: 0.5rem 1rem;
-            font-weight: bold;
-            border-radius: 0.3rem;
-            transition: background-color 0.3s;
-        }
+
+        .export-button { padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; border-radius: 0.5rem; transition: background-color 0.3s; }
+        .calculate-btn { background-color: #7c2d12; color: white; padding: 0.5rem 1rem; font-weight: bold; border-radius: 0.3rem; transition: background-color 0.3s; }
         .calculate-btn:hover { background-color: #2563EB; }
         .hide-on-export { display: none !important; }
         h1 { color: #5c3f1e; }
         .text-important { color: #7c2d12; }
-        .data-entry-box {
-            border: 1px solid #c89f5e;
-            background-color: white;
-            padding: 2px 2px;
-            display: flex;
-            align-items: center;
-            min-height: 8px;
-            border-radius: 6px;
-        }
-        .loading-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            backdrop-filter: blur(4px);
-        }
+        .data-entry-box { border: 1px solid #c89f5e; background-color: white; padding: 2px 2px; display: flex; align-items: center; min-height: 8px; border-radius: 6px; }
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
         .loading-overlay.active { display: flex; }
         .dots-loader { display: flex; gap: 12px; }
-        .dots-loader .dot {
-            width: 16px; height: 16px;
-            background-color: #fff;
-            border-radius: 50%;
-            animation: dotBounce 1.4s infinite ease-in-out both;
-        }
+        .dots-loader .dot { width: 16px; height: 16px; background-color: #fff; border-radius: 50%; animation: dotBounce 1.4s infinite ease-in-out both; }
         .dots-loader .dot:nth-child(1) { animation-delay: -0.32s; }
         .dots-loader .dot:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes dotBounce {
-            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-
-        /* Email footer line inside bill */
-        .bill-email-footer {
-            text-align: center;
-            font-size: 8px;
-            color: #9a8070;
-            margin-top: 4px;
-            letter-spacing: 0.02em;
-            direction: ltr;
-        }
-
+        @keyframes dotBounce { 0%, 80%, 100% { transform: scale(0); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
+        .bill-email-footer { text-align: center; font-size: 8px; color: #9a8070; margin-top: 4px; letter-spacing: 0.02em; direction: ltr; }
         @media (max-width: 640px) {
             .ledger-page { padding: 1rem; margin: 1rem auto; }
-            .main-table th, .main-table td, .footer-table td, .extra-products-table td {
-                padding: 0.1rem 0.3rem;
-                font-size: 0.75rem;
-                height: 1.2rem;
-            }
+            .main-table th, .main-table td, .footer-table td, .extra-products-table td { padding: 0.1rem 0.3rem; font-size: 0.75rem; height: 1.2rem; }
         }
     </style>
 </head>
 <body class="p-6">
 
-    <!-- ============ GMAIL-STYLE SPLASH SCREEN ============ -->
     <div id="startup-screen">
-        <div class="splash-logo-box">
-            <span>RA</span>
-        </div>
+        <div class="splash-logo-box"><span><img src="logo.png" alt=""></span></div>
         <div class="splash-shop-name">رانا احمد ملک شاپ</div>
-        <div class="splash-progress-wrap">
-            <div class="splash-progress-bar"></div>
-        </div>
+        <div class="splash-progress-wrap"><div class="splash-progress-bar"></div></div>
     </div>
-    <!-- ================================================== -->
 
-    <!-- LOADING OVERLAY WITH DOTS LOADER -->
     <div id="loadingOverlay" class="loading-overlay">
-        <div class="dots-loader">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
+        <div class="dots-loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     </div>
 
     <div class="max-w-[400px] mx-auto mb-4 border border-red-500 p-3 rounded bg-red-50 text-red-800" id="calculationBox">
@@ -237,29 +103,45 @@
         </div>
         <div class="text-xs text-center opacity-80"></div>
     </div>
-    
+
     <div class="ledger-page" id="ledgerContent">
         <div class="text-center mb-3">
             <h1 class="text-2xl font-bold border-b-2 border-[#c89f5e] inline-block px-8 pb-1">
                 رانا احمد ملک شاپ<sup class="shop-tm" style="font-size:0.55em; vertical-align:super;">™</sup>
             </h1>
-            
+
             <div class="text-xs mt-1 leading-relaxed">
                 <span class="font-bold ml-4 flex justify-center items-center">
-                    رانا احمر لطیف 
-                    <span class="whatsapp-icon ml-2 mr-2">
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.46 2.13 11.92C2.13 13.77 2.61 15.54 3.55 17.1L2.09 22.07L7.15 20.6C8.67 21.46 10.33 21.91 12.04 21.91C17.5 21.91 21.96 17.45 21.96 11.99C21.96 6.53 17.5 2 12.04 2ZM17.29 16.32C17.02 16.73 15.65 17.47 15.35 17.57C15.05 17.67 14.86 17.72 14.28 17.43C13.7 17.14 12.02 16.58 10.08 15.02C8.58 13.77 7.56 12.35 7.26 11.86C6.97 11.37 6.38 10.6 6.7 10.3C6.98 10 7.28 9.94 7.57 9.92C7.81 9.9 8.05 9.87 8.27 10.3C8.51 10.73 9.17 12.34 9.24 12.48C9.31 12.62 9.38 12.78 9.28 13.01C9.18 13.24 9.09 13.31 8.89 13.55C8.69 13.78 8.46 14.02 8.32 14.16C8.19 14.3 8.04 14.44 8.28 14.75C8.51 15.06 9.01 15.89 9.87 16.63C10.74 17.37 11.41 17.6 11.66 17.72C11.91 17.85 12.19 17.77 12.39 17.63C12.63 17.47 13.38 17.07 13.65 16.7C13.92 16.33 14.16 16.2 14.41 16.1C14.66 16 17.04 15 17.47 15.65C17.91 16.29 17.91 16.24 17.29 16.32Z"/></svg>
-                    </span>
+                    رانا احمر لطیف
+
+                    <!-- ── HD Official WhatsApp SVG Logo #1 ── -->
+                    <svg class="whatsapp-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <radialGradient id="wa1a" cx="11.087" cy="7.022" r="47.612" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#55d163"/>
+                            <stop offset="1" stop-color="#23b33a"/>
+                        </radialGradient>
+                        <path fill="url(#wa1a)" d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"/>
+                        <path fill="#fff" fill-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"/>
+                    </svg>
+
                     <span contenteditable="true">0323-6717478</span>
                     <span class="mr-4 ml-4"></span>
-                    رانا حامد لطیف 
-                    <span class="whatsapp-icon ml-2 mr-2">
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.46 2.13 11.92C2.13 13.77 2.61 15.54 3.55 17.1L2.09 22.07L7.15 20.6C8.67 21.46 10.33 21.91 12.04 21.91C17.5 21.91 21.96 17.45 21.96 11.99C21.96 6.53 17.5 2 12.04 2ZM17.29 16.32C17.02 16.73 15.65 17.47 15.35 17.57C15.05 17.67 14.86 17.72 14.28 17.43C13.7 17.14 12.02 16.58 10.08 15.02C8.58 13.77 7.56 12.35 7.26 11.86C6.97 11.37 6.38 10.6 6.7 10.3C6.98 10 7.28 9.94 7.57 9.92C7.81 9.9 8.05 9.87 8.27 10.3C8.51 10.73 9.17 12.34 9.24 12.48C9.31 12.62 9.38 12.78 9.28 13.01C9.18 13.24 9.09 13.31 8.89 13.55C8.69 13.78 8.46 14.02 8.32 14.16C8.19 14.3 8.04 14.44 8.28 14.75C8.51 15.06 9.01 15.89 9.87 16.63C10.74 17.37 11.41 17.6 11.66 17.72C11.91 17.85 12.19 17.77 12.39 17.63C12.63 17.47 13.38 17.07 13.65 16.7C13.92 16.33 14.16 16.2 14.41 16.1C14.66 16 17.04 15 17.47 15.65C17.91 16.29 17.91 16.24 17.29 16.32Z"/></svg>
-                    </span>
+                    رانا حامد لطیف
+
+                    <!-- ── HD Official WhatsApp SVG Logo #2 ── -->
+                    <svg class="whatsapp-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <radialGradient id="wa2a" cx="11.087" cy="7.022" r="47.612" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#55d163"/>
+                            <stop offset="1" stop-color="#23b33a"/>
+                        </radialGradient>
+                        <path fill="url(#wa2a)" d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"/>
+                        <path fill="#fff" fill-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"/>
+                    </svg>
+
                     <span contenteditable="true">0300-7198213</span>
                 </span>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-1 mt-4 text-sm">
                 <div class="data-entry-box">
                     <span class="font-bold ml-2 text-important">بل نمبر:</span>
@@ -295,32 +177,23 @@
             </thead>
             <tbody id="ledgerBody"></tbody>
         </table>
-        
+
         <div class="flex justify-between mt-2">
             <div class="w-2/4">
                 <table class="footer-table">
-                    <tr>
-                        <td contenteditable class="w-1/2">کل دودھ</td>
-                        <td contenteditable id="totalMilkKg" class="w-1/2 numeric-cell"></td>
-                    </tr>
-                    <tr>
-                        <td contenteditable class="w-1/2">کل رقم</td>
-                        <td contenteditable id="totalCalculatedAmount" class="w-1/2 numeric-cell"></td>
-                    </tr>
-                    <tr>
-                        <td contenteditable class="w-1/2">بقایا</td>
-                        <td contenteditable="true" id="previousBalance" class="w-1/2 numeric-cell"></td>
-                    </tr>
+                    <tr><td contenteditable class="w-1/2">کل دودھ</td><td  contenteditable id="totalMilkKg" class="w-1/2 numeric-cell"></td></tr>
+                    <tr><td contenteditable  class="w-1/2">کل رقم</td><td contenteditable id="totalCalculatedAmount" class="w-1/2 numeric-cell"></td></tr>
+                    <tr><td  contenteditable class="w-1/2">بقایا</td><td contenteditable="true" id="previousBalance" class="w-1/2 numeric-cell"></td></tr>
                     <tr>
                         <td contenteditable class="font-bold w-1/2">ٹوٹل رقم</td>
-                        <td contenteditable id="grandTotalAmount" class="w-1/2 bg-gray-200 font-bold numeric-cell text-[#7c2d12]"></td>
+                        <td  contenteditable id="grandTotalAmount" class="w-1/2 bg-gray-200 font-bold numeric-cell text-[#7c2d12]"></td>
                     </tr>
                 </table>
                 <div class="mt-2 text-center">
                     <img src="sign.jpg" class="h-12 mx-auto mb-1 opacity-100">
                     <div class="border-t border-[#c89f5e] w-32 mx-auto"></div>
                     <div class="text-[10px] mt-1 font-bold text-important">Authorized Signatory</div>
-                    <div id="issueDateTime" class="mt-0 text-[8px] text-gray-500"></div>
+                    <div id="issueDateTime" class="mt-0 text-[8px] text-black-500"></div>
                 </div>
             </div>
 
@@ -335,56 +208,42 @@
                     <div class="text-center font-medium">
                         دودھ لے جا کر فورا گرم کر لیں
                         <br>
-                        شادی و تقاریب کے خصوصی آرڈرز دستیاب ہیں — براہِ کرم بل کی ادائیگی بروقت فرمائیں۔  <br>!Thank you for choosing us 
+                        شادی و تقاریب کے خصوصی آرڈرز دستیاب ہیں — براہِ کرم بل کی ادائیگی بروقت فرمائیں۔  <br>!Thank you for choosing us
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Email footer — subtle, tiny, does not add significant height -->
         <div class="bill-email-footer">
-<button><a href="https://ranaahmadmilk.shop" target="_blank" style="text-decoration:none; color:#1a73e8;">
-  🌐 Visit ranaahmadmilk.shop
-</a></button>        </div>
+            <button><a href="https://ranaahmadmilk.shop" target="_blank" style="text-decoration:none; color:#1a73e8;">
+              🌐 Visit ranaahmadmilk.shop
+            </a></button>
+        </div>
     </div>
-    
+
     <div class="max-w-md mx-auto p-4 text-center">
-        <button id="exportBtn" class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg w-full">
-            Download
-        </button>
+        <button id="exportBtn" class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg w-full">Download</button>
         <div id="statusMessage" class="mt-3 text-sm font-medium text-gray-700 hidden"></div>
     </div>
 
 <script>
-    // ============ GMAIL-STYLE SPLASH SCREEN (4 seconds total) ============
     window.addEventListener('load', function () {
         setTimeout(function () {
             const splash = document.getElementById('startup-screen');
             splash.classList.add('fade-out');
-            splash.addEventListener('transitionend', function () {
-                splash.remove();
-            }, { once: true });
-        }, 4000); // 4 seconds
+            splash.addEventListener('transitionend', function () { splash.remove(); }, { once: true });
+        }, 4000);
     });
-    // =====================================================================
 
-    function getNumber(el) {
-        return parseFloat(el.textContent.trim().replace(/,/g, '')) || 0;
-    }
-
-    function formatCurrency(amount) {
-        return Math.round(amount).toLocaleString('en-US');
-    }
+    function getNumber(el) { return parseFloat(el.textContent.trim().replace(/,/g, '')) || 0; }
+    function formatCurrency(amount) { return Math.round(amount).toLocaleString('en-US'); }
 
     function autoRecalculate() {
         const milkAmount = getNumber(document.getElementById('totalCalculatedAmount'));
         const prevBalance = getNumber(document.getElementById('previousBalance'));
         let extraTotal = 0;
-        document.querySelectorAll('.extra-item').forEach(item => {
-            extraTotal += getNumber(item);
-        });
-        const grandTotal = milkAmount + prevBalance + extraTotal;
-        document.getElementById('grandTotalAmount').textContent = formatCurrency(grandTotal);
+        document.querySelectorAll('.extra-item').forEach(item => { extraTotal += getNumber(item); });
+        document.getElementById('grandTotalAmount').textContent = formatCurrency(milkAmount + prevBalance + extraTotal);
     }
 
     document.querySelectorAll('.extra-item, #previousBalance').forEach(el => {
@@ -393,18 +252,15 @@
     });
 
     const tbody = document.getElementById('ledgerBody');
-    const MAX_DAYS = 31;
-    const HALF_ROWS = 16;
-
+    const MAX_DAYS = 31, HALF_ROWS = 16;
     (function() {
         for (let i = 1; i <= HALF_ROWS; i++) {
-            const day1 = i;
             const day2 = i + HALF_ROWS;
-            const day2Content = day2 <= MAX_DAYS ?
-                `<td class="font-bold bg-gray-50">${day2}</td><td contenteditable="true" class="numeric-cell kg-input"></td>` :
-                `<td class="bg-gray-100">-</td><td class="bg-gray-100">-</td>`;
+            const day2Content = day2 <= MAX_DAYS
+                ? `<td class="font-bold bg-gray-50">${day2}</td><td contenteditable="true" class="numeric-cell kg-input"></td>`
+                : `<td class="bg-gray-100">-</td><td class="bg-gray-100">-</td>`;
             const row = document.createElement('tr');
-            row.innerHTML = `<td class="font-bold bg-gray-50">${day1}</td><td contenteditable="true" class="numeric-cell kg-input"></td>${day2Content}`;
+            row.innerHTML = `<td class="font-bold bg-gray-50">${i}</td><td contenteditable="true" class="numeric-cell kg-input"></td>${day2Content}`;
             tbody.appendChild(row);
         }
     })();
@@ -412,21 +268,15 @@
     document.getElementById('calculateBtn').addEventListener('click', function() {
         const overlay = document.getElementById('loadingOverlay');
         overlay.classList.add('active');
-
         setTimeout(function() {
             let totalKg = 0;
             const rateValue = parseFloat(document.getElementById('milkRate').textContent) || 0;
             document.getElementById('displayRate').textContent = rateValue;
-
-            document.querySelectorAll('.kg-input').forEach(input => {
-                totalKg += parseFloat(input.textContent.trim()) || 0;
-            });
-
+            document.querySelectorAll('.kg-input').forEach(input => { totalKg += parseFloat(input.textContent.trim()) || 0; });
             const totalMilkAmount = totalKg * rateValue;
             document.getElementById('totalMilkKg').textContent = (totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)) + ' کلو';
             document.getElementById('totalCalculatedAmount').textContent = formatCurrency(totalMilkAmount);
             autoRecalculate();
-
             overlay.classList.remove('active');
         }, 1200);
     });
@@ -435,7 +285,6 @@
         const ledgerElement = document.getElementById('ledgerContent');
         const calculationBox = document.getElementById('calculationBox');
         calculationBox.classList.add('hide-on-export');
-
         html2canvas(ledgerElement, { scale: 3, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
             const link = document.createElement('a');
             link.download = 'Rana_Ahmed_Bill_' + new Date().toISOString().slice(0, 10) + '.png';
@@ -445,20 +294,17 @@
         });
     });
 
-    const now = new Date();
-    document.getElementById("issueDateTime").innerText = "Issued: " + now.toLocaleString('en-GB');
+    document.getElementById("issueDateTime").innerText = "Issued: " + new Date().toLocaleString('en-GB');
 
     (function generateInvoiceNumber() {
         const now = new Date();
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const key = `invoice_serial_${year}_${month}`;
-        let serial = localStorage.getItem(key) || 100;
-        serial = parseInt(serial) + 1;
+        let serial = parseInt(localStorage.getItem(key) || '100') + 1;
         localStorage.setItem(key, serial);
         document.getElementById('invoiceNumber').innerText = `RAM-${month}${year}-${serial}`;
     })();
 </script>
 </body>
 </html>
-
