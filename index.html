@@ -349,7 +349,7 @@
         const key = `invoice_serial_${year}_${month}`;
         let serial = parseInt(localStorage.getItem(key) || '100') + 1;
         localStorage.setItem(key, serial);
-        document.getElementById('invoiceNumber').innerText = `RAM-${month}${year}-${serial}`;
+        document.getElementById('invoiceNumber').innerText = `RAMS-${month}${year}-${serial}`;
     })();
 </script>
 </body>
