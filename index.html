@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ur" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,49 +9,173 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         #startup-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #ffffff; z-index: 10000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
             transition: opacity 0.6s ease, visibility 0.6s ease;
         }
-        #startup-screen.fade-out { opacity: 0; visibility: hidden; }
+
+        #startup-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
         .splash-logo-box {
-            width: 80px; height: 80px; border-radius: 20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
             background: linear-gradient(135deg, #7c2d12 0%, #c89f5e 100%);
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 0 8px 24px rgba(124, 45, 18, 0.35);
             animation: logoEntrance 0.5s ease forwards;
         }
-        .splash-logo-box span { font-size: 2rem; font-weight: 800; color: white; letter-spacing: -1px; font-family: Georgia, serif; }
-        @keyframes logoEntrance { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .splash-shop-name { font-size: 1.4rem; font-weight: 700; color: #5c3f1e; font-family: 'Segoe UI', sans-serif; animation: pulseName 2s ease-in-out infinite; }
-        @keyframes pulseName { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
-        .splash-progress-wrap { width: 220px; height: 3px; background: #e8ddd0; border-radius: 2px; overflow: hidden; margin-top: 6px; }
-        .splash-progress-bar {
-            height: 100%; background: linear-gradient(90deg, #7c2d12, #c89f5e, #7c2d12);
-            background-size: 200% 100%; border-radius: 2px; animation: gmailProgress 2s linear forwards;
-        }
-        @keyframes gmailProgress {
-            0%   { width: 0%;   background-position: 0% 50%; }
-            60%  { width: 75%;  background-position: 100% 50%; }
-            90%  { width: 92%;  background-position: 0% 50%; }
-            100% { width: 100%; background-position: 100% 50%; }
-        }
-        body { font-family: 'Inter', sans-serif; background-color: #fdfaf5; direction: rtl; color: #3c2f2f; }
-        .ledger-page {
-            width: 100%; max-width: 400px; background-color: white; padding: 1.0rem;
-            margin: 1rem auto 1rem; box-shadow: 0 6px 16px rgba(139, 69, 19, 0.12);
-            border: 1px solid #c89f5e; border-radius: 8px;
-        }
-        .main-table, .footer-table, .extra-products-table { border-collapse: collapse; width: 100%; font-size: 0.8rem; }
-        .main-table th, .main-table td, .footer-table td, .extra-products-table td {
-            border: 1px solid #c89f5e; padding: 0.2rem 0.4rem; height: 1.5rem; text-align: center;
-        }
-        .main-table th { background-color: #f9e8d2; color: #5c3f1e; font-weight: bold; }
-        [contenteditable="true"]:focus { outline: 1px dashed #000; outline-offset: -1px; background-color: #fffbeb; }
-        .numeric-cell { text-align: left; direction: ltr; font-family: 'Segoe UI', monospace; }
 
-        /* ── HD WhatsApp icon — replaces old .whatsapp-icon ── */
+        .splash-logo-box span {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+            font-family: Georgia, serif;
+        }
+
+        @keyframes logoEntrance {
+            from {
+                transform: scale(0.6);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .splash-shop-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #5c3f1e;
+            font-family: 'Segoe UI', sans-serif;
+            animation: pulseName 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseName {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.55;
+            }
+        }
+
+        .splash-progress-wrap {
+            width: 220px;
+            height: 3px;
+            background: #e8ddd0;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .splash-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #7c2d12, #c89f5e, #7c2d12);
+            background-size: 200% 100%;
+            border-radius: 2px;
+            animation: gmailProgress 2s linear forwards;
+        }
+
+        @keyframes gmailProgress {
+            0% {
+                width: 0%;
+                background-position: 0% 50%;
+            }
+
+            60% {
+                width: 75%;
+                background-position: 100% 50%;
+            }
+
+            90% {
+                width: 92%;
+                background-position: 0% 50%;
+            }
+
+            100% {
+                width: 100%;
+                background-position: 100% 50%;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfaf5;
+            direction: rtl;
+            color: #3c2f2f;
+        }
+
+        .ledger-page {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            padding: 1.0rem;
+            margin: 1rem auto 1rem;
+            box-shadow: 0 6px 16px rgba(139, 69, 19, 0.12);
+            border: 1px solid #c89f5e;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-table,
+        .footer-table,
+        .extra-products-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.8rem;
+        }
+
+        .main-table th,
+        .main-table td,
+        .footer-table td,
+        .extra-products-table td {
+            border: 1px solid #c89f5e;
+            padding: 0.2rem 0.4rem;
+            height: 1.5rem;
+            text-align: center;
+        }
+
+        .main-table th {
+            background-color: #f9e8d2;
+            color: #5c3f1e;
+            font-weight: bold;
+        }
+
+        [contenteditable="true"]:focus {
+            outline: 1px dashed #000;
+            outline-offset: -1px;
+            background-color: #fffbeb;
+        }
+
+        .numeric-cell {
+            text-align: left;
+            direction: ltr;
+            font-family: 'Segoe UI', monospace;
+        }
+
         .whatsapp-icon {
             display: inline-block;
             vertical-align: middle;
@@ -60,158 +185,357 @@
             height: 22px;
             flex-shrink: 0;
         }
-        .hdr-tagline{
-  font-size:7.5px;color:#5c3f1e;
-  letter-spacing:.08em;text-transform:uppercase;
-  direction:ltr;font-family:'Segoe UI',sans-serif;
-  margin-top:1px;opacity:.9;
-}
-.bill-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;direction:rtl;}
-.bill-info-wide{grid-column:1/-1;}
-.bill-info-field{
-  background:#fff;border:1px solid #d0a86a;
-  
-  border-radius:6px;padding:4px 8px;
-  display:flex;align-items:center;gap:5px;
-  min-height:26px;
-  box-shadow:0 1px 3px rgba(120,70,0,.06);
-  transition:border-color .15s,box-shadow .15s;
-}
-.bill-info-field:focus-within{
-  border-color:#5A3E2B;
-  box-shadow:0 1px 6px rgba(90,62,43,.14);
-}
-.bill-info-lbl{
-  font-size:10px;font-weight:700;color:#5A3E2B;
-  white-space:nowrap;flex-shrink:0;
-  font-family:'Segoe UI',sans-serif;direction:rtl;
-}
-.bill-info-sep{width:1px;height:12px;background:#d0a86a;flex-shrink:0;}
-.bill-info-val{
-  flex:1;font-size:10.5px;color:#3c2810;
-  direction:ltr;text-align:center;
-  border:none;outline:none;background:transparent;min-width:0;
-  font-family:'Segoe UI',monospace;
-}
-.bill-info-val[dir="rtl"]{direction:rtl;text-align:right;font-family:'Segoe UI',sans-serif;}
 
-/* Bottom accent */
+        .hdr-tagline {
+            font-size: 7.5px;
+            color: #5c3f1e;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            direction: ltr;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 1px;
+            opacity: .9;
+        }
 
+        .bill-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            direction: rtl;
+        }
 
-        .export-button { padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: bold; border-radius: 0.5rem; transition: background-color 0.3s; }
-        .calculate-btn { background-color: #7c2d12; color: white; padding: 0.5rem 1rem; font-weight: bold; border-radius: 0.3rem; transition: background-color 0.3s; }
-        .calculate-btn:hover { background-color: #2563EB; }
-        .hide-on-export { display: none !important; }
-        h1 { color: #5c3f1e; }
-        .text-important { color: #7c2d12; }
-        .data-entry-box { border: 1px solid #c89f5e; background-color: white; padding: 2px 2px; display: flex; align-items: center; min-height: 8px; border-radius: 6px; }
-        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
-        .loading-overlay.active { display: flex; }
-        .dots-loader { display: flex; gap: 12px; }
-        .dots-loader .dot { width: 16px; height: 16px; background-color: #fff; border-radius: 50%; animation: dotBounce 1.4s infinite ease-in-out both; }
-        .dots-loader .dot:nth-child(1) { animation-delay: -0.32s; }
-        .dots-loader .dot:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes dotBounce { 0%, 80%, 100% { transform: scale(0); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
-        .bill-email-footer { text-align: center; font-size: 8px; color: #9a8070; margin-top: 4px; letter-spacing: 0.02em; direction: ltr; }
+        .bill-info-wide {
+            grid-column: 1/-1;
+        }
+
+        .bill-info-field {
+            background: #fff;
+            border: 1px solid #d0a86a;
+            border-radius: 6px;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-height: 26px;
+            box-shadow: 0 1px 3px rgba(120, 70, 0, .06);
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .bill-info-field:focus-within {
+            border-color: #5A3E2B;
+            box-shadow: 0 1px 6px rgba(90, 62, 43, .14);
+        }
+
+        .bill-info-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            color: #5A3E2B;
+            white-space: nowrap;
+            flex-shrink: 0;
+            font-family: 'Segoe UI', sans-serif;
+            direction: rtl;
+        }
+
+        .bill-info-sep {
+            width: 1px;
+            height: 12px;
+            background: #d0a86a;
+            flex-shrink: 0;
+        }
+
+        .bill-info-val {
+            flex: 1;
+            font-size: 10.5px;
+            color: #3c2810;
+            direction: ltr;
+            text-align: center;
+            border: none;
+            outline: none;
+            background: transparent;
+            min-width: 0;
+            font-family: 'Segoe UI', monospace;
+        }
+
+        .bill-info-val[dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .export-button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .calculate-btn {
+            background-color: #7c2d12;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            border-radius: 0.3rem;
+            transition: background-color 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background-color: #2563EB;
+        }
+
+        .hide-on-export {
+            display: none !important;
+        }
+
+        h1 {
+            color: #5c3f1e;
+        }
+
+        .text-important {
+            color: #7c2d12;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .dots-loader {
+            display: flex;
+            gap: 12px;
+        }
+
+        .dots-loader .dot {
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: dotBounce 1.4s infinite ease-in-out both;
+        }
+
+        .dots-loader .dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .dots-loader .dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes dotBounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .bill-email-footer {
+            text-align: center;
+            font-size: 8px;
+            color: #9a8070;
+            margin-top: 4px;
+            letter-spacing: 0.02em;
+            direction: ltr;
+        }
+
         @media (max-width: 640px) {
-            .ledger-page { padding: 1rem; margin: 1rem auto; }
-            .main-table th, .main-table td, .footer-table td, .extra-products-table td { padding: 0.1rem 0.3rem; font-size: 0.75rem; height: 1.2rem; }
+            .ledger-page {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+
+            .main-table th,
+            .main-table td,
+            .footer-table td,
+            .extra-products-table td {
+                padding: 0.1rem 0.3rem;
+                font-size: 0.75rem;
+                height: 1.2rem;
+            }
+        }
+
+        /* ── DIAGONAL NOTICE — table ke upar, neeche block nahi karta ── */
+        .diagonal-notice {
+            position: absolute;
+            /* table shuru hoti hai ~220px se, uski midpoint pe rakhte hain */
+            top: 420px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-35deg);
+            background: transparent;
+            border: 2px solid #1E1E1E;
+            border-radius: 6px;
+            padding: 7px 16px;
+            text-align: center;
+            pointer-events: none;
+            z-index: 10;
+            width: 200px;
+            box-shadow: none;
+        }
+
+        .diagonal-notice .dn-title {
+            font-size: 8.5px;
+            font-weight: 800;
+            color: #1E1E1E;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: 'Segoe UI', sans-serif;
+            direction: ltr;
+            border-bottom: 1px solid #c89f5e;
+            padding-bottom: 3px;
+            margin-bottom: 4px;
+        }
+
+        .diagonal-notice .dn-msg {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: #1E1E1E;
+            direction: rtl;
+            line-height: 1.6;
+        }
+
+        .diagonal-notice .dn-sub {
+            font-size: 7px;
+            color: #1E1E1E;
+            letter-spacing: 0.05em;
+            font-family: 'Segoe UI', sans-serif;
+            direction: ltr;
+            margin-top: 3px;
         }
     </style>
 </head>
+
 <body class="p-6">
 
     <div id="startup-screen">
         <div class="splash-logo-box"><span><img src="logo.png" alt=""></span></div>
         <div class="splash-shop-name">رانا احمد ملک شاپ</div>
-        <div class="splash-progress-wrap"><div class="splash-progress-bar"></div></div>
+        <div class="splash-progress-wrap">
+            <div class="splash-progress-bar"></div>
+        </div>
     </div>
 
     <div id="loadingOverlay" class="loading-overlay">
-        <div class="dots-loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="dots-loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
     </div>
 
-    <div class="max-w-[400px] mx-auto mb-4 border border-red-500 p-3 rounded bg-red-50 text-red-800" id="calculationBox">
+    <div class="max-w-[400px] mx-auto mb-4 border border-red-500 p-3 rounded bg-red-50 text-red-800"
+        id="calculationBox">
         <h3 class="text-lg font-bold text-center mb-2">Ledger Bill</h3>
         <div class="flex justify-between items-center text-sm mb-3">
             <span class="font-bold ml-2">Rate/Kg :</span>
-            <span contenteditable="true" id="milkRate" class="border border-amber-400 bg-white px-3 py-1 min-w-[70px] text-right numeric-cell rounded"></span>
+            <span contenteditable="true" id="milkRate"
+                class="border border-amber-400 bg-white px-3 py-1 min-w-[70px] text-right numeric-cell rounded"></span>
             <button id="calculateBtn" class="calculate-btn">Calculate Total</button>
         </div>
-        <div class="text-xs text-center opacity-80"></div>
     </div>
 
     <div class="ledger-page" id="ledgerContent">
+
+        <!-- ── DIAGONAL NOTICE — table ke beech mein, neeche nahi ── -->
+      
+
         <div class="text-center mb-3">
             <h1 class="text-2xl font-bold border-b-2 border-[#c89f5e] inline-block px-8 pb-1">
-                رانا احمد ملک شاپ<sup class="shop-tm" style="font-size:0.55em; vertical-align:super;">™</sup>
+                رانا احمد ملک شاپ<sup style="font-size:0.55em; vertical-align:super;">™</sup>
             </h1>
             <div class="hdr-tagline">Since 1970 &nbsp;|&nbsp; Pure &amp; Fresh Milk</div>
 
             <div class="text-xs mt-1 leading-relaxed">
                 <span class="font-bold ml-4 flex justify-center items-center">
                     رانا احمر لطیف
-
-                    <!-- ── HD Official WhatsApp SVG Logo #1 ── -->
                     <svg class="whatsapp-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                         <radialGradient id="wa1a" cx="11.087" cy="7.022" r="47.612" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#55d163"/>
-                            <stop offset="1" stop-color="#23b33a"/>
+                            <stop offset="0" stop-color="#55d163" />
+                            <stop offset="1" stop-color="#23b33a" />
                         </radialGradient>
-                        <path fill="url(#wa1a)" d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"/>
-                        <path fill="#fff" fill-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"/>
+                        <path fill="url(#wa1a)"
+                            d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" />
+                        <path fill="#fff" fill-rule="evenodd"
+                            d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" />
                     </svg>
-
                     <span contenteditable="true">0323-6717478</span>
                     <span class="mr-4 ml-4"></span>
                     رانا حامد لطیف
-
-                    <!-- ── HD Official WhatsApp SVG Logo #2 ── -->
                     <svg class="whatsapp-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                         <radialGradient id="wa2a" cx="11.087" cy="7.022" r="47.612" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#55d163"/>
-                            <stop offset="1" stop-color="#23b33a"/>
+                            <stop offset="0" stop-color="#55d163" />
+                            <stop offset="1" stop-color="#23b33a" />
                         </radialGradient>
-                        <path fill="url(#wa2a)" d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"/>
-                        <path fill="#fff" fill-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"/>
+                        <path fill="url(#wa2a)"
+                            d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" />
+                        <path fill="#fff" fill-rule="evenodd"
+                            d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" />
                     </svg>
-
                     <span contenteditable="true">0300-7198213</span>
                 </span>
             </div>
 
             <div class="bill-info-grid mt-2">
-      <div class="bill-info-field">
-        <span class="bill-info-lbl">بل نمبر</span>
-        <div class="bill-info-sep"></div>
-        <span id="invoiceNumber" class="bill-info-val" style="direction:ltr;text-align:center;font-size:9.5px;"></span>
-      </div>
-      <div class="bill-info-field">
-        <span class="bill-info-lbl"> مہینہ بل</span>
-        <div class="bill-info-sep"></div>
-        <span contenteditable="true" class="bill-info-val" dir="rtl">&nbsp;</span>
-      </div>
-      <div class="bill-info-field bill-info-wide">
-        <span class="bill-info-lbl">کلائنٹ</span>
-        <div class="bill-info-sep"></div>
-        <span contenteditable="true" class="bill-info-val" dir="rtl" style="font-size:11px;">&nbsp;</span>
-      </div>
-      <div class="bill-info-field">
-        <span class="bill-info-lbl">ریٹ</span>
-        <div class="bill-info-sep"></div>
-        <span contenteditable="true" id="displayRate" class="bill-info-val"></span>
-      </div>
-      <div class="bill-info-field">
-        <span class="bill-info-lbl">موبائل</span>
-        <div class="bill-info-sep"></div>
-        <span contenteditable="true" class="bill-info-val" style="direction:ltr;font-size:9.5px;"></span>
-      </div>
-    </div>
+                <div class="bill-info-field">
+                    <span class="bill-info-lbl">بل نمبر</span>
+                    <div class="bill-info-sep"></div>
+                    <span id="invoiceNumber" class="bill-info-val"
+                        style="direction:ltr;text-align:center;font-size:9.5px;"></span>
+                </div>
+                <div class="bill-info-field">
+                    <span class="bill-info-lbl">موبائل نمبر</span>
+                    <div class="bill-info-sep"></div>
+                    <span contenteditable="true" class="bill-info-val" style="direction:ltr;font-size:9.5px;"></span>
+                </div>
+                <div class="bill-info-field bill-info-wide">
+                    <span class="bill-info-lbl">کلائنٹ</span>
+                    <div class="bill-info-sep"></div>
+                    <span contenteditable="true" class="bill-info-val" dir="rtl" style="font-size:11px;">&nbsp;</span>
+                </div>
+                <div class="bill-info-field" style="display:flex; align-items:center; gap:0; padding:4px 5px;">
+                    <div style="display:flex; align-items:center; gap:5px; flex:1; justify-content:center;">
+                        <span class="bill-info-lbl">ریٹ</span>
+                        <div class="bill-info-sep"></div>
+                        <span contenteditable="true" id="displayRate" class="bill-info-val"
+                            style="direction:ltr;text-align:center;"></span>
+                    </div>
+                    <div></div>
+                    <div style="width:1px;height:16px;background:#c89f5e;flex-shrink:0;margin:0 4px;"></div>
+                    <div style="display:flex; align-items:center; gap:5px; flex:1; justify-content:center;">
+                        <span class="bill-info-lbl">وقت </span>
+                        <div class="bill-info-sep"></div>
+                        <span contenteditable="true" class="bill-info-val"
+                            style="direction:ltr;text-align:center;"></span>
+                    </div>
+                </div>
+                <div class="bill-info-field">
+                    <span class="bill-info-lbl">مہینہ</span>
+                    <div class="bill-info-sep"></div>
+                    <span contenteditable="true" class="bill-info-val" dir="rtl">&nbsp;</span>
+                </div>
+            </div>
+        </div>
 
-    
-
-   
-  </div>
         <table class="main-table mt-3">
             <thead>
                 <tr>
@@ -227,12 +551,22 @@
         <div class="flex justify-between mt-2">
             <div class="w-2/4">
                 <table class="footer-table">
-                    <tr><td contenteditable class="w-1/2">کل دودھ</td><td  contenteditable id="totalMilkKg" class="w-1/2 numeric-cell"></td></tr>
-                    <tr><td contenteditable  class="w-1/2">کل رقم</td><td contenteditable id="totalCalculatedAmount" class="w-1/2 numeric-cell"></td></tr>
-                    <tr><td  contenteditable class="w-1/2">بقایا</td><td contenteditable="true" id="previousBalance" class="w-1/2 numeric-cell"></td></tr>
                     <tr>
-                        <td contenteditable class="font-bold w-1/2">ٹوٹل رقم</td>
-                        <td  contenteditable id="grandTotalAmount" class="w-1/2 bg-gray-200 font-bold numeric-cell text-[#7c2d12]"></td>
+                        <td contenteditable class="w-1/2">کل دودھ</td>
+                        <td contenteditable id="totalMilkKg" class="w-1/2 numeric-cell" data-suffix=" Ltr"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable class="w-1/2">کل رقم</td>
+                        <td contenteditable id="totalCalculatedAmount" class="w-1/2 numeric-cell"></td>
+                    </tr>
+                    <tr id="baqayaRow">
+                        <td contenteditable class="w-1/2" id="baqayaLabel">بقایا</td>
+                        <td contenteditable="true" id="previousBalance" class="w-1/2 numeric-cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold w-1/2" style="font-size:0.85rem; font-weight:900; color:#5A3E2B;">قابلِ ادائیگی رقم</td>
+                        <td contenteditable id="grandTotalAmount"
+                            class="w-1/2 bg-gray-200 numeric-cell" style="font-size:0.9rem; font-weight:900; color:#7c2d12; letter-spacing:0.02em;"></td>
                     </tr>
                 </table>
                 <div class="mt-2 text-center">
@@ -245,112 +579,177 @@
 
             <div class="w-2/4 mr-1flex flex-col justify-end">
                 <table class="extra-products-table">
-                    <tr><td contenteditable class="font-bold bg-amber-50">دیسی گھی</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
-                    <tr><td contenteditable class="font-bold bg-amber-50">دہی</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
-                    <tr><td contenteditable class="font-bold bg-amber-50">مکھن/کھویا</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
-                    <tr><td contenteditable class="font-bold bg-amber-50">کریم</td><td contenteditable="true" class="numeric-cell bg-white extra-item"></td></tr>
+                    <tr>
+                        <td contenteditable class="font-bold bg-amber-50">دیسی گھی <span style="font-size:7px;font-weight:400;color:#8a7560;"></span></td>
+                        <td contenteditable="true" class="numeric-cell bg-white extra-item"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable class="font-bold bg-amber-50">دہی <span style="font-size:7px;font-weight:400;color:#8a7560;"></span></td>
+                        <td contenteditable="true" class="numeric-cell bg-white extra-item"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable class="font-bold bg-amber-50">مکھن/کھویا <span style="font-size:7px;font-weight:400;color:#8a7560;"></span></td>
+                        <td contenteditable="true" class="numeric-cell bg-white extra-item"></td>
+                    </tr>
+                    <tr>
+                        <td contenteditable class="font-bold bg-amber-50">کریم</td>
+                        <td contenteditable="true" class="numeric-cell bg-white extra-item"></td>
+                    </tr>
                 </table>
-                <div class ="text-xs p-3 border border-amber-300 rounded bg-amber-50/50 mb-1 mt-1">
-                    <div class ="text-center font-medium">
-                     دودھ لے جا کر فورا گرم کر لیں
-                        <br>
-                        شادی و تقاریب کے خصوصی آرڈرز دستیاب ہیں — براہِ کرم بل کی ادائیگی بروقت فرمائیں۔  <br>!Thank you for choosing us
+                <!-- Payment History Table -->
+                <div class="mt-1 mb-1">
+                    <div style="text-align:center; font-size:8.5px; font-weight:800; color:#5A3E2B; text-transform:uppercase; letter-spacing:0.1em; font-family:'Segoe UI',sans-serif; direction:ltr; margin-bottom:3px; border-bottom:1px solid #c89f5e; padding-bottom:2px;">
+                        Payment History
                     </div>
+                    <table class="payment-history-table" style="border-collapse:collapse; width:100%; font-size:0.7rem; direction:ltr;">
+                        <thead>
+                            <tr>
+                                <th style="background:#f9e8d2; color:#5c3f1e; font-weight:700; border:1px solid #c89f5e; padding:2px 4px; font-size:7.5px; text-align:center; font-family:'Segoe UI',sans-serif;">Month</th>
+                                <th style="background:#f9e8d2; color:#5c3f1e; font-weight:700; border:1px solid #c89f5e; padding:2px 4px; font-size:7.5px; text-align:center; font-family:'Segoe UI',sans-serif;">Bill Amt</th>
+                                <th style="background:#f9e8d2; color:#5c3f1e; font-weight:700; border:1px solid #c89f5e; padding:2px 4px; font-size:7.5px; text-align:center; font-family:'Segoe UI',sans-serif;">Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            <tr>
+                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',sans-serif; background:#fff;"></td>
+                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
+                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
+                            </tr>
+                           
+                            <tr>
+                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',sans-serif; background:#fff;"></td>
+                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
+                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',sans-serif; background:#fdfaf5;"></td>
+                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fdfaf5;"></td>
+                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fdfaf5;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                   
                 </div>
             </div>
         </div>
 
         <div class="bill-email-footer">
             <button><a href="https://ranaahmadmilk.shop" target="_blank" style="text-decoration:none; color:#1a73e8;">
-              🌐 Visit ranaahmadmilk.shop
-            </a></button>
+                    🌐 Visit ranaahmadmilk.shop
+                </a></button>
         </div>
     </div>
 
     <div class="max-w-md mx-auto p-4 text-center">
-        <button id="exportBtn" class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg w-full">Download</button>
+        <button id="exportBtn"
+            class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg w-full">Download</button>
         <div id="statusMessage" class="mt-3 text-sm font-medium text-gray-700 hidden"></div>
     </div>
 
-<script>
-    window.addEventListener('load', function () {
-        setTimeout(function () {
-            const splash = document.getElementById('startup-screen');
-            splash.classList.add('fade-out');
-            splash.addEventListener('transitionend', function () { splash.remove(); }, { once: true });
-        }, 4000);
-    });
-
-    function getNumber(el) { return parseFloat(el.textContent.trim().replace(/,/g, '')) || 0; }
-    function formatCurrency(amount) { return Math.round(amount).toLocaleString('en-US'); }
-
-    function autoRecalculate() {
-        const milkAmount = getNumber(document.getElementById('totalCalculatedAmount'));
-        const prevBalance = getNumber(document.getElementById('previousBalance'));
-        let extraTotal = 0;
-        document.querySelectorAll('.extra-item').forEach(item => { extraTotal += getNumber(item); });
-        document.getElementById('grandTotalAmount').textContent = formatCurrency(milkAmount + prevBalance + extraTotal);
-    }
-
-    document.querySelectorAll('.extra-item, #previousBalance').forEach(el => {
-        el.addEventListener('input', autoRecalculate);
-        el.addEventListener('blur', autoRecalculate);
-    });
-
-    const tbody = document.getElementById('ledgerBody');
-    const MAX_DAYS = 31, HALF_ROWS = 16;
-    (function() {
-        for (let i = 1; i <= HALF_ROWS; i++) {
-            const day2 = i + HALF_ROWS;
-            const day2Content = day2 <= MAX_DAYS
-                ? `<td class="font-bold bg-gray-50">${day2}</td><td contenteditable="true" class="numeric-cell kg-input"></td>`
-                : `<td class="bg-gray-100">-</td><td class="bg-gray-100">-</td>`;
-            const row = document.createElement('tr');
-            row.innerHTML = `<td class="font-bold bg-gray-50">${i}</td><td contenteditable="true" class="numeric-cell kg-input"></td>${day2Content}`;
-            tbody.appendChild(row);
-        }
-    })();
-
-    document.getElementById('calculateBtn').addEventListener('click', function() {
-        const overlay = document.getElementById('loadingOverlay');
-        overlay.classList.add('active');
-        setTimeout(function() {
-            let totalKg = 0;
-            const rateValue = parseFloat(document.getElementById('milkRate').textContent) || 0;
-            document.getElementById('displayRate').textContent = rateValue;
-            document.querySelectorAll('.kg-input').forEach(input => { totalKg += parseFloat(input.textContent.trim()) || 0; });
-            const totalMilkAmount = totalKg * rateValue;
-            document.getElementById('totalMilkKg').textContent = (totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)) + ' کلو';
-            document.getElementById('totalCalculatedAmount').textContent = formatCurrency(totalMilkAmount);
-            autoRecalculate();
-            overlay.classList.remove('active');
-        }, 1200);
-    });
-
-    document.getElementById('exportBtn').addEventListener('click', function() {
-        const ledgerElement = document.getElementById('ledgerContent');
-        const calculationBox = document.getElementById('calculationBox');
-        calculationBox.classList.add('hide-on-export');
-        html2canvas(ledgerElement, { scale: 3, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = 'Rana_Ahmed_Bill_' + new Date().toISOString().slice(0, 10) + '.png';
-            link.href = canvas.toDataURL();
-            link.click();
-            calculationBox.classList.remove('hide-on-export');
+    <script>
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                const splash = document.getElementById('startup-screen');
+                splash.classList.add('fade-out');
+                splash.addEventListener('transitionend', function () { splash.remove(); }, { once: true });
+            }, 4000);
         });
-    });
 
-    document.getElementById("issueDateTime").innerText = "Issued: " + new Date().toLocaleString('en-GB');
+        function getNumber(el) { return parseFloat(el.textContent.trim().replace(/Rs\.?\s*/g, '').replace(/,/g, '')) || 0; }
+        function formatCurrency(amount) { return 'Rs. ' + Math.round(amount).toLocaleString('en-US'); }
 
-    (function generateInvoiceNumber() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const key = `invoice_serial_${year}_${month}`;
-        let serial = parseInt(localStorage.getItem(key) || '100') + 1;
-        localStorage.setItem(key, serial);
-        document.getElementById('invoiceNumber').innerText = `RAMS-${month}${year}-${serial}`;
-    })();
-</script>
+        function updateBaqayaLabel() {
+            const prevBalance = getNumber(document.getElementById('previousBalance'));
+            const label = document.getElementById('baqayaLabel');
+            const row = document.getElementById('baqayaRow');
+            const cell = document.getElementById('previousBalance');
+            if (prevBalance < 0) {
+                label.textContent = 'ایڈوانس';
+                row.style.background = '#e6f9ed';
+                cell.style.color = '#16a34a';
+            } else {
+                label.textContent = 'بقایا';
+                row.style.background = '';
+                cell.style.color = '';
+            }
+        }
+
+        function autoRecalculate() {
+            const milkAmount = getNumber(document.getElementById('totalCalculatedAmount'));
+            const prevBalance = getNumber(document.getElementById('previousBalance'));
+            let extraTotal = 0;
+            document.querySelectorAll('.extra-item').forEach(item => { extraTotal += getNumber(item); });
+            document.getElementById('grandTotalAmount').textContent = formatCurrency(milkAmount + prevBalance + extraTotal);
+            updateBaqayaLabel();
+        }
+
+        document.querySelectorAll('.extra-item, #previousBalance').forEach(el => {
+            el.addEventListener('input', autoRecalculate);
+            el.addEventListener('blur', function () {
+                autoRecalculate();
+                const val = getNumber(this);
+                if (this.textContent.trim() !== '') {
+                    this.textContent = val ? formatCurrency(val) : '';
+                }
+            });
+        });
+
+        const tbody = document.getElementById('ledgerBody');
+        const MAX_DAYS = 31, HALF_ROWS = 16;
+        (function () {
+            for (let i = 1; i <= HALF_ROWS; i++) {
+                const day2 = i + HALF_ROWS;
+                const day2Content = day2 <= MAX_DAYS
+                    ? `<td class="font-bold bg-gray-50">${day2}</td><td contenteditable="true" class="numeric-cell kg-input"></td>`
+                    : `<td class="bg-gray-100">-</td><td class="bg-gray-100">-</td>`;
+                const row = document.createElement('tr');
+                row.innerHTML = `<td class="font-bold bg-gray-50">${i}</td><td contenteditable="true" class="numeric-cell kg-input"></td>${day2Content}`;
+                tbody.appendChild(row);
+            }
+        })();
+
+        document.getElementById('calculateBtn').addEventListener('click', function () {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('active');
+            setTimeout(function () {
+                let totalKg = 0;
+                const rateValue = parseFloat(document.getElementById('milkRate').textContent) || 0;
+                document.getElementById('displayRate').textContent = rateValue > 0 ? 'Rs. ' + rateValue : '';
+                document.querySelectorAll('.kg-input').forEach(input => { totalKg += parseFloat(input.textContent.trim()) || 0; });
+                const totalMilkAmount = totalKg * rateValue;
+                document.getElementById('totalMilkKg').textContent = (totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)) + ' Ltr';
+                document.getElementById('totalCalculatedAmount').textContent = formatCurrency(totalMilkAmount);
+                autoRecalculate();
+                overlay.classList.remove('active');
+            }, 1200);
+        });
+
+        document.getElementById('exportBtn').addEventListener('click', function () {
+            const ledgerElement = document.getElementById('ledgerContent');
+            const calculationBox = document.getElementById('calculationBox');
+            calculationBox.classList.add('hide-on-export');
+            html2canvas(ledgerElement, { scale: 3, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Rana_Ahmed_Bill_' + new Date().toISOString().slice(0, 10) + '.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                calculationBox.classList.remove('hide-on-export');
+            });
+        });
+
+        document.getElementById("issueDateTime").innerText = "Issued: " + new Date().toLocaleString('en-GB');
+
+        (function generateInvoiceNumber() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const key = `invoice_serial_${year}_${month}`;
+            let serial = parseInt(localStorage.getItem(key) || '100') + 1;
+            localStorage.setItem(key, serial);
+            document.getElementById('invoiceNumber').innerText = `RAMS-${month}${year}-${serial}`;
+        })();
+    </script>
 </body>
+
 </html>
