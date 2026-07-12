@@ -208,6 +208,15 @@
             grid-column: 1/-1;
         }
 
+        /* ── ریٹ | وقت | مہینہ — teen alag boxes, aik hi row (height same) ── */
+        .bill-info-trio {
+            grid-column: 1/-1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 5px;
+            direction: rtl;
+        }
+
         .bill-info-field {
             background: #fff;
             border: 1px solid #d0a86a;
@@ -260,6 +269,20 @@
             direction: rtl;
             text-align: right;
             font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* trio ke chhote boxes thoda compact */
+        .bill-info-trio .bill-info-field {
+            padding: 4px 5px;
+            gap: 4px;
+        }
+
+        .bill-info-trio .bill-info-lbl {
+            font-size: 9px;
+        }
+
+        .bill-info-trio .bill-info-val {
+            font-size: 9.5px;
         }
 
         .export-button {
@@ -358,6 +381,153 @@
             direction: ltr;
         }
 
+        /* ── FOOTER: website + email + helpline — aik hi line, height same ── */
+        .bill-contact-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 6px;
+            direction: ltr;
+            margin-top: 4px;
+            border-top: 1px solid #c89f5e;
+            padding-top: 3px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 7.5px;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .bill-contact-footer a,
+        .bill-contact-footer span.cf-item {
+            color: #5c3f1e;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .bill-contact-footer .cf-web {
+            color: #1a73e8;
+        }
+
+        .bill-contact-footer .cf-divider {
+            width: 1px;
+            height: 8px;
+            background: #c89f5e;
+            flex-shrink: 0;
+        }
+
+        /* ── LOGO WATERMARK — background mein, jagah zero ── */
+        .bill-watermark {
+            position: absolute;
+            top: 52%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 270px;
+            opacity: 0.045;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+        }
+
+        /* content watermark ke upar rahe */
+        .ledger-page>*:not(.bill-watermark):not(#billStamp) {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── ZEBRA ROWS — transparent tints taake watermark bhi nazar aaye ── */
+        #ledgerBody td {
+            background-color: transparent;
+        }
+
+        #ledgerBody td.day-cell {
+            background-color: rgba(200, 159, 94, 0.10);
+        }
+
+        #ledgerBody tr:nth-child(even) td {
+            background-color: rgba(200, 159, 94, 0.055);
+        }
+
+        #ledgerBody tr:nth-child(even) td.day-cell {
+            background-color: rgba(200, 159, 94, 0.17);
+        }
+
+        #ledgerBody td.dead-cell {
+            background-color: rgba(120, 100, 80, 0.10);
+            color: #a89684;
+        }
+
+        /* ── KHAALI DIN — halki dash, likhne par ghaayab ── */
+        .kg-input:empty::before {
+            content: "–";
+            color: #d8cabb;
+            font-weight: 400;
+            display: block;
+            text-align: center;
+        }
+
+        .kg-input:empty:focus::before {
+            content: "";
+        }
+
+        /* ── GRAND TOTAL BAND (soft) ── */
+        #grandTotalRow td {
+            background-color: #7c2d12 !important;
+            color: #ffffff !important;
+            border-color: #7c2d12;
+        }
+
+        #grandTotalRow #grandTotalAmount {
+            color: #ffffff !important;
+            font-weight: 900;
+        }
+
+        /* ── DELIVERY TOGGLE (صبح / شام) ── */
+        .delivery-toggle {
+            cursor: pointer;
+            user-select: none;
+            font-weight: 700;
+            color: #5A3E2B;
+            border-radius: 4px;
+            transition: background-color .15s;
+        }
+
+        .delivery-toggle:hover {
+            background-color: #fdf3e3;
+        }
+
+        /* ── CIRCULAR RUBBER STAMP: PAID (green) / UNPAID (red) ── */
+        #billStamp {
+            position: absolute;
+            top: 46%;
+            left: 50%;
+            width: 155px;
+            height: 155px;
+            transform: translate(-50%, -50%) rotate(-14deg);
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.85;
+            display: none;
+        }
+
+        #billStamp.show {
+            display: block;
+        }
+
+        #billStamp.paid {
+            color: #15803d;
+        }
+
+        #billStamp.unpaid {
+            color: #b91c1c;
+        }
+
+        #billStamp svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
         @media (max-width: 640px) {
             .ledger-page {
                 padding: 1rem;
@@ -452,12 +622,61 @@
                 class="border border-amber-400 bg-white px-3 py-1 min-w-[70px] text-right numeric-cell rounded"></span>
             <button id="calculateBtn" class="calculate-btn">Calculate Total</button>
         </div>
+        <div class="flex gap-2">
+            <button id="paidBtn" class="calculate-btn flex-1" style="background-color:#15803d;">PAID</button>
+            <button id="unpaidBtn" class="calculate-btn flex-1" style="background-color:#b91c1c;">UNPAID</button>
+            <button id="noStampBtn" class="calculate-btn flex-1" style="background-color:#6b7280;">Stamp Hatayen</button>
+        </div>
+
+        <div class="flex items-center gap-2 mt-3 text-sm">
+            <span class="font-bold whitespace-nowrap">Month :</span>
+            <input type="month" id="monthPicker"
+                class="border border-amber-400 bg-white px-2 py-1 rounded flex-1 text-gray-800" dir="ltr">
+        </div>
+
+        <div class="flex items-center gap-2 mt-2 text-sm">
+            <select id="customerSelect"
+                class="border border-amber-400 bg-white px-2 py-1 rounded flex-1 text-gray-800" dir="rtl">
+                <option value="">— محفوظ کلائنٹ کھولیں —</option>
+            </select>
+            <button id="saveBtn" class="calculate-btn" style="background-color:#0f766e;">Save</button>
+            <button id="deleteBtn" class="calculate-btn" style="background-color:#6b7280;">Delete</button>
+        </div>
+        <div id="saveStatus" class="text-xs text-center mt-1 font-bold" style="min-height:14px;"></div>
     </div>
 
     <div class="ledger-page" id="ledgerContent">
 
-        <!-- ── DIAGONAL NOTICE — table ke beech mein, neeche nahi ── -->
-      
+        <!-- ── LOGO WATERMARK ── -->
+        <img src="logo.png" alt="" class="bill-watermark">
+
+        <!-- ── CIRCULAR STAMP: PAID / UNPAID (jagah nahi leta) ── -->
+        <div id="billStamp">
+            <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <path id="arcTop" d="M 22,80 A 58,58 0 0 1 138,80" fill="none" />
+                    <path id="arcBottom" d="M 28,80 A 52,52 0 0 0 132,80" fill="none" />
+                </defs>
+                <circle cx="80" cy="80" r="76" fill="none" stroke="currentColor" stroke-width="3" />
+                <circle cx="80" cy="80" r="70" fill="none" stroke="currentColor" stroke-width="1" />
+                <circle cx="80" cy="80" r="50" fill="none" stroke="currentColor" stroke-width="1.2" />
+                <text font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700"
+                    letter-spacing="1.6" fill="currentColor">
+                    <textPath href="#arcTop" startOffset="50%" text-anchor="middle">RANA AHMAD MILK SHOP</textPath>
+                </text>
+                <text font-family="'Segoe UI', Arial, sans-serif" font-size="8" font-weight="600" letter-spacing="1.2"
+                    fill="currentColor">
+                    <textPath href="#arcBottom" startOffset="50%" text-anchor="middle" id="stampDatePath">SINCE 1970
+                    </textPath>
+                </text>
+                <text id="stampTitle" x="80" y="76" text-anchor="middle"
+                    font-family="'Segoe UI', Arial, sans-serif" font-size="23" font-weight="900" letter-spacing="1.5"
+                    fill="currentColor">PAID</text>
+                <line x1="46" y1="86" x2="114" y2="86" stroke="currentColor" stroke-width="1" />
+                <text id="stampSub" x="80" y="100" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif"
+                    font-size="9" font-weight="600" letter-spacing="0.5" fill="currentColor">12/07/2026</text>
+            </svg>
+        </div>
 
         <div class="text-center mb-3">
             <h1 class="text-2xl font-bold border-b-2 border-[#c89f5e] inline-block px-8 pb-1">
@@ -505,33 +724,35 @@
                 <div class="bill-info-field">
                     <span class="bill-info-lbl">موبائل نمبر</span>
                     <div class="bill-info-sep"></div>
-                    <span contenteditable="true" class="bill-info-val" style="direction:ltr;font-size:9.5px;"></span>
+                    <span contenteditable="true" id="clientMobile" class="bill-info-val"
+                        style="direction:ltr;font-size:9.5px;"></span>
                 </div>
                 <div class="bill-info-field bill-info-wide">
                     <span class="bill-info-lbl">کلائنٹ</span>
                     <div class="bill-info-sep"></div>
-                    <span contenteditable="true" class="bill-info-val" dir="rtl" style="font-size:11px;">&nbsp;</span>
+                    <span contenteditable="true" id="clientName" class="bill-info-val" dir="rtl"
+                        style="font-size:11px;">&nbsp;</span>
                 </div>
-                <div class="bill-info-field" style="display:flex; align-items:center; gap:0; padding:4px 5px;">
-                    <div style="display:flex; align-items:center; gap:5px; flex:1; justify-content:center;">
+
+                <!-- ریٹ | وقت | مہینہ — ab teenon alag box -->
+                <div class="bill-info-trio">
+                    <div class="bill-info-field">
                         <span class="bill-info-lbl">ریٹ</span>
                         <div class="bill-info-sep"></div>
                         <span contenteditable="true" id="displayRate" class="bill-info-val"
                             style="direction:ltr;text-align:center;"></span>
                     </div>
-                    <div></div>
-                    <div style="width:1px;height:16px;background:#c89f5e;flex-shrink:0;margin:0 4px;"></div>
-                    <div style="display:flex; align-items:center; gap:5px; flex:1; justify-content:center;">
-                        <span class="bill-info-lbl">وقت </span>
+                    <div class="bill-info-field">
+                        <span class="bill-info-lbl">ڈلیوری</span>
                         <div class="bill-info-sep"></div>
-                        <span contenteditable="true" class="bill-info-val"
-                            style="direction:ltr;text-align:center;"></span>
+                        <span id="deliveryTime" class="bill-info-val delivery-toggle" title="Click: صبح / شام / دونوں"
+                            style="direction:rtl;text-align:center;font-family:'Segoe UI',sans-serif;">صبح</span>
                     </div>
-                </div>
-                <div class="bill-info-field">
-                    <span class="bill-info-lbl">مہینہ</span>
-                    <div class="bill-info-sep"></div>
-                    <span contenteditable="true" class="bill-info-val" dir="rtl">&nbsp;</span>
+                    <div class="bill-info-field">
+                        <span class="bill-info-lbl">مہینہ</span>
+                        <div class="bill-info-sep"></div>
+                        <span contenteditable="true" id="monthField" class="bill-info-val" dir="rtl">&nbsp;</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -563,10 +784,10 @@
                         <td contenteditable class="w-1/2" id="baqayaLabel">بقایا</td>
                         <td contenteditable="true" id="previousBalance" class="w-1/2 numeric-cell"></td>
                     </tr>
-                    <tr>
-                        <td class="font-bold w-1/2" style="font-size:0.85rem; font-weight:900; color:#5A3E2B;">قابلِ ادائیگی رقم</td>
+                    <tr id="grandTotalRow">
+                        <td class="font-bold w-1/2" style="font-size:0.85rem; font-weight:900;">قابلِ ادائیگی رقم</td>
                         <td contenteditable id="grandTotalAmount"
-                            class="w-1/2 bg-gray-200 numeric-cell" style="font-size:0.9rem; font-weight:900; color:#7c2d12; letter-spacing:0.02em;"></td>
+                            class="w-1/2 numeric-cell" style="font-size:0.9rem; font-weight:900; letter-spacing:0.02em;"></td>
                     </tr>
                 </table>
                 <div class="mt-2 text-center">
@@ -580,7 +801,7 @@
             <div class="w-2/4 mr-1flex flex-col justify-end">
                 <table class="extra-products-table">
                     <tr>
-                        <td contenteditable class="font-bold bg-amber-50">دیسی گھی / آٹا <span style="font-size:7px;font-weight:400;color:#8a7560;"></span></td>
+                        <td contenteditable class="font-bold bg-amber-50">دیسی گھی/ آٹا<span style="font-size:7px;font-weight:400;color:#8a7560;"></span></td>
                         <td contenteditable="true" class="numeric-cell bg-white extra-item"></td>
                     </tr>
                     <tr>
@@ -609,23 +830,23 @@
                                 <th style="background:#f9e8d2; color:#5c3f1e; font-weight:700; border:1px solid #c89f5e; padding:2px 4px; font-size:7.5px; text-align:center; font-family:'Segoe UI',sans-serif;">Payment</th>
                             </tr>
                         </thead>
-                        <tbody>
-                           
+                        <tbody id="historyBody">
+
                             <tr>
-                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',sans-serif; background:#fff;"></td>
-                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
-                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
+                                <td contenteditable="true" class="ph-month" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',sans-serif; background:#fff;"></td>
+                                <td contenteditable="true" class="ph-bill" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
+                                <td contenteditable="true" class="ph-pay" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
                             </tr>
-                           
+
                             <tr>
-                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',sans-serif; background:#fff;"></td>
-                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
-                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
+                                <td contenteditable="true" class="ph-month" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',sans-serif; background:#fff;"></td>
+                                <td contenteditable="true" class="ph-bill" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
+                                <td contenteditable="true" class="ph-pay" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fff;"></td>
                             </tr>
                             <tr>
-                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',sans-serif; background:#fdfaf5;"></td>
-                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fdfaf5;"></td>
-                                <td contenteditable="true" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fdfaf5;"></td>
+                                <td contenteditable="true" class="ph-month" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',sans-serif; background:#fdfaf5;"></td>
+                                <td contenteditable="true" class="ph-bill" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fdfaf5;"></td>
+                                <td contenteditable="true" class="ph-pay" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fdfaf5;"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -634,16 +855,23 @@
             </div>
         </div>
 
-        <div class="bill-email-footer">
-            <button><a href="https://ranaahmadmilk.shop" target="_blank" style="text-decoration:none; color:#1a73e8;">
-                    🌐 Visit ranaahmadmilk.shop
-                </a></button>
+        <!-- ── Website + Email + Helpline (aik hi line) ── -->
+        <div class="bill-contact-footer">
+            <a href="https://ranaahmadmilk.shop" target="_blank" class="cf-web">🌐 ranaahmadmilk.shop</a>
+            <div class="cf-divider"></div>
+            <span class="cf-item">✉ <span contenteditable="true">info@ranaahmadmilk.shop</span></span>
+            <div class="cf-divider"></div>
+            <span class="cf-item">☎ Helpline: <span contenteditable="true">0323-6717478</span></span>
         </div>
     </div>
 
     <div class="max-w-md mx-auto p-4 text-center">
-        <button id="exportBtn"
-            class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg w-full">Download</button>
+        <div class="flex gap-2">
+            <button id="exportBtn"
+                class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg flex-1">Download</button>
+            <button id="whatsappBtn"
+                class="export-button text-white shadow-lg flex-1" style="background-color:#25D366;">WhatsApp پر بھیجیں</button>
+        </div>
         <div id="statusMessage" class="mt-3 text-sm font-medium text-gray-700 hidden"></div>
     </div>
 
@@ -695,20 +923,86 @@
             });
         });
 
+        /* ═══════════ TABLE — mahine ke din (rows hamesha 16, size kabhi nahi badalti) ═══════════ */
         const tbody = document.getElementById('ledgerBody');
-        const MAX_DAYS = 31, HALF_ROWS = 16;
-        (function () {
+        const HALF_ROWS = 16;
+        let monthDays = 31;
+
+        function cellPair(day, values) {
+            if (day > monthDays) return `<td class="dead-cell">-</td><td class="dead-cell">-</td>`;
+            const v = values[day] || '';
+            return `<td class="font-bold day-cell">${day}</td>` +
+                `<td contenteditable="true" class="numeric-cell kg-input" data-day="${day}">${v}</td>`;
+        }
+
+        function buildTable(days, values) {
+            monthDays = days || 31;
+            values = values || {};
+            tbody.innerHTML = '';
             for (let i = 1; i <= HALF_ROWS; i++) {
-                const day2 = i + HALF_ROWS;
-                const day2Content = day2 <= MAX_DAYS
-                    ? `<td class="font-bold bg-gray-50">${day2}</td><td contenteditable="true" class="numeric-cell kg-input"></td>`
-                    : `<td class="bg-gray-100">-</td><td class="bg-gray-100">-</td>`;
                 const row = document.createElement('tr');
-                row.innerHTML = `<td class="font-bold bg-gray-50">${i}</td><td contenteditable="true" class="numeric-cell kg-input"></td>${day2Content}`;
+                row.innerHTML = cellPair(i, values) + cellPair(i + HALF_ROWS, values);
                 tbody.appendChild(row);
             }
-        })();
+            document.querySelectorAll('.kg-input').forEach(cell => {
+                cell.addEventListener('input', scheduleDraft);
+                cell.addEventListener('blur', function () {
+                    if (this.textContent.trim() === '') { this.innerHTML = ''; }  /* dash wapas aa jaye */
+                    saveDraft();
+                });
+            });
+        }
 
+        function collectKg() {
+            const o = {};
+            document.querySelectorAll('.kg-input').forEach(c => {
+                const v = c.textContent.trim();
+                if (v) o[c.dataset.day] = v;
+            });
+            return o;
+        }
+
+        /* ═══════════ MONTH PICKER ═══════════ */
+        const URDU_MONTHS = ['جنوری', 'فروری', 'مارچ', 'اپریل', 'مئی', 'جون', 'جولائی', 'اگست', 'ستمبر', 'اکتوبر', 'نومبر', 'دسمبر'];
+        const monthPicker = document.getElementById('monthPicker');
+
+        function applyMonth(val, values) {
+            if (!val) return;
+            const parts = val.split('-');
+            const y = parseInt(parts[0]), m = parseInt(parts[1]);
+            const days = new Date(y, m, 0).getDate();       /* 28 / 29 / 30 / 31 */
+            buildTable(days, values || collectKg());
+            document.getElementById('monthField').textContent = URDU_MONTHS[m - 1] + ' ' + y;
+        }
+
+        monthPicker.addEventListener('change', function () {
+            applyMonth(this.value);
+            saveDraft();
+        });
+
+        /* ═══════════ AUTO BAQAYA (Payment History se) ═══════════ */
+        function autoBaqaya() {
+            let due = 0, filled = false;
+            document.querySelectorAll('#historyBody tr').forEach(tr => {
+                const billCell = tr.querySelector('.ph-bill');
+                const payCell = tr.querySelector('.ph-pay');
+                if (billCell.textContent.trim() !== '' || payCell.textContent.trim() !== '') {
+                    filled = true;
+                    due += getNumber(billCell) - getNumber(payCell);
+                }
+            });
+            if (filled) {
+                const pb = document.getElementById('previousBalance');
+                pb.textContent = due !== 0 ? formatCurrency(due) : 'Rs. 0';
+            }
+            autoRecalculate();
+        }
+
+        document.querySelectorAll('#historyBody .ph-bill, #historyBody .ph-pay').forEach(c => {
+            c.addEventListener('input', function () { autoBaqaya(); scheduleDraft(); });
+        });
+
+        /* ═══════════ CALCULATE ═══════════ */
         document.getElementById('calculateBtn').addEventListener('click', function () {
             const overlay = document.getElementById('loadingOverlay');
             overlay.classList.add('active');
@@ -721,33 +1015,281 @@
                 document.getElementById('totalMilkKg').textContent = (totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)) + ' Ltr';
                 document.getElementById('totalCalculatedAmount').textContent = formatCurrency(totalMilkAmount);
                 autoRecalculate();
+                saveDraft();
                 overlay.classList.remove('active');
             }, 1200);
         });
 
-        document.getElementById('exportBtn').addEventListener('click', function () {
-            const ledgerElement = document.getElementById('ledgerContent');
-            const calculationBox = document.getElementById('calculationBox');
-            calculationBox.classList.add('hide-on-export');
-            html2canvas(ledgerElement, { scale: 3, useCORS: true, backgroundColor: '#ffffff' }).then(canvas => {
+        /* ═══════════ DATA SAVE / LOAD ═══════════ */
+        const LS_CUSTOMERS = 'rams_customers_v1';
+        const LS_DRAFT = 'rams_draft_v1';
+        const $ = id => document.getElementById(id);
+
+        function collectData() {
+            return {
+                invoice: $('invoiceNumber').textContent,
+                client: $('clientName').textContent,
+                mobile: $('clientMobile').textContent,
+                rate: $('milkRate').textContent,
+                displayRate: $('displayRate').textContent,
+                delivery: $('deliveryTime').textContent,
+                monthText: $('monthField').textContent,
+                monthValue: monthPicker.value,
+                days: monthDays,
+                kg: collectKg(),
+                extras: Array.from(document.querySelectorAll('.extra-item')).map(e => e.textContent),
+                prev: $('previousBalance').textContent,
+                totalKg: $('totalMilkKg').textContent,
+                totalAmt: $('totalCalculatedAmount').textContent,
+                grand: $('grandTotalAmount').textContent,
+                history: Array.from(document.querySelectorAll('#historyBody tr')).map(tr => [
+                    tr.querySelector('.ph-month').textContent,
+                    tr.querySelector('.ph-bill').textContent,
+                    tr.querySelector('.ph-pay').textContent
+                ])
+            };
+        }
+
+        function applyData(d) {
+            if (!d) return;
+            if (d.invoice) $('invoiceNumber').textContent = d.invoice;
+            $('clientName').textContent = d.client || '\u00A0';
+            $('clientMobile').textContent = d.mobile || '';
+            $('milkRate').textContent = d.rate || '';
+            $('displayRate').textContent = d.displayRate || '';
+            $('deliveryTime').textContent = d.delivery || 'صبح';
+            $('monthField').textContent = d.monthText || '\u00A0';
+            if (d.monthValue) monthPicker.value = d.monthValue;
+            monthDays = d.days || 31;
+            buildTable(monthDays, d.kg || {});
+            const extras = document.querySelectorAll('.extra-item');
+            (d.extras || []).forEach((v, i) => { if (extras[i]) extras[i].textContent = v; });
+            $('previousBalance').textContent = d.prev || '';
+            $('totalMilkKg').textContent = d.totalKg || '';
+            $('totalCalculatedAmount').textContent = d.totalAmt || '';
+            $('grandTotalAmount').textContent = d.grand || '';
+            const rows = document.querySelectorAll('#historyBody tr');
+            (d.history || []).forEach((h, i) => {
+                if (!rows[i]) return;
+                rows[i].querySelector('.ph-month').textContent = h[0] || '';
+                rows[i].querySelector('.ph-bill').textContent = h[1] || '';
+                rows[i].querySelector('.ph-pay').textContent = h[2] || '';
+            });
+            updateBaqayaLabel();
+        }
+
+        function clearBill() {
+            const now = new Date();
+            const mv = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+            monthPicker.value = mv;
+            $('clientName').textContent = '\u00A0';
+            $('clientMobile').textContent = '';
+            $('milkRate').textContent = '';
+            $('displayRate').textContent = '';
+            $('deliveryTime').textContent = 'صبح';
+            document.querySelectorAll('.extra-item').forEach(e => e.textContent = '');
+            $('previousBalance').textContent = '';
+            $('totalMilkKg').textContent = '';
+            $('totalCalculatedAmount').textContent = '';
+            $('grandTotalAmount').textContent = '';
+            document.querySelectorAll('#historyBody td').forEach(td => td.textContent = '');
+            $('invoiceNumber').textContent = newInvoiceNumber();
+            applyMonth(mv, {});
+            updateBaqayaLabel();
+            saveDraft();
+        }
+
+        /* draft — refresh/band karne par data zaya na ho */
+        let draftTimer = null;
+        function scheduleDraft() {
+            clearTimeout(draftTimer);
+            draftTimer = setTimeout(saveDraft, 500);
+        }
+        function saveDraft() {
+            try { localStorage.setItem(LS_DRAFT, JSON.stringify(collectData())); } catch (e) { }
+        }
+
+        document.querySelectorAll('#ledgerContent [contenteditable="true"], #milkRate').forEach(el => {
+            el.addEventListener('input', scheduleDraft);
+        });
+        $('deliveryTime').addEventListener('click', scheduleDraft);
+
+        /* named customers */
+        function getCustomers() {
+            try { return JSON.parse(localStorage.getItem(LS_CUSTOMERS) || '{}'); } catch (e) { return {}; }
+        }
+        function setCustomers(obj) {
+            localStorage.setItem(LS_CUSTOMERS, JSON.stringify(obj));
+        }
+        function refreshCustomerList(selected) {
+            const sel = $('customerSelect');
+            const names = Object.keys(getCustomers()).sort();
+            sel.innerHTML = '<option value="">— نیا بل / محفوظ کلائنٹ کھولیں —</option>';
+            names.forEach(n => {
+                const o = document.createElement('option');
+                o.value = n; o.textContent = n;
+                sel.appendChild(o);
+            });
+            if (selected) sel.value = selected;
+        }
+        function status(msg, color) {
+            const s = $('saveStatus');
+            s.textContent = msg;
+            s.style.color = color || '#0f766e';
+            setTimeout(() => { s.textContent = ''; }, 2500);
+        }
+
+        $('saveBtn').addEventListener('click', function () {
+            const name = $('clientName').textContent.trim();
+            if (!name) { status('پہلے کلائنٹ کا نام لکھیں', '#b91c1c'); return; }
+            const all = getCustomers();
+            all[name] = collectData();
+            setCustomers(all);
+            refreshCustomerList(name);
+            status('محفوظ ہو گیا: ' + name);
+        });
+
+        $('deleteBtn').addEventListener('click', function () {
+            const sel = $('customerSelect');
+            const name = sel.value;
+            if (!name) { status('پہلے کلائنٹ منتخب کریں', '#b91c1c'); return; }
+            if (!confirm(name + ' کا ریکارڈ ڈیلیٹ کریں؟')) return;
+            const all = getCustomers();
+            delete all[name];
+            setCustomers(all);
+            refreshCustomerList();
+            clearBill();
+            status('ڈیلیٹ ہو گیا', '#b91c1c');
+        });
+
+        $('customerSelect').addEventListener('change', function () {
+            const name = this.value;
+            if (!name) { clearBill(); return; }
+            const all = getCustomers();
+            if (all[name]) {
+                applyData(all[name]);
+                saveDraft();
+                status('کھول دیا: ' + name);
+            }
+        });
+
+        /* ═══════════ ڈلیوری toggle ═══════════ */
+        (function () {
+            const el = $('deliveryTime');
+            const states = ['صبح', 'شام', 'صبح و شام'];
+            el.addEventListener('click', function () {
+                const i = states.indexOf(el.textContent.trim());
+                el.textContent = states[(i + 1) % states.length];
+            });
+        })();
+
+        /* ═══════════ STAMP ═══════════ */
+        (function () {
+            const stamp = $('billStamp');
+            const title = $('stampTitle');
+            const sub = $('stampSub');
+            const arc = $('stampDatePath');
+            function setStamp(type) {
+                stamp.classList.remove('paid', 'unpaid', 'show');
+                if (!type) return;
+                title.textContent = (type === 'paid') ? 'PAID' : 'UNPAID';
+                title.setAttribute('font-size', (type === 'paid') ? '23' : '18');
+                arc.textContent = (type === 'paid') ? 'PAYMENT RECEIVED' : 'AMOUNT DUE';
+                sub.textContent = new Date().toLocaleDateString('en-GB');
+                stamp.classList.add(type, 'show');
+            }
+            $('paidBtn').addEventListener('click', () => setStamp('paid'));
+            $('unpaidBtn').addEventListener('click', () => setStamp('unpaid'));
+            $('noStampBtn').addEventListener('click', () => setStamp(null));
+        })();
+
+        /* ═══════════ EXPORT + WHATSAPP ═══════════ */
+        function renderCanvas() {
+            const box = $('calculationBox');
+            box.classList.add('hide-on-export');
+            return html2canvas($('ledgerContent'), { scale: 3, useCORS: true, backgroundColor: '#ffffff' })
+                .then(canvas => { box.classList.remove('hide-on-export'); return canvas; })
+                .catch(err => { box.classList.remove('hide-on-export'); throw err; });
+        }
+
+        function fileName() {
+            const c = $('clientName').textContent.trim().replace(/\s+/g, '_') || 'Bill';
+            return 'RanaAhmed_' + c + '_' + new Date().toISOString().slice(0, 10) + '.png';
+        }
+
+        $('exportBtn').addEventListener('click', function () {
+            renderCanvas().then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Rana_Ahmed_Bill_' + new Date().toISOString().slice(0, 10) + '.png';
+                link.download = fileName();
                 link.href = canvas.toDataURL();
                 link.click();
-                calculationBox.classList.remove('hide-on-export');
             });
         });
 
-        document.getElementById("issueDateTime").innerText = "Issued: " + new Date().toLocaleString('en-GB');
+        function waNumber() {
+            let n = ($('clientMobile').textContent || '').replace(/\D/g, '');
+            if (!n) return '';
+            if (n.startsWith('92')) return n;
+            if (n.startsWith('0')) return '92' + n.slice(1);
+            if (n.length === 10) return '92' + n;
+            return n;
+        }
 
-        (function generateInvoiceNumber() {
+        $('whatsappBtn').addEventListener('click', function () {
+            const overlay = $('loadingOverlay');
+            overlay.classList.add('active');
+            const msg = 'رانا احمد ملک شاپ\n' + $('monthField').textContent.trim() + ' کا بل\nقابلِ ادائیگی رقم: ' + $('grandTotalAmount').textContent.trim();
+
+            renderCanvas().then(canvas => {
+                canvas.toBlob(function (blob) {
+                    overlay.classList.remove('active');
+                    const file = new File([blob], fileName(), { type: 'image/png' });
+
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        navigator.share({ files: [file], text: msg }).catch(() => { });
+                    } else {
+                        /* desktop / purana browser: image download + WhatsApp khul jayega */
+                        const a = document.createElement('a');
+                        a.download = fileName();
+                        a.href = URL.createObjectURL(blob);
+                        a.click();
+                        const num = waNumber();
+                        const url = num
+                            ? 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg)
+                            : 'https://wa.me/?text=' + encodeURIComponent(msg);
+                        window.open(url, '_blank');
+                    }
+                }, 'image/png');
+            }).catch(() => { overlay.classList.remove('active'); });
+        });
+
+        /* ═══════════ INIT ═══════════ */
+        $('issueDateTime').innerText = "Issued: " + new Date().toLocaleString('en-GB');
+
+        function newInvoiceNumber() {
             const now = new Date();
             const year = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const key = `invoice_serial_${year}_${month}`;
             let serial = parseInt(localStorage.getItem(key) || '100') + 1;
             localStorage.setItem(key, serial);
-            document.getElementById('invoiceNumber').innerText = `RAMS-${month}${year}-${serial}`;
+            return `RAMS-${month}${year}-${serial}`;
+        }
+
+        (function init() {
+            refreshCustomerList();
+            let draft = null;
+            try { draft = JSON.parse(localStorage.getItem(LS_DRAFT) || 'null'); } catch (e) { }
+
+            if (draft) {
+                applyData(draft);                       /* refresh par purana bill wapas */
+            } else {
+                $('invoiceNumber').textContent = newInvoiceNumber();
+                const now = new Date();
+                const mv = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+                monthPicker.value = mv;
+                applyMonth(mv, {});
+            }
         })();
     </script>
 </body>
