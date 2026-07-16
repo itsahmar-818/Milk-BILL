@@ -528,21 +528,10 @@
             display: block;
         }
 
-        @media (max-width: 640px) {
-            .ledger-page {
-                padding: 1rem;
-                margin: 1rem auto;
-            }
-
-            .main-table th,
-            .main-table td,
-            .footer-table td,
-            .extra-products-table td {
-                padding: 0.1rem 0.3rem;
-                font-size: 0.75rem;
-                height: 1.2rem;
-            }
-        }
+        /* NOTE: purana @media(max-width:640px) hata diya gaya —
+           ab poora bill fixed 400px par render ho kar uniformly scale hota hai
+           (neeche RESPONSIVE REFACTOR block dekhein), taake mobile aur desktop
+           dono par aur download mein layout bilkul aik jaisa rahe. */
 
         /* ── DIAGONAL NOTICE — table ke upar, neeche block nahi karta ── */
         .diagonal-notice {
@@ -592,10 +581,68 @@
             direction: ltr;
             margin-top: 3px;
         }
+
+        /* ═══════════════════════════════════════════════════════════
+           RESPONSIVE REFACTOR (added)
+           - Bill ka design hamesha 400px par fix rehta hai.
+           - Choti screen par poora bill ek saath (uniform) scale ho
+             jata hai — is liye koi box kabhi mis-align ya stretch nahi hota.
+           - Download (html2canvas) JS mein fixed 400px par capture hota
+             hai, is liye mobile ka download desktop jaisa hi aata hai.
+           ═══════════════════════════════════════════════════════════ */
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { max-width: 100%; overflow-x: hidden; }
+        body { padding: 12px; }
+
+        /* wrapper: fixed-width bill ko center + clip karta hai */
+        .bill-viewport {
+            width: 100%;
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden;
+        }
+
+        /* design ki fixed width — poora layout isi par tuned hai */
+        .ledger-page {
+            width: 400px !important;
+            max-width: 400px !important;
+            margin: 0 auto !important;
+            transform-origin: top center;
+        }
+
+        /* control panel + buttons choti screen par andar rahein */
+        #calculationBox, #actionBar { width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; }
+        #actionBar .flex { flex-wrap: wrap; }
+        .export-button { flex: 1 1 140px; }
+
+        /* lambe words / email box ko toray bagair wrap ho jayein */
+        .bill-info-val,
+        .cf-item,
+        .bill-contact-footer span[contenteditable] {
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        /* ── PRINT: saaf receipt size, koi UI chrome nahi ── */
+        @media print {
+            @page { size: 80mm auto; margin: 4mm; }
+            #startup-screen, #loadingOverlay, #calculationBox, #actionBar { display: none !important; }
+            body { padding: 0; background: #fff; }
+            .bill-viewport { overflow: visible; display: block; margin: 0; height: auto !important; }
+            .ledger-page {
+                width: 100% !important;
+                max-width: 100% !important;
+                transform: none !important;
+                box-shadow: none;
+                margin: 0 auto !important;
+            }
+        }
     </style>
 </head>
 
-<body class="p-6">
+<body>
 
     <div id="startup-screen">
         <div class="splash-logo-box"><span><img src="logo.png" alt=""></span></div>
@@ -645,6 +692,7 @@
         <div id="saveStatus" class="text-xs text-center mt-1 font-bold" style="min-height:14px;"></div>
     </div>
 
+    <div id="billViewport" class="bill-viewport">
     <div class="ledger-page" id="ledgerContent">
 
         <!-- ── LOGO WATERMARK ── -->
@@ -864,8 +912,9 @@
             <span class="cf-item">☎ Helpline: <span contenteditable="true">0323-6717478</span></span>
         </div>
     </div>
+    </div>
 
-    <div class="max-w-md mx-auto p-4 text-center">
+    <div id="actionBar" class="max-w-md mx-auto p-4 text-center">
         <div class="flex gap-2">
             <button id="exportBtn"
                 class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg flex-1">Download</button>
@@ -886,6 +935,7 @@
 
         function getNumber(el) { return parseFloat(el.textContent.trim().replace(/Rs\.?\s*/g, '').replace(/,/g, '')) || 0; }
         function formatCurrency(amount) { return 'Rs. ' + Math.round(amount).toLocaleString('en-US'); }
+
 
         function updateBaqayaLabel() {
             const prevBalance = getNumber(document.getElementById('previousBalance'));
@@ -1206,10 +1256,21 @@
         /* ═══════════ EXPORT + WHATSAPP ═══════════ */
         function renderCanvas() {
             const box = $('calculationBox');
+            const page = $('ledgerContent');
+            const prevTransform = page.style.transform;
             box.classList.add('hide-on-export');
-            return html2canvas($('ledgerContent'), { scale: 3, useCORS: true, backgroundColor: '#ffffff' })
-                .then(canvas => { box.classList.remove('hide-on-export'); return canvas; })
-                .catch(err => { box.classList.remove('hide-on-export'); throw err; });
+            /* capture ke waqt scale hata do — hamesha poora 400px width par snapshot */
+            page.style.transform = 'none';
+            return html2canvas(page, {
+                scale: 3,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                width: 400,               /* output hamesha 400px design width */
+                windowWidth: 800,         /* desktop-jaisa viewport — mobile rules off */
+                windowHeight: page.offsetHeight + 40
+            })
+                .then(canvas => { box.classList.remove('hide-on-export'); page.style.transform = prevTransform; fitBill(); return canvas; })
+                .catch(err => { box.classList.remove('hide-on-export'); page.style.transform = prevTransform; fitBill(); throw err; });
         }
 
         function fileName() {
@@ -1291,6 +1352,28 @@
                 applyMonth(mv, {});
             }
         })();
+
+        /* ═══════════ FIT BILL — poora bill uniform scale (mobile) ═══════════ */
+        /* Bill hamesha 400px par banta hai; agar screen chhoti ho to poora bill
+           ek saath scale ho kar fit ho jata hai — koi box mis-align nahi hota. */
+        function fitBill() {
+            const page = $('ledgerContent');
+            const vp = $('billViewport');
+            if (!page || !vp) return;
+            page.style.transform = 'none';
+            const naturalW = 400;
+            let scale = vp.clientWidth / naturalW;
+            if (scale > 1) scale = 1;                 /* desktop par kabhi bara na karein */
+            page.style.transform = scale < 1 ? ('scale(' + scale + ')') : 'none';
+            vp.style.height = (page.offsetHeight * scale) + 'px';
+        }
+
+        window.addEventListener('resize', fitBill);
+        window.addEventListener('orientationchange', function () { setTimeout(fitBill, 100); });
+        window.addEventListener('load', function () { setTimeout(fitBill, 60); });
+        /* content badle (extra/history/kg edit) to height dobara set ho */
+        $('ledgerContent').addEventListener('input', function () { requestAnimationFrame(fitBill); });
+        requestAnimationFrame(fitBill);
     </script>
 </body>
 
