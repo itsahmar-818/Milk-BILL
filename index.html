@@ -126,6 +126,7 @@
             background-color: #fdfaf5;
             direction: rtl;
             color: #3c2f2f;
+            transition: background-color .25s ease;
         }
 
         .ledger-page {
@@ -139,6 +140,7 @@
             border-radius: 8px;
             position: relative;
             overflow: hidden;
+            transition: background-color .25s ease, border-color .25s ease;
         }
 
         .main-table,
@@ -196,6 +198,92 @@
             font-family: 'Segoe UI', sans-serif;
             margin-top: 1px;
             opacity: .9;
+        }
+
+        /* ═══════════ IMPROVED HEADER — CONTAINER STYLING ═══════════
+           Additive + height-neutral. The old spacing (mb-3 / mt-1 / mt-2) is
+           folded into tight card padding, and the h1 leading is tightened, so
+           the three cards occupy the SAME vertical space as the old header. */
+
+        .hdr-title-box {
+            position: relative;
+            background: linear-gradient(160deg, #ffffff 0%, #fbf2e1 100%);
+            border: 1.5px solid #c89f5e;
+            border-radius: 9px;
+            box-shadow: 0 2px 7px rgba(124, 45, 18, 0.10);
+            padding: 5px 12px 3px;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+
+        .hdr-title-box::before {          /* top accent line */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #7c2d12 0%, #c89f5e 50%, #7c2d12 100%);
+        }
+
+        .hdr-title-box h1 {
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .hdr-title-name {
+            display: inline-block;
+            border-bottom: 2px solid #c89f5e;
+            padding: 0 22px 2px;
+        }
+
+        .hdr-contact-card {
+            direction: rtl;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 10px;
+            background: #ffffff;
+            border: 1px solid #e8d5c4;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(124, 45, 18, 0.06);
+            padding: 2px 8px;
+            margin-bottom: 4px;
+        }
+
+        .hdr-contact-item {
+            direction: rtl;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #3c2f2f;
+            white-space: nowrap;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .hdr-contact-item .hci-num {
+            direction: ltr;
+            font-family: 'Segoe UI', monospace;
+            font-size: 10.5px;
+            color: #5c3f1e;
+        }
+
+        .hdr-contact-divider {
+            width: 1.5px;
+            align-self: stretch;
+            background: linear-gradient(180deg, #c89f5e, #e8d5c4);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .bill-info-card {
+            background: linear-gradient(180deg, #fffdf9 0%, #fbf4e8 100%);
+            border: 1px solid #e8d5c4;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(124, 45, 18, 0.05);
+            padding: 4px;
         }
 
         .bill-info-grid {
@@ -543,6 +631,20 @@
                 font-size: 0.75rem;
                 height: 1.2rem;
             }
+
+            /* contact card mobile par neeche-neeche stack ho jaye */
+            .hdr-contact-card {
+                flex-direction: column;
+                gap: 2px;
+                padding: 3px 6px;
+            }
+
+            .hdr-contact-divider {
+                width: 60%;
+                align-self: center;
+                height: 1px;
+                background: #e8d5c4;
+            }
         }
 
         /* ── DIAGONAL NOTICE — table ke upar, neeche block nahi karta ── */
@@ -593,6 +695,245 @@
             direction: ltr;
             margin-top: 3px;
         }
+
+        /* ══════════════════════════════════════════════════════════════
+           DARK MODE — professional (mobile-jaisa). Button se .dark-bill
+           #ledgerContent par aur .app-dark <body> par lagti hai. Sab
+           overrides scoped hain, export bhi dark mein sahi aata hai.
+           ══════════════════════════════════════════════════════════════ */
+
+        /* ---- App shell (screen only; export mein nahi jata) ---- */
+        body.app-dark {
+            background-color: #0e0c09;
+        }
+
+        body.app-dark #calculationBox {
+            background: #1b1610 !important;
+            border-color: #7c5f34 !important;
+            color: #f0e7d6 !important;
+        }
+
+        body.app-dark #calculationBox h3 {
+            color: #eccf92;
+        }
+
+        body.app-dark #calculationBox .font-bold,
+        body.app-dark #calculationBox label,
+        body.app-dark #calculationBox span {
+            color: #e8dcc8;
+        }
+
+        body.app-dark #calculationBox input,
+        body.app-dark #calculationBox select,
+        body.app-dark #calculationBox #milkRate {
+            background: #241d14 !important;
+            color: #f6efe0 !important;
+            border-color: #6f5734 !important;
+        }
+
+        body.app-dark #statusMessage {
+            color: #cbbfa8 !important;
+        }
+
+        /* ---- The BILL itself ---- */
+        .ledger-page.dark-bill {
+            background-color: #17130e !important;
+            border-color: #6b5330 !important;
+            color: #ece3d3;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.6);
+        }
+
+        .dark-bill h1 {
+            color: #eccf92 !important;
+        }
+
+        /* header title card */
+        .dark-bill .hdr-title-box {
+            background: linear-gradient(160deg, #241d14 0%, #1a150f 100%);
+            border-color: #7c5f34;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-bill .hdr-title-name {
+            border-bottom-color: #b7873f;
+        }
+
+        .dark-bill .hdr-tagline {
+            color: #d9b775;
+        }
+
+        /* contact card */
+        .dark-bill .hdr-contact-card {
+            background: #201a12;
+            border-color: #4a3c28;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-bill .hdr-contact-item {
+            color: #ece3d3;
+        }
+
+        .dark-bill .hdr-contact-item .hci-num {
+            color: #e6c78a;
+        }
+
+        .dark-bill .hdr-contact-divider {
+            background: linear-gradient(180deg, #b7873f, #5a4a30);
+        }
+
+        /* bill info card + fields */
+        .dark-bill .bill-info-card {
+            background: linear-gradient(180deg, #211a12 0%, #191309 100%);
+            border-color: #4a3c28;
+        }
+
+        .dark-bill .bill-info-field {
+            background: #251e15 !important;
+            border-color: #6f5734 !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark-bill .bill-info-lbl {
+            color: #e0bd7f !important;
+        }
+
+        .dark-bill .bill-info-val {
+            color: #f0e7d6 !important;
+        }
+
+        .dark-bill .bill-info-sep {
+            background: #6f5734 !important;
+        }
+
+        .dark-bill .delivery-toggle {
+            color: #e0bd7f !important;
+        }
+
+        .dark-bill .delivery-toggle:hover {
+            background-color: #2f2617 !important;
+        }
+
+        /* main ledger table */
+        .dark-bill .main-table th {
+            background-color: #3a2c17 !important;
+            color: #eccf92 !important;
+        }
+
+        .dark-bill .main-table td,
+        .dark-bill .footer-table td,
+        .dark-bill .extra-products-table td {
+            border-color: #6b5330 !important;
+            color: #ece3d3;
+        }
+
+        .dark-bill #ledgerBody td.day-cell {
+            background-color: rgba(224, 189, 127, 0.14) !important;
+            color: #eccf92;
+        }
+
+        .dark-bill #ledgerBody tr:nth-child(even) td {
+            background-color: rgba(224, 189, 127, 0.05) !important;
+        }
+
+        .dark-bill #ledgerBody tr:nth-child(even) td.day-cell {
+            background-color: rgba(224, 189, 127, 0.20) !important;
+        }
+
+        .dark-bill #ledgerBody td.dead-cell {
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            color: #6b5f4d !important;
+        }
+
+        .dark-bill .kg-input:empty::before {
+            color: #5c5140;
+        }
+
+        /* extra products (Tailwind bg-amber-50 / bg-white) */
+        .dark-bill .extra-products-table td.bg-amber-50 {
+            background-color: #2a2114 !important;
+            color: #e0bd7f !important;
+        }
+
+        .dark-bill .extra-products-table td.bg-white {
+            background-color: #1d1710 !important;
+            color: #f0e7d6 !important;
+        }
+
+        /* payment history */
+        .dark-bill .ph-title-bar {
+            color: #e0bd7f !important;
+            border-bottom-color: #6b5330 !important;
+        }
+
+        .dark-bill .payment-history-table th {
+            background: #3a2c17 !important;
+            color: #eccf92 !important;
+            border-color: #6b5330 !important;
+        }
+
+        .dark-bill .payment-history-table td,
+        .dark-bill #historyBody td {
+            background: #1d1710 !important;
+            color: #f0e7d6 !important;
+            border-color: #6b5330 !important;
+        }
+
+        .dark-bill #historyBody tr:last-child td {
+            background: #221a11 !important;
+        }
+
+        /* outstanding due row — bg/border dark; amount ka color JS set karta hai */
+        .dark-bill #outstandingDueRow td {
+            background: #241a12 !important;
+            border-color: #6b5330 !important;
+        }
+
+        .dark-bill #outstandingDueRow td:first-child {
+            background: #3a2c17 !important;
+            color: #e0bd7f !important;
+        }
+
+        /* footer contact */
+        .dark-bill .bill-contact-footer {
+            border-top-color: #6b5330;
+        }
+
+        .dark-bill .bill-contact-footer a,
+        .dark-bill .bill-contact-footer span.cf-item,
+        .dark-bill .bill-contact-footer .cf-item span[contenteditable] {
+            color: #d9b775;
+        }
+
+        .dark-bill .bill-contact-footer .cf-web {
+            color: #7cb8ff;
+        }
+
+        .dark-bill .bill-contact-footer .cf-divider {
+            background: #6b5330;
+        }
+
+        /* signature + authorized text + issue date */
+        .dark-bill .text-important {
+            color: #eccf92 !important;
+        }
+
+        .dark-bill .sign-img {
+            filter: invert(1) brightness(1.05) contrast(1.05);
+        }
+
+        .dark-bill .border-t {
+            border-color: #6b5330 !important;
+        }
+
+        .dark-bill #issueDateTime {
+            color: #8a7c66 !important;
+        }
+
+        /* watermark: kisi bhi logo ko halka safed silhouette bana kar dikhao */
+        .dark-bill .bill-watermark {
+            opacity: 0.10;
+            filter: brightness(0) invert(1);
+        }
     </style>
 </head>
 
@@ -627,6 +968,10 @@
             <button id="paidBtn" class="calculate-btn flex-1" style="background-color:#15803d;">PAID</button>
             <button id="unpaidBtn" class="calculate-btn flex-1" style="background-color:#b91c1c;">UNPAID</button>
             <button id="noStampBtn" class="calculate-btn flex-1" style="background-color:#6b7280;">Stamp Hatayen</button>
+        </div>
+
+        <div class="flex gap-2 mt-2">
+            <button id="darkModeBtn" class="calculate-btn flex-1" style="background-color:#111827;">🌙 Dark Mode</button>
         </div>
 
         <div class="flex items-center gap-2 mt-3 text-sm">
@@ -679,43 +1024,56 @@
             </svg>
         </div>
 
-        <div class="text-center mb-3">
-            <h1 class="text-2xl font-bold border-b-2 border-[#c89f5e] inline-block px-8 pb-1">
-                رانا احمد ملک شاپ<sup style="font-size:0.55em; vertical-align:super;">™</sup>
+        <!-- ═══ HEADER TITLE CARD ═══ -->
+        <div class="hdr-title-box text-center">
+            <h1 class="text-2xl font-bold">
+                <span class="hdr-title-name">رانا احمد ملک شاپ<sup style="font-size:0.55em; vertical-align:super;">™</sup></span>
             </h1>
             <div class="hdr-tagline">Since 1970 &nbsp;|&nbsp; Pure &amp; Fresh Milk</div>
+        </div>
 
-            <div class="text-xs mt-1 leading-relaxed">
-                <span class="font-bold ml-4 flex justify-center items-center">
-                    رانا احمر لطیف
-                    <svg class="whatsapp-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <radialGradient id="wa1a" cx="11.087" cy="7.022" r="47.612" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#55d163" />
-                            <stop offset="1" stop-color="#23b33a" />
-                        </radialGradient>
-                        <path fill="url(#wa1a)"
-                            d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" />
-                        <path fill="#fff" fill-rule="evenodd"
-                            d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" />
-                    </svg>
-                    <span contenteditable="true">0323-6717478</span>
-                    <span class="mr-4 ml-4"></span>
-                    رانا حامد لطیف
-                    <svg class="whatsapp-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <radialGradient id="wa2a" cx="11.087" cy="7.022" r="47.612" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#55d163" />
-                            <stop offset="1" stop-color="#23b33a" />
-                        </radialGradient>
-                        <path fill="url(#wa2a)"
-                            d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" />
-                        <path fill="#fff" fill-rule="evenodd"
-                            d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" />
-                    </svg>
-                    <span contenteditable="true">0300-7198213</span>
-                </span>
-            </div>
+        <!-- ═══ CONTACT CARD ═══ -->
+        <div class="hdr-contact-card">
+            <span class="hdr-contact-item">
+                رانا احمر لطیف
+                <svg class="whatsapp-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <radialGradient id="wa1a" cx="11.087" cy="7.022" r="47.612" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#55d163" />
+                        <stop offset="1" stop-color="#23b33a" />
+                    </radialGradient>
+                    <path fill="url(#wa1a)"
+                        d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" />
+                    <path fill="#fff" fill-rule="evenodd"
+                        d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" />
+                </svg>
+                <span class="hci-num" contenteditable="true">0323-6717478</span>
+            </span>
+            <div class="hdr-contact-divider"></div>
+            <span class="hdr-contact-item">
+                رانا حامد لطیف
+                <svg class="whatsapp-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <radialGradient id="wa2a" cx="11.087" cy="7.022" r="47.612" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#55d163" />
+                        <stop offset="1" stop-color="#23b33a" />
+                    </radialGradient>
+                    <path fill="url(#wa2a)"
+                        d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979 C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428 c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" />
+                    <path fill="#fff" fill-rule="evenodd"
+                        d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82 c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956 c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187 c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554 s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859 c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285 c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791 c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" />
+                </svg>
+                <span class="hci-num" contenteditable="true">0300-7198213</span>
+            </span>
+        </div>
 
-            <div class="bill-info-grid mt-2">
+        <!-- ═══ BILL INFO CARD ═══ -->
+        <div class="bill-info-card">
+            <div class="bill-info-grid">
+                <div class="bill-info-field bill-info-wide">
+                    <span class="bill-info-lbl">کلائنٹ</span>
+                    <div class="bill-info-sep"></div>
+                    <span contenteditable="true" id="clientName" class="bill-info-val" dir="rtl"
+                        style="font-size:11px;">&nbsp;</span>
+                </div>
                 <div class="bill-info-field">
                     <span class="bill-info-lbl">بل نمبر</span>
                     <div class="bill-info-sep"></div>
@@ -727,12 +1085,6 @@
                     <div class="bill-info-sep"></div>
                     <span contenteditable="true" id="clientMobile" class="bill-info-val"
                         style="direction:ltr;font-size:9.5px;"></span>
-                </div>
-                <div class="bill-info-field bill-info-wide">
-                    <span class="bill-info-lbl">کلائنٹ</span>
-                    <div class="bill-info-sep"></div>
-                    <span contenteditable="true" id="clientName" class="bill-info-val" dir="rtl"
-                        style="font-size:11px;">&nbsp;</span>
                 </div>
 
                 <!-- ریٹ | وقت | مہینہ — ab teenon alag box -->
@@ -758,7 +1110,7 @@
             </div>
         </div>
 
-        <table class="main-table mt-3">
+        <table class="main-table mt-1">
             <thead>
                 <tr>
                     <th class="w-[20%]">تاریخ</th>
@@ -770,7 +1122,7 @@
             <tbody id="ledgerBody"></tbody>
         </table>
 
-        <div class="flex justify-between mt-2">
+        <div class="flex justify-between mt-1">
             <div class="w-2/4">
                 <table class="footer-table">
                     <tr>
@@ -792,7 +1144,7 @@
                     </tr>
                 </table>
                 <div class="mt-2 text-center">
-                    <img src="sign.jpg" class="h-12 mx-auto mb-1 opacity-100">
+                    <img src="sign.jpg" class="sign-img h-12 mx-auto mb-1 opacity-100">
                     <div class="border-t border-[#c89f5e] w-32 mx-auto"></div>
                     <div class="text-[10px] mt-1 font-bold text-important">Authorized Signatory</div>
                     <div id="issueDateTime" class="mt-0 text-[8px] text-black-500"></div>
@@ -820,15 +1172,16 @@
                 </table>
                 <!-- Payment History Table -->
                 <div class="mt-1 mb-1">
-                    <div style="text-align:center; font-size:8.5px; font-weight:800; color:#5A3E2B; text-transform:uppercase; letter-spacing:0.1em; font-family:'Segoe UI',sans-serif; direction:ltr; margin-bottom:3px; border-bottom:1px solid #c89f5e; padding-bottom:2px;">
+                    <div class="ph-title-bar" style="text-align:center; font-size:8.5px; font-weight:800; color:#5A3E2B; text-transform:uppercase; letter-spacing:0.1em; font-family:'Segoe UI',sans-serif; direction:ltr; margin-bottom:3px; border-bottom:1px solid #c89f5e; padding-bottom:2px;">
                         Payment History
                     </div>
-                    <table class="payment-history-table" style="border-collapse:collapse; width:100%; font-size:0.7rem; direction:ltr;">
+                    <table class="payment-history-table" style="border-collapse:collapse; width:100%; font-size:0.8rem; direction:ltr;">
                         <thead>
                             <tr>
                                 <th style="background:#f9e8d2; color:#5c3f1e; font-weight:700; border:1px solid #c89f5e; padding:2px 4px; font-size:7.5px; text-align:center; font-family:'Segoe UI',sans-serif;">Month</th>
                                 <th style="background:#f9e8d2; color:#5c3f1e; font-weight:700; border:1px solid #c89f5e; padding:2px 4px; font-size:7.5px; text-align:center; font-family:'Segoe UI',sans-serif;">Bill Amt</th>
                                 <th style="background:#f9e8d2; color:#5c3f1e; font-weight:700; border:1px solid #c89f5e; padding:2px 4px; font-size:7.5px; text-align:center; font-family:'Segoe UI',sans-serif;">Payment</th>
+                                
                             </tr>
                         </thead>
                         <tbody id="historyBody">
@@ -850,6 +1203,7 @@
                                 <td contenteditable="true" class="ph-pay" style="border:1px solid #c89f5e; padding:2px 4px; text-align:center; font-size:7.5px; font-family:'Segoe UI',monospace; background:#fdfaf5;"></td>
                             </tr>
                         </tbody>
+                        
                     </table>
                    
                 </div>
@@ -890,20 +1244,42 @@
         function getNumber(el) { return parseFloat(el.textContent.trim().replace(/Rs\.?\s*/g, '').replace(/,/g, '')) || 0; }
         function formatCurrency(amount) { return 'Rs. ' + Math.round(amount).toLocaleString('en-US'); }
 
+        function isDark() { return document.getElementById('ledgerContent').classList.contains('dark-bill'); }
+
         function updateBaqayaLabel() {
             const prevBalance = getNumber(document.getElementById('previousBalance'));
             const label = document.getElementById('baqayaLabel');
             const row = document.getElementById('baqayaRow');
             const cell = document.getElementById('previousBalance');
+            const dark = isDark();
             if (prevBalance < 0) {
                 label.textContent = 'ایڈوانس';
-                row.style.background = '#e6f9ed';
-                cell.style.color = '#16a34a';
+                row.style.background = dark ? '#12321f' : '#e6f9ed';
+                cell.style.color = dark ? '#4ade80' : '#16a34a';
             } else {
                 label.textContent = 'بقایا';
                 row.style.background = '';
                 cell.style.color = '';
             }
+        }
+
+        /* ═══════════ OUTSTANDING DUE (Payment History se) ═══════════ */
+        function updateOutstanding() {
+            let due = 0, filled = false;
+            document.querySelectorAll('#historyBody tr').forEach(tr => {
+                const b = tr.querySelector('.ph-bill'), p = tr.querySelector('.ph-pay');
+                if (!b || !p) return;
+                if (b.textContent.trim() !== '' || p.textContent.trim() !== '') {
+                    filled = true; due += getNumber(b) - getNumber(p);
+                }
+            });
+            const el = document.getElementById('outstandingDue');
+            if (!el) return;
+            el.textContent = filled ? (formatCurrency(Math.abs(due)) + (due < 0 ? ' Adv' : '')) : 'Rs. 0';
+            const dark = isDark();
+            if (due > 0)      el.style.color = dark ? '#f87171' : '#b91c1c';   /* baqi due — red */
+            else if (due < 0) el.style.color = dark ? '#4ade80' : '#15803d';   /* advance — green */
+            else              el.style.color = dark ? '#e0bd7f' : '#5A3E2B';   /* clear — neutral */
         }
 
         function autoRecalculate() {
@@ -999,6 +1375,7 @@
                 pb.textContent = due !== 0 ? formatCurrency(due) : 'Rs. 0';
             }
             autoRecalculate();
+            updateOutstanding();
         }
 
         document.querySelectorAll('#historyBody .ph-bill, #historyBody .ph-pay').forEach(c => {
@@ -1018,6 +1395,7 @@
                 document.getElementById('totalMilkKg').textContent = (totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)) + ' Ltr';
                 document.getElementById('totalCalculatedAmount').textContent = formatCurrency(totalMilkAmount);
                 autoRecalculate();
+                updateOutstanding();
                 saveDraft();
                 overlay.classList.remove('active');
             }, 1200);
@@ -1026,6 +1404,7 @@
         /* ═══════════ DATA SAVE / LOAD ═══════════ */
         const LS_CUSTOMERS = 'rams_customers_v1';
         const LS_DRAFT = 'rams_draft_v1';
+        const LS_THEME = 'rams_theme_v1';
         const $ = id => document.getElementById(id);
 
         function collectData() {
@@ -1079,6 +1458,7 @@
                 rows[i].querySelector('.ph-pay').textContent = h[2] || '';
             });
             updateBaqayaLabel();
+            updateOutstanding();
         }
 
         function clearBill() {
@@ -1099,6 +1479,7 @@
             $('invoiceNumber').textContent = newInvoiceNumber();
             applyMonth(mv, {});
             updateBaqayaLabel();
+            updateOutstanding();
             saveDraft();
         }
 
@@ -1186,6 +1567,23 @@
             });
         })();
 
+        /* ═══════════ DARK MODE TOGGLE ═══════════ */
+        function applyTheme(dark) {
+            document.body.classList.toggle('app-dark', dark);
+            $('ledgerContent').classList.toggle('dark-bill', dark);
+            const btn = $('darkModeBtn');
+            if (btn) {
+                btn.innerHTML = dark ? '☀️ Light Mode' : '🌙 Dark Mode';
+                btn.style.backgroundColor = dark ? '#b45309' : '#111827';
+            }
+            updateBaqayaLabel();
+            updateOutstanding();
+            try { localStorage.setItem(LS_THEME, dark ? '1' : '0'); } catch (e) { }
+        }
+        $('darkModeBtn').addEventListener('click', function () {
+            applyTheme(!isDark());
+        });
+
         /* ═══════════ STAMP ═══════════ */
         (function () {
             const stamp = $('billStamp');
@@ -1210,7 +1608,8 @@
         function renderCanvas() {
             const box = $('calculationBox');
             box.classList.add('hide-on-export');
-            return html2canvas($('ledgerContent'), { scale: 3, useCORS: true, backgroundColor: '#ffffff' })
+            const dark = isDark();
+            return html2canvas($('ledgerContent'), { scale: 3, useCORS: true, backgroundColor: dark ? '#17130e' : '#ffffff' })
                 .then(canvas => { box.classList.remove('hide-on-export'); return canvas; })
                 .catch(err => { box.classList.remove('hide-on-export'); throw err; });
         }
@@ -1321,7 +1720,13 @@
                 const mv = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
                 monthPicker.value = mv;
                 applyMonth(mv, {});
+                updateOutstanding();
             }
+
+            /* theme restore (light default) */
+            let savedTheme = '0';
+            try { savedTheme = localStorage.getItem(LS_THEME) || '0'; } catch (e) { }
+            applyTheme(savedTheme === '1');
         })();
     </script>
 </body>
