@@ -707,30 +707,6 @@
             background-color: #0e0c09;
         }
 
-        body.app-dark #calculationBox {
-            background: #1b1610 !important;
-            border-color: #7c5f34 !important;
-            color: #f0e7d6 !important;
-        }
-
-        body.app-dark #calculationBox h3 {
-            color: #eccf92;
-        }
-
-        body.app-dark #calculationBox .font-bold,
-        body.app-dark #calculationBox label,
-        body.app-dark #calculationBox span {
-            color: #e8dcc8;
-        }
-
-        body.app-dark #calculationBox input,
-        body.app-dark #calculationBox select,
-        body.app-dark #calculationBox #milkRate {
-            background: #241d14 !important;
-            color: #f6efe0 !important;
-            border-color: #6f5734 !important;
-        }
-
         body.app-dark #statusMessage {
             color: #cbbfa8 !important;
         }
@@ -934,10 +910,880 @@
             opacity: 0.10;
             filter: brightness(0) invert(1);
         }
+
+        /* ══════════════════════════════════════════════════════════════
+           NEW TOOLS — sab kuch BILL KE BAHAR. #ledgerContent ko koi
+           style touch nahi karti, is liye bill ka size bilkul same.
+           ══════════════════════════════════════════════════════════════ */
+
+        .tool-input {
+            border: 1px solid #f59e0b;
+            background: #fff;
+            color: #1f2937;
+            border-radius: 0.3rem;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.85rem;
+            min-width: 0;
+        }
+
+        body.app-dark .tool-input {
+            background: #241d14 !important;
+            color: #f6efe0 !important;
+            border-color: #6f5734 !important;
+        }
+
+        .mini-btn {
+            background-color: #7c2d12;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 0.4rem 0.55rem;
+            border-radius: 0.3rem;
+            white-space: nowrap;
+            transition: opacity .2s;
+        }
+
+        .mini-btn:hover {
+            opacity: .85;
+        }
+
+        /* ── DASHBOARD OVERLAY ── */
+        #dashboardOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(3px);
+            z-index: 9998;
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 24px 12px;
+            overflow: auto;
+        }
+
+        #dashboardOverlay.active {
+            display: flex;
+        }
+
+        .dash-box {
+            width: 100%;
+            max-width: 780px;
+            background: #fffdf9;
+            border: 1.5px solid #c89f5e;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+            overflow: hidden;
+            direction: rtl;
+        }
+
+        .dash-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: linear-gradient(90deg, #7c2d12, #a15a2a);
+            padding: 8px 12px;
+        }
+
+        .dash-head .dash-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #fff;
+            margin-left: auto;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .dash-head select,
+        .dash-head input {
+            border: 1px solid #e8c9a0;
+            background: #fff;
+            color: #3c2f2f;
+            border-radius: 5px;
+            padding: 3px 7px;
+            font-size: 0.78rem;
+        }
+
+        #dashClose {
+            background: rgba(255, 255, 255, .18);
+            color: #fff;
+            font-weight: 900;
+            border-radius: 5px;
+            width: 26px;
+            height: 26px;
+            line-height: 1;
+        }
+
+        .dash-body {
+            max-height: 62vh;
+            overflow: auto;
+            padding: 8px;
+        }
+
+        #dashTable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+
+        #dashTable th,
+        #dashTable td {
+            border: 1px solid #e0c9a6;
+            padding: 4px 6px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        #dashTable th {
+            background: #f9e8d2;
+            color: #5c3f1e;
+            font-weight: 800;
+            position: sticky;
+            top: 0;
+            font-size: 0.74rem;
+        }
+
+        #dashTable td.dash-name {
+            text-align: right;
+            font-weight: 700;
+            color: #5c3f1e;
+        }
+
+        #dashTable td.dash-num {
+            direction: ltr;
+            font-family: 'Segoe UI', monospace;
+        }
+
+        #dashTable tbody tr:nth-child(even) td {
+            background: #fdf6ec;
+        }
+
+        #dashTable tbody tr:hover td {
+            background: #f6e6cd;
+        }
+
+        .dash-open {
+            background: #0f766e;
+            color: #fff;
+            font-weight: 700;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 0.72rem;
+        }
+
+        .dash-foot {
+            border-top: 1px solid #c89f5e;
+            background: #f9e8d2;
+            padding: 7px 12px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #5c3f1e;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .dash-foot .df-num {
+            direction: ltr;
+            font-family: 'Segoe UI', monospace;
+        }
+
+        .dash-empty {
+            text-align: center;
+            padding: 22px;
+            color: #9a8070;
+            font-size: 0.85rem;
+        }
+
+        /* dashboard — dark mode */
+        body.app-dark .dash-box {
+            background: #17130e;
+            border-color: #6b5330;
+        }
+
+        body.app-dark .dash-head select,
+        body.app-dark .dash-head input {
+            background: #241d14;
+            color: #f6efe0;
+            border-color: #6f5734;
+        }
+
+        body.app-dark #dashTable th {
+            background: #3a2c17;
+            color: #eccf92;
+            border-color: #6b5330;
+        }
+
+        body.app-dark #dashTable td {
+            background: #1d1710;
+            color: #f0e7d6;
+            border-color: #6b5330;
+        }
+
+        body.app-dark #dashTable td.dash-name {
+            color: #e0bd7f;
+        }
+
+        body.app-dark #dashTable tbody tr:nth-child(even) td {
+            background: #221a11;
+        }
+
+        body.app-dark #dashTable tbody tr:hover td {
+            background: #2f2617;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           SIDE-BY-SIDE LAYOUT — controls bill ke DAAYEN taraf.
+           Sirf wrapper divs ko style karta hai; .ledger-page ki width/
+           padding/font ko koi haath nahi lagata, is liye bill same.
+           ══════════════════════════════════════════════════════════════ */
+
+        .app-layout {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 18px;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+
+        .app-side {
+            flex: 0 0 400px;
+            position: sticky;
+            top: 10px;
+            max-height: calc(100vh - 20px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-left: 4px;
+        }
+
+        .app-side::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .app-side::-webkit-scrollbar-thumb {
+            background: #c89f5e;
+            border-radius: 3px;
+        }
+
+        .app-main {
+            flex: 0 0 400px;
+        }
+
+        .app-main>.ledger-page {
+            margin-top: 0;
+        }
+
+        /* export buttons ab side panel mein — thoda compact */
+        .app-side .export-button {
+            padding: 0.55rem 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* chhoti screen / mobile par purani tarah upar-neeche */
+        @media (max-width: 900px) {
+            .app-layout {
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                max-width: 100%;
+            }
+
+            .app-side,
+            .app-main {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 400px;
+                position: static;
+                max-height: none;
+                overflow: visible;
+                padding-left: 0;
+            }
+
+            .app-main>.ledger-page {
+                margin-top: 1rem;
+            }
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           CONTROL PANEL — ek waqt mein sirf ek khana (tabs).
+           Type scale: readout 23px · hero 15px · button 13.5px ·
+           field 14px · tab 13px · eyebrow 10px.
+           Ek button height (38px), ek radius (7px), teen hi rang.
+           ══════════════════════════════════════════════════════════════ */
+
+        #calculationBox.cp {
+            background: linear-gradient(180deg, #fffdf9 0%, #fbf4e8 100%);
+            border: 1px solid #c89f5e;
+            border-radius: 11px;
+            box-shadow: 0 3px 14px rgba(124, 45, 18, .09);
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            color: #3c2810;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        .cp-head {
+            position: relative;
+            background: #fff;
+            border-bottom: 1px solid #e8d5c4;
+            padding: 10px 14px 8px;
+            text-align: center;
+        }
+
+        .cp-head::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #7c2d12 0%, #c89f5e 50%, #7c2d12 100%);
+        }
+
+        .cp-head-title {
+            display: block;
+            font-size: 15px;
+            font-weight: 800;
+            color: #5c3f1e;
+        }
+
+        .cp-head-sub {
+            display: block;
+            font-size: 8px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: #a1794a;
+            direction: ltr;
+            margin-top: 2px;
+        }
+
+        /* ── SIGNATURE: brass readout — dukaan ke kaante ki display ── */
+        .cp-readout {
+            background: linear-gradient(180deg, #2a2015 0%, #191309 100%);
+            border-bottom: 1px solid #7c5f34;
+            padding: 9px 14px 10px;
+            display: grid;
+            grid-template-columns: 1fr 1px 1.25fr;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ro-cell {
+            text-align: center;
+            min-width: 0;
+        }
+
+        .ro-lbl {
+            display: block;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .14em;
+            color: #9b7c4e;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .ro-val {
+            display: block;
+            font-family: 'Segoe UI', Consolas, monospace;
+            font-size: 17px;
+            font-weight: 800;
+            color: #e8c07a;
+            direction: ltr;
+            letter-spacing: .01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ro-val.ro-big {
+            font-size: 23px;
+            color: #ffd894;
+        }
+
+        .ro-sep {
+            width: 1px;
+            height: 30px;
+            background: linear-gradient(180deg, transparent, #7c5f34, transparent);
+        }
+
+        /* ── hamesha mojood: rate + hisab ── */
+        .cp-calc {
+            display: grid;
+            grid-template-columns: 1fr 1.35fr;
+            gap: 8px;
+            align-items: center;
+            padding: 11px 14px;
+            border-bottom: 1px solid #ecd9bd;
+            background: #fffdf8;
+        }
+
+        .cp-calc-rate {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .cp-calc-rate .cp-inline-lbl {
+            min-width: auto;
+        }
+
+        /* ── TABS ── */
+        .cp-tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: #f4e6d0;
+            border-bottom: 1px solid #d9bd91;
+        }
+
+        .cp-tab {
+            position: relative;
+            padding: 10px 2px 9px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #8a7560;
+            background: transparent;
+            border: 0;
+            border-left: 1px solid #e3cead;
+            cursor: pointer;
+            transition: background-color .15s, color .15s;
+        }
+
+        .cp-tab:last-child {
+            border-left: 0;
+        }
+
+        .cp-tab:hover {
+            background: #f9efdd;
+            color: #5c3f1e;
+        }
+
+        .cp-tab.is-on {
+            background: #fffdf9;
+            color: #7c2d12;
+            font-weight: 800;
+        }
+
+        .cp-tab.is-on::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #7c2d12;
+        }
+
+        .cp-tab:focus-visible {
+            outline: 2px solid #7c2d12;
+            outline-offset: -3px;
+        }
+
+        .cp-pane {
+            display: none;
+            padding: 13px 14px 14px;
+            gap: 9px;
+        }
+
+        .cp-pane.is-on {
+            display: grid;
+        }
+
+        .cp-lbl {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            color: #a1794a;
+            margin-top: 2px;
+        }
+
+        .cp-lbl:first-child {
+            margin-top: 0;
+        }
+
+        .cp-lbl::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #ebd9bd;
+        }
+
+        .cp-row {
+            display: grid;
+            gap: 7px;
+        }
+
+        .cp-row-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .cp-row-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .cp-inline {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .cp-inline-lbl {
+            font-size: 13px;
+            font-weight: 700;
+            color: #5A3E2B;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 74px;
+        }
+
+        .cp-field {
+            width: 100%;
+            height: 38px;
+            border: 1px solid #d8bd91;
+            border-radius: 7px;
+            background: #fff;
+            color: #3c2810;
+            font-size: 14px;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 0 10px;
+            outline: none;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .cp-field:focus,
+        .cp-field:focus-within {
+            border-color: #7c2d12;
+            box-shadow: 0 0 0 3px rgba(124, 45, 18, .10);
+        }
+
+        .cp-field::placeholder {
+            color: #b9a68c;
+        }
+
+        .cp-field-num {
+            direction: ltr;
+            text-align: center;
+            font-family: 'Segoe UI', Consolas, monospace;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cp-field-sm {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cp-btn {
+            height: 38px;
+            border-radius: 7px;
+            border: 1px solid transparent;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: background-color .15s, border-color .15s, opacity .15s;
+        }
+
+        .cp-btn-primary {
+            background: #7c2d12;
+            color: #fff;
+        }
+
+        .cp-btn-primary:hover {
+            background: #96381a;
+        }
+
+        .cp-btn-ghost {
+            background: #fff;
+            color: #5c3f1e;
+            border-color: #ddc39a;
+        }
+
+        .cp-btn-ghost:hover {
+            background: #f9efdd;
+            border-color: #c89f5e;
+        }
+
+        .cp-btn-ok {
+            background: #15803d;
+            color: #fff;
+        }
+
+        .cp-btn-ok:hover {
+            background: #179145;
+        }
+
+        .cp-btn-danger {
+            background: #b91c1c;
+            color: #fff;
+        }
+
+        .cp-btn-danger:hover {
+            background: #cf2020;
+        }
+
+        .cp-btn-wa {
+            background: #25D366;
+            color: #0b3d1f;
+        }
+
+        .cp-btn-wa:hover {
+            background: #2ee273;
+        }
+
+        .cp-btn:focus-visible {
+            outline: 2px solid #7c2d12;
+            outline-offset: 2px;
+        }
+
+        .cp-btn-hero {
+            height: 42px;
+            font-size: 15px;
+        }
+
+        .cp-foot {
+            border-top: 1px solid #e8d5c4;
+            background: #f9f0e2;
+            padding: 7px 14px;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #8a7560;
+        }
+
+        /* ── control panel — dark mode ── */
+        body.app-dark #calculationBox.cp {
+            background: linear-gradient(180deg, #1d1710 0%, #17130e 100%);
+            border-color: #6b5330;
+            color: #ece3d3;
+        }
+
+        body.app-dark .cp-head {
+            background: #241d14;
+            border-bottom-color: #4a3c28;
+        }
+
+        body.app-dark .cp-head-title {
+            color: #eccf92;
+        }
+
+        body.app-dark .cp-head-sub,
+        body.app-dark .cp-lbl {
+            color: #b08f5c;
+        }
+
+        body.app-dark .cp-lbl::after {
+            background: #4a3c28;
+        }
+
+        body.app-dark .cp-calc {
+            background: #1f1811;
+            border-bottom-color: #4a3c28;
+        }
+
+        body.app-dark .cp-tabs {
+            background: #241d14;
+            border-bottom-color: #6b5330;
+        }
+
+        body.app-dark .cp-tab {
+            color: #a4917a;
+            border-left-color: #3a2f1e;
+        }
+
+        body.app-dark .cp-tab:hover {
+            background: #2f2617;
+            color: #e6d5b6;
+        }
+
+        body.app-dark .cp-tab.is-on {
+            background: #17130e;
+            color: #eccf92;
+        }
+
+        body.app-dark .cp-tab.is-on::after {
+            background: #c89f5e;
+        }
+
+        body.app-dark .cp-inline-lbl {
+            color: #e0bd7f;
+        }
+
+        body.app-dark .cp-field {
+            background: #241d14;
+            border-color: #6f5734;
+            color: #f6efe0;
+        }
+
+        body.app-dark .cp-field::placeholder {
+            color: #7a6a52;
+        }
+
+        body.app-dark .cp-field:focus,
+        body.app-dark .cp-field:focus-within {
+            border-color: #c89f5e;
+            box-shadow: 0 0 0 3px rgba(200, 159, 94, .14);
+        }
+
+        body.app-dark .cp-btn-ghost {
+            background: #241d14;
+            color: #e6d5b6;
+            border-color: #6f5734;
+        }
+
+        body.app-dark .cp-btn-ghost:hover {
+            background: #2f2617;
+            border-color: #b7873f;
+        }
+
+        body.app-dark .cp-foot {
+            background: #241d14;
+            border-top-color: #4a3c28;
+            color: #a4917a;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           PIN LOCK SCREEN — poori screen par, sab se upar.
+           Bill ki koi style is se mutasir nahi hoti.
+           ══════════════════════════════════════════════════════════════ */
+
+        #lockScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            background: linear-gradient(160deg, #2a1a0d 0%, #14100b 100%);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            direction: rtl;
+        }
+
+        #lockScreen.active {
+            display: flex;
+        }
+
+        .lock-badge {
+            width: 68px;
+            height: 68px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #7c2d12 0%, #c89f5e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.9rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .5);
+        }
+
+        .lock-shop {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #eccf92;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .lock-hint {
+            font-size: 0.8rem;
+            color: #b09a76;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #lockInput {
+            width: 190px;
+            text-align: center;
+            letter-spacing: 0.6em;
+            font-size: 1.4rem;
+            font-weight: 800;
+            padding: 9px 10px;
+            border-radius: 9px;
+            border: 1.5px solid #7c5f34;
+            background: #241d14;
+            color: #f6efe0;
+            direction: ltr;
+            outline: none;
+        }
+
+        #lockInput:focus {
+            border-color: #c89f5e;
+            box-shadow: 0 0 0 3px rgba(200, 159, 94, .18);
+        }
+
+        #lockBtn {
+            background: #7c2d12;
+            color: #fff;
+            font-weight: 800;
+            padding: 8px 34px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        #lockBtn:disabled {
+            background: #4b3a2a;
+            color: #8a7c66;
+            cursor: not-allowed;
+        }
+
+        #lockError {
+            min-height: 18px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #f87171;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* PIN laga ho to page load par content jhalak bhi na dikhe */
+        html.pin-armed body>*:not(#lockScreen) {
+            visibility: hidden;
+        }
+
+        html.pin-open body>* {
+            visibility: visible;
+        }
     </style>
 </head>
 
 <body class="p-6">
+
+    <!-- ══ PIN LOCK SCREEN (sab se pehle, taake content jhalke bhi na) ══ -->
+    <div id="lockScreen">
+        <div class="lock-badge">🔒</div>
+        <div class="lock-shop">رانا احمد ملک شاپ</div>
+        <div class="lock-hint">جاری رکھنے کے لیے PIN درج کریں</div>
+        <input type="password" id="lockInput" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="••••">
+        <button id="lockBtn">کھولیں</button>
+        <div id="lockError"></div>
+    </div>
+    <script>
+        /* PIN laga hua hai? To content ko foran chhupa do — flash na ho */
+        (function () {
+            try {
+                if (localStorage.getItem('rams_pin_v1')) {
+                    document.documentElement.classList.add('pin-armed');
+                    document.getElementById('lockScreen').classList.add('active');
+                }
+            } catch (e) { }
+        })();
+    </script>
 
     <div id="startup-screen">
         <div class="splash-logo-box"><span><img src="logo.png" alt=""></span></div>
@@ -955,40 +1801,153 @@
         </div>
     </div>
 
-    <div class="max-w-[400px] mx-auto mb-4 border border-red-500 p-3 rounded bg-red-50 text-red-800"
-        id="calculationBox">
-        <h3 class="text-lg font-bold text-center mb-2">Ledger Bill</h3>
-        <div class="flex justify-between items-center text-sm mb-3">
-            <span class="font-bold ml-2">Rate/Kg :</span>
-            <span contenteditable="true" id="milkRate"
-                class="border border-amber-400 bg-white px-3 py-1 min-w-[70px] text-right numeric-cell rounded"></span>
-            <button id="calculateBtn" class="calculate-btn">Calculate Total</button>
-        </div>
-        <div class="flex gap-2">
-            <button id="paidBtn" class="calculate-btn flex-1" style="background-color:#15803d;">PAID</button>
-            <button id="unpaidBtn" class="calculate-btn flex-1" style="background-color:#b91c1c;">UNPAID</button>
-            <button id="noStampBtn" class="calculate-btn flex-1" style="background-color:#6b7280;">Stamp Hatayen</button>
+    <div class="app-layout">
+    <div class="app-side">
+
+    <div id="calculationBox" class="cp">
+
+        <div class="cp-head">
+            <span class="cp-head-title">بل کنٹرول</span>
+            <span class="cp-head-sub">Rana Ahmad Milk Shop — Ledger</span>
         </div>
 
-        <div class="flex gap-2 mt-2">
-            <button id="darkModeBtn" class="calculate-btn flex-1" style="background-color:#111827;">🌙 Dark Mode</button>
+        <!-- SIGNATURE: bara readout — bill ke chhote hindson ka sahara -->
+        <div class="cp-readout">
+            <div class="ro-cell">
+                <span class="ro-lbl">کل دودھ</span>
+                <span class="ro-val" id="roKg">—</span>
+            </div>
+            <div class="ro-sep"></div>
+            <div class="ro-cell">
+                <span class="ro-lbl">قابلِ ادائیگی</span>
+                <span class="ro-val ro-big" id="roAmt">—</span>
+            </div>
         </div>
 
-        <div class="flex items-center gap-2 mt-3 text-sm">
-            <span class="font-bold whitespace-nowrap">Month :</span>
-            <input type="month" id="monthPicker"
-                class="border border-amber-400 bg-white px-2 py-1 rounded flex-1 text-gray-800" dir="ltr">
+        <!-- hamesha mojood: rate + hisab -->
+        <div class="cp-calc">
+            <div class="cp-calc-rate">
+                <span class="cp-inline-lbl">ریٹ</span>
+                <span contenteditable="true" id="milkRate" class="cp-field cp-field-sm cp-field-num"></span>
+            </div>
+            <button id="calculateBtn" class="cp-btn cp-btn-primary cp-btn-hero">کل رقم نکالیں</button>
         </div>
 
-        <div class="flex items-center gap-2 mt-2 text-sm">
-            <select id="customerSelect"
-                class="border border-amber-400 bg-white px-2 py-1 rounded flex-1 text-gray-800" dir="rtl">
+        <div class="cp-tabs" role="tablist">
+            <button class="cp-tab is-on" data-tab="client" role="tab">کلائنٹ</button>
+            <button class="cp-tab" data-tab="entry" role="tab">اندراج</button>
+            <button class="cp-tab" data-tab="bill" role="tab">بل</button>
+            <button class="cp-tab" data-tab="settings" role="tab">ترتیبات</button>
+        </div>
+
+        <!-- ── کلائنٹ ── -->
+        <section class="cp-pane is-on" data-pane="client">
+            <input type="text" id="customerSearch" class="cp-field" dir="rtl" placeholder="نام سے تلاش کریں">
+            <select id="customerSelect" class="cp-field" dir="rtl">
                 <option value="">— محفوظ کلائنٹ کھولیں —</option>
             </select>
-            <button id="saveBtn" class="calculate-btn" style="background-color:#0f766e;">Save</button>
-            <button id="deleteBtn" class="calculate-btn" style="background-color:#6b7280;">Delete</button>
+            <div class="cp-row cp-row-2">
+                <button id="saveBtn" class="cp-btn cp-btn-primary">محفوظ کریں</button>
+                <button id="deleteBtn" class="cp-btn cp-btn-ghost">ڈیلیٹ</button>
+            </div>
+            <div class="cp-lbl">پرانے بل</div>
+            <select id="savedMonthSelect" class="cp-field" dir="ltr">
+                <option value="">— محفوظ مہینے —</option>
+            </select>
+            <button id="dashboardBtn" class="cp-btn cp-btn-ghost">سب کلائنٹس کی فہرست</button>
+        </section>
+
+        <!-- ── اندراج ── -->
+        <section class="cp-pane" data-pane="entry">
+            <div class="cp-inline">
+                <span class="cp-inline-lbl">مہینہ</span>
+                <input type="month" id="monthPicker" class="cp-field cp-field-sm" dir="ltr">
+            </div>
+            <div class="cp-inline">
+                <span class="cp-inline-lbl">روزانہ مقدار</span>
+                <input type="text" id="quickFillValue" class="cp-field cp-field-sm cp-field-num" dir="ltr" placeholder="2">
+            </div>
+            <div class="cp-row cp-row-3">
+                <button id="fillAllBtn" class="cp-btn cp-btn-primary">سب دن</button>
+                <button id="fillEmptyBtn" class="cp-btn cp-btn-ghost">خالی دن</button>
+                <button id="clearDaysBtn" class="cp-btn cp-btn-ghost">مٹائیں</button>
+            </div>
+            <div class="cp-lbl">شارٹ کٹ</div>
+            <div class="cp-row cp-row-2">
+                <button id="undoFillBtn" class="cp-btn cp-btn-ghost">واپس</button>
+                <button id="copyPrevBtn" class="cp-btn cp-btn-ghost">پچھلا مہینہ</button>
+            </div>
+        </section>
+
+        <!-- ── بل ── -->
+        <section class="cp-pane" data-pane="bill">
+            <div class="cp-lbl">مہر</div>
+            <div class="cp-row cp-row-2">
+                <button id="paidBtn" class="cp-btn cp-btn-ok">ادا شدہ</button>
+                <button id="unpaidBtn" class="cp-btn cp-btn-danger">واجب الادا</button>
+            </div>
+            <button id="noStampBtn" class="cp-btn cp-btn-ghost">مہر ہٹائیں</button>
+            <div class="cp-lbl">بھیجیں</div>
+            <div class="cp-row cp-row-2">
+                <button id="exportBtn" class="cp-btn cp-btn-ghost">PNG تصویر</button>
+                <button id="pdfBtn" class="cp-btn cp-btn-ghost">PDF فائل</button>
+            </div>
+            <button id="whatsappBtn" class="cp-btn cp-btn-wa">WhatsApp پر بھیجیں</button>
+        </section>
+
+        <!-- ── ترتیبات ── -->
+        <section class="cp-pane" data-pane="settings">
+            <div class="cp-lbl">شکل</div>
+            <button id="darkModeBtn" class="cp-btn cp-btn-ghost">ڈارک موڈ</button>
+            <div class="cp-lbl">تحفظ</div>
+            <div class="cp-row cp-row-2">
+                <button id="lockNowBtn" class="cp-btn cp-btn-ghost">لاک کریں</button>
+                <button id="pinSetBtn" class="cp-btn cp-btn-ghost">PIN سیٹ کریں</button>
+            </div>
+        </section>
+
+        <div class="cp-foot">
+            <span id="saveStatus"></span>
+            <span id="statusMessage" class="hidden"></span>
         </div>
-        <div id="saveStatus" class="text-xs text-center mt-1 font-bold" style="min-height:14px;"></div>
+    </div>
+
+    </div><!-- /app-side -->
+
+    <div class="app-main">
+
+    <!-- ══ SAB CLIENTS DASHBOARD (bill se bilkul bahar, alag overlay) ══ -->
+    <div id="dashboardOverlay">
+        <div class="dash-box">
+            <div class="dash-head">
+                <span class="dash-title">📋 سب کلائنٹس</span>
+                <select id="dashMonth" dir="ltr"></select>
+                <input type="text" id="dashSearch" placeholder="🔍 نام…" dir="rtl">
+                <button id="dashClose" title="بند کریں">✕</button>
+            </div>
+            <div class="dash-body">
+                <table id="dashTable">
+                    <thead>
+                        <tr>
+                            <th>کلائنٹ</th>
+                            <th>مہینہ</th>
+                            <th>دودھ</th>
+                            <th>کل رقم</th>
+                            <th>بقایا</th>
+                            <th>قابلِ ادائیگی</th>
+                            <th>موبائل</th>
+                            <th>—</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashBody"></tbody>
+                </table>
+                <div id="dashEmpty" class="dash-empty" style="display:none;">کوئی ریکارڈ نہیں ملا</div>
+            </div>
+            <div class="dash-foot">
+                <span id="dashCount">کلائنٹس: 0</span>
+                <span>کل قابلِ ادائیگی: <span id="dashTotal" class="df-num">Rs. 0</span></span>
+            </div>
+        </div>
     </div>
 
     <div class="ledger-page" id="ledgerContent">
@@ -1220,17 +2179,8 @@
         </div>
     </div>
 
-    <div class="max-w-md mx-auto p-4 text-center">
-        <div class="flex gap-2">
-            <button id="exportBtn"
-                class="export-button bg-green-600 hover:bg-green-700 text-white shadow-lg flex-1">PNG</button>
-            <button id="pdfBtn"
-                class="export-button text-white shadow-lg flex-1" style="background-color:#dc2626;">PDF</button>
-            <button id="whatsappBtn"
-                class="export-button text-white shadow-lg flex-1" style="background-color:#25D366;">WhatsApp</button>
-        </div>
-        <div id="statusMessage" class="mt-3 text-sm font-medium text-gray-700 hidden"></div>
-    </div>
+    </div><!-- /app-main -->
+    </div><!-- /app-layout -->
 
     <script>
         window.addEventListener('load', function () {
@@ -1289,6 +2239,7 @@
             document.querySelectorAll('.extra-item').forEach(item => { extraTotal += getNumber(item); });
             document.getElementById('grandTotalAmount').textContent = formatCurrency(milkAmount + prevBalance + extraTotal);
             updateBaqayaLabel();
+            updateReadout();
         }
 
         document.querySelectorAll('.extra-item, #previousBalance').forEach(el => {
@@ -1325,6 +2276,8 @@
             }
             document.querySelectorAll('.kg-input').forEach(cell => {
                 cell.addEventListener('input', scheduleDraft);
+                cell.addEventListener('keydown', kgKeyNav);
+                cell.addEventListener('focus', function () { selectCellText(this); });
                 cell.addEventListener('blur', function () {
                     if (this.textContent.trim() === '') { this.innerHTML = ''; }  /* dash wapas aa jaye */
                     saveDraft();
@@ -1354,10 +2307,7 @@
             document.getElementById('monthField').textContent = URDU_MONTHS[m - 1] + ' ' + y;
         }
 
-        monthPicker.addEventListener('change', function () {
-            applyMonth(this.value);
-            saveDraft();
-        });
+        monthPicker.addEventListener('change', onMonthChange);
 
         /* ═══════════ AUTO BAQAYA (Payment History se) ═══════════ */
         function autoBaqaya() {
@@ -1459,12 +2409,16 @@
             });
             updateBaqayaLabel();
             updateOutstanding();
+            qfUndoStack = [];              /* naye bill par purana undo bekaar */
+            refreshUndoBtn();
+            updateReadout();
         }
 
         function clearBill() {
             const now = new Date();
             const mv = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
             monthPicker.value = mv;
+            activeMonth = mv;
             $('clientName').textContent = '\u00A0';
             $('clientMobile').textContent = '';
             $('milkRate').textContent = '';
@@ -1498,16 +2452,52 @@
         });
         $('deliveryTime').addEventListener('click', scheduleDraft);
 
-        /* named customers */
+        /* ═══════════ CUSTOMERS — har month ka alag record (v2) ═══════════ */
+        const LS_CUSTOMERS_V2 = 'rams_customers_v2';
+        const CARRY_FORWARD = true;      /* pichhle month ka grand total => naye month ka بقایا */
+        let activeMonth = null;          /* is waqt screen par jo month hai */
+
+        function currentMonthValue() {
+            const n = new Date();
+            return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0');
+        }
+        function monthLabel(mv) {
+            if (!mv) return '';
+            const p = mv.split('-');
+            return URDU_MONTHS[parseInt(p[1]) - 1].trim() + ' ' + p[0];
+        }
+        function prevMonthValue(mv) {
+            const p = mv.split('-'); let y = +p[0], m = +p[1] - 1;
+            if (m === 0) { m = 12; y--; }
+            return y + '-' + String(m).padStart(2, '0');
+        }
+
+        function setCustomers(db) {
+            try { localStorage.setItem(LS_CUSTOMERS_V2, JSON.stringify(db)); } catch (e) { }
+        }
         function getCustomers() {
-            try { return JSON.parse(localStorage.getItem(LS_CUSTOMERS) || '{}'); } catch (e) { return {}; }
+            let db = null;
+            try { db = JSON.parse(localStorage.getItem(LS_CUSTOMERS_V2) || 'null'); } catch (e) { }
+            if (db) return db;
+            /* purane (v1) record ko naye format mein le aao */
+            db = {};
+            let old = {};
+            try { old = JSON.parse(localStorage.getItem(LS_CUSTOMERS) || '{}'); } catch (e) { }
+            Object.keys(old).forEach(n => {
+                const rec = old[n];
+                db[n] = { months: {} };
+                db[n].months[rec.monthValue || currentMonthValue()] = rec;
+            });
+            setCustomers(db);
+            return db;
         }
-        function setCustomers(obj) {
-            localStorage.setItem(LS_CUSTOMERS, JSON.stringify(obj));
-        }
+
         function refreshCustomerList(selected) {
             const sel = $('customerSelect');
-            const names = Object.keys(getCustomers()).sort();
+            const box = $('customerSearch');
+            const q = box ? box.value.trim().toLowerCase() : '';
+            let names = Object.keys(getCustomers()).sort();
+            if (q) names = names.filter(n => n.toLowerCase().indexOf(q) !== -1);
             sel.innerHTML = '<option value="">— نیا بل / محفوظ کلائنٹ کھولیں —</option>';
             names.forEach(n => {
                 const o = document.createElement('option');
@@ -1516,6 +2506,25 @@
             });
             if (selected) sel.value = selected;
         }
+
+        function refreshMonthList(name, selected) {
+            const sel = $('savedMonthSelect');
+            if (!sel) return;
+            const db = getCustomers();
+            const months = (name && db[name] && db[name].months) ? Object.keys(db[name].months).sort() : [];
+            sel.innerHTML = '';
+            if (!months.length) {
+                sel.innerHTML = '<option value="">— کوئی محفوظ مہینہ نہیں —</option>';
+                return;
+            }
+            months.forEach(mv => {
+                const o = document.createElement('option');
+                o.value = mv; o.textContent = monthLabel(mv);
+                sel.appendChild(o);
+            });
+            sel.value = selected || monthPicker.value || months[months.length - 1];
+        }
+
         function status(msg, color) {
             const s = $('saveStatus');
             s.textContent = msg;
@@ -1523,38 +2532,557 @@
             setTimeout(() => { s.textContent = ''; }, 2500);
         }
 
+        /* screen par mojood bill ko uske apne month mein mehfooz karo */
+        function persistCurrentMonth() {
+            const name = $('clientName').textContent.trim();
+            const mv = activeMonth || monthPicker.value;
+            if (!name || !mv) return;
+            const db = getCustomers();
+            if (!db[name]) return;                 /* sirf pehle se saved client ka auto-save */
+            const d = collectData();
+            d.monthValue = mv;
+            d.monthText = monthLabel(mv);
+            db[name].months[mv] = d;
+            setCustomers(db);
+        }
+
+        /* jis month ka record na ho, uske liye khaali bill (client info wahi rahe) */
+        function blankMonthFor(name, mv, base) {
+            base = base || {};
+            let prev = '';
+            if (CARRY_FORWARD) {
+                const db = getCustomers();
+                const pm = db[name] && db[name].months ? db[name].months[prevMonthValue(mv)] : null;
+                if (pm && pm.grand) prev = pm.grand;
+            }
+            const y = +mv.split('-')[0], m = +mv.split('-')[1];
+            return {
+                invoice: newInvoiceNumber(),
+                client: name,
+                mobile: base.mobile || '',
+                rate: base.rate || '',
+                displayRate: base.displayRate || '',
+                delivery: base.delivery || 'صبح',
+                monthText: monthLabel(mv),
+                monthValue: mv,
+                days: new Date(y, m, 0).getDate(),
+                kg: {},
+                extras: ['', '', '', ''],
+                prev: prev,
+                totalKg: '', totalAmt: '', grand: '',
+                history: [['', '', ''], ['', '', ''], ['', '', '']]
+            };
+        }
+
+        function loadCustomerMonth(name, mv) {
+            const db = getCustomers();
+            if (!db[name]) return;
+            const months = db[name].months || {};
+            let data = months[mv];
+            if (!data) {
+                const keys = Object.keys(months).sort();
+                const last = keys.length ? months[keys[keys.length - 1]] : {};
+                data = blankMonthFor(name, mv, last);
+            }
+            monthPicker.value = mv;
+            activeMonth = mv;
+            applyData(data);
+            refreshMonthList(name, mv);
+            saveDraft();
+        }
+
+        function onMonthChange() {
+            const mv = monthPicker.value;
+            if (!mv) return;
+            const name = $('clientName').textContent.trim();
+            const db = getCustomers();
+            if (name && db[name]) {
+                persistCurrentMonth();          /* purana month save */
+                loadCustomerMonth(name, mv);    /* naye month ka bill */
+                status(monthLabel(mv) + ' کھل گیا');
+            } else {
+                activeMonth = mv;
+                applyMonth(mv);
+                saveDraft();
+            }
+        }
+
+        $('savedMonthSelect').addEventListener('change', function () {
+            if (!this.value) return;
+            monthPicker.value = this.value;
+            onMonthChange();
+        });
+
         $('saveBtn').addEventListener('click', function () {
             const name = $('clientName').textContent.trim();
             if (!name) { status('پہلے کلائنٹ کا نام لکھیں', '#b91c1c'); return; }
-            const all = getCustomers();
-            all[name] = collectData();
-            setCustomers(all);
+            const mv = monthPicker.value || currentMonthValue();
+            const db = getCustomers();
+            if (!db[name]) db[name] = { months: {} };
+            const d = collectData();
+            d.monthValue = mv;
+            d.monthText = monthLabel(mv);
+            db[name].months[mv] = d;
+            setCustomers(db);
+            commitInvoiceNumber(d.invoice);      /* bill number ab pakka */
+            activeMonth = mv;
             refreshCustomerList(name);
-            status('محفوظ ہو گیا: ' + name);
+            refreshMonthList(name, mv);
+            if ($('dashboardOverlay').classList.contains('active')) buildDashboard();
+            status('محفوظ: ' + name + ' — ' + monthLabel(mv));
         });
 
         $('deleteBtn').addEventListener('click', function () {
-            const sel = $('customerSelect');
-            const name = sel.value;
-            if (!name) { status('پہلے کلائنٹ منتخب کریں', '#b91c1c'); return; }
-            if (!confirm(name + ' کا ریکارڈ ڈیلیٹ کریں؟')) return;
-            const all = getCustomers();
-            delete all[name];
-            setCustomers(all);
-            refreshCustomerList();
-            clearBill();
-            status('ڈیلیٹ ہو گیا', '#b91c1c');
+            const name = $('customerSelect').value || $('clientName').textContent.trim();
+            const db = getCustomers();
+            if (!name || !db[name]) { status('پہلے کلائنٹ منتخب کریں', '#b91c1c'); return; }
+            const mv = monthPicker.value;
+            if (confirm(name + ' کا صرف ' + monthLabel(mv) + ' والا بل ڈیلیٹ کریں؟\n(Cancel دبانے پر پورا کلائنٹ ڈیلیٹ کرنے کا آپشن آئے گا)')) {
+                delete db[name].months[mv];
+                if (!Object.keys(db[name].months).length) delete db[name];
+                setCustomers(db);
+                refreshCustomerList();
+                refreshMonthList(db[name] ? name : '');
+                clearBill();
+                status('مہینہ ڈیلیٹ ہو گیا', '#b91c1c');
+            } else if (confirm(name + ' کے تمام مہینے ڈیلیٹ کریں؟')) {
+                delete db[name];
+                setCustomers(db);
+                refreshCustomerList();
+                refreshMonthList('');
+                clearBill();
+                status('کلائنٹ ڈیلیٹ ہو گیا', '#b91c1c');
+            }
+            if ($('dashboardOverlay').classList.contains('active')) { fillDashMonths(); buildDashboard(); }
         });
 
         $('customerSelect').addEventListener('change', function () {
             const name = this.value;
-            if (!name) { clearBill(); return; }
-            const all = getCustomers();
-            if (all[name]) {
-                applyData(all[name]);
-                saveDraft();
-                status('کھول دیا: ' + name);
+            if (!name) { clearBill(); refreshMonthList(''); return; }
+            const db = getCustomers();
+            const months = Object.keys(db[name].months || {}).sort();
+            const mv = months.includes(monthPicker.value)
+                ? monthPicker.value
+                : (months[months.length - 1] || currentMonthValue());
+            loadCustomerMonth(name, mv);
+            status('کھول دیا: ' + name + ' — ' + monthLabel(mv));
+        });
+
+        /* ═══════════ CUSTOMER SEARCH ═══════════ */
+        $('customerSearch').addEventListener('input', function () {
+            const cur = $('customerSelect').value;
+            refreshCustomerList(cur);
+            const n = $('customerSelect').options.length - 1;
+            if (this.value.trim() !== '') status(n + ' کلائنٹ ملے', n ? '#0f766e' : '#b91c1c');
+        });
+
+        /* ═══════════ KEYBOARD NAVIGATION (کلو خانے) ═══════════ */
+        function selectCellText(el) {
+            try {
+                const r = document.createRange();
+                r.selectNodeContents(el);
+                const s = window.getSelection();
+                s.removeAllRanges();
+                s.addRange(r);
+            } catch (e) { }
+        }
+
+        function focusKgDay(d) {
+            const c = document.querySelector('.kg-input[data-day="' + d + '"]');
+            if (!c) return false;
+            c.focus();
+            selectCellText(c);
+            return true;
+        }
+
+        function kgKeyNav(e) {
+            const day = parseInt(this.dataset.day, 10);
+            let t = null;
+            if (e.key === 'Enter') { t = e.shiftKey ? day - 1 : day + 1; }
+            else if (e.key === 'ArrowDown') { t = day + 1; }
+            else if (e.key === 'ArrowUp') { t = day - 1; }
+            else if (e.key === 'PageDown') { t = day + HALF_ROWS; }
+            else if (e.key === 'PageUp') { t = day - HALF_ROWS; }
+            else if (e.key === 'Escape') { this.blur(); return; }
+            else return;
+            e.preventDefault();
+            if (t < 1) t = 1;
+            if (t > monthDays) t = monthDays;
+            focusKgDay(t);
+        }
+
+        /* ═══════════ QUICK FILL ═══════════ */
+        function quickFill(mode) {
+            const raw = ($('quickFillValue').value || '').trim();
+            if (mode !== 'clear' && raw === '') {
+                status('پہلے مقدار لکھیں (مثلاً 2)', '#b91c1c');
+                $('quickFillValue').focus();
+                return;
             }
+            if (mode === 'all' && !confirm('پورے مہینے کے ' + monthDays + ' دنوں میں ' + raw + ' بھر دیں؟\n(پہلے سے لکھی ہوئی مقدار بدل جائے گی)')) return;
+            if (mode === 'clear' && !confirm('سارے دنوں کی مقدار مٹا دیں؟')) return;
+
+            pushUndo();
+            let n = 0;
+            document.querySelectorAll('.kg-input').forEach(c => {
+                const empty = c.textContent.trim() === '';
+                if (mode === 'clear') { c.innerHTML = ''; n++; }
+                else if (mode === 'all') { c.textContent = raw; n++; }
+                else if (mode === 'empty' && empty) { c.textContent = raw; n++; }
+            });
+            saveDraft();
+            status(mode === 'clear' ? 'سارے دن خالی کر دیے' : (n + ' دن بھر دیے — اب Calculate دبائیں'));
+        }
+
+        $('fillAllBtn').addEventListener('click', () => quickFill('all'));
+        $('fillEmptyBtn').addEventListener('click', () => quickFill('empty'));
+        $('clearDaysBtn').addEventListener('click', () => quickFill('clear'));
+        $('quickFillValue').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') { e.preventDefault(); quickFill('all'); }
+        });
+
+        /* ═══════════ SAB CLIENTS DASHBOARD ═══════════ */
+        function allSavedMonths() {
+            const db = getCustomers(), set = {};
+            Object.keys(db).forEach(n => Object.keys(db[n].months || {}).forEach(m => set[m] = 1));
+            return Object.keys(set).sort().reverse();
+        }
+
+        function fillDashMonths() {
+            const sel = $('dashMonth');
+            const keep = sel.value;
+            const months = allSavedMonths();
+            sel.innerHTML = '<option value="__latest">تازہ ترین مہینہ</option>';
+            months.forEach(m => {
+                const o = document.createElement('option');
+                o.value = m; o.textContent = monthLabel(m);
+                sel.appendChild(o);
+            });
+            if (keep && (keep === '__latest' || months.indexOf(keep) !== -1)) sel.value = keep;
+            else if (months.indexOf(monthPicker.value) !== -1) sel.value = monthPicker.value;
+        }
+
+        function buildDashboard() {
+            const db = getCustomers();
+            const body = $('dashBody');
+            const pick = $('dashMonth').value || '__latest';
+            const q = ($('dashSearch').value || '').trim().toLowerCase();
+            body.innerHTML = '';
+
+            let names = Object.keys(db).sort();
+            if (q) names = names.filter(n => n.toLowerCase().indexOf(q) !== -1);
+
+            let grandSum = 0, shown = 0;
+            names.forEach(name => {
+                const months = db[name].months || {};
+                const keys = Object.keys(months).sort();
+                if (!keys.length) return;
+                let mv = (pick === '__latest') ? keys[keys.length - 1] : pick;
+                const d = months[mv];
+                if (!d) return;                       /* us month ka bill nahi bana */
+
+                shown++;
+                grandSum += getNum(d.grand);
+
+                const tr = document.createElement('tr');
+                tr.innerHTML =
+                    '<td class="dash-name">' + esc(name) + '</td>' +
+                    '<td>' + esc(monthLabel(mv)) + '</td>' +
+                    '<td class="dash-num">' + esc(d.totalKg || '—') + '</td>' +
+                    '<td class="dash-num">' + esc(d.totalAmt || '—') + '</td>' +
+                    '<td class="dash-num" style="color:' + baqayaColor(d.prev) + ';font-weight:700;">' + esc(d.prev || '—') + '</td>' +
+                    '<td class="dash-num" style="font-weight:800;">' + esc(d.grand || '—') + '</td>' +
+                    '<td class="dash-num">' + esc(d.mobile || '—') + '</td>' +
+                    '<td><button class="dash-open">کھولیں</button></td>';
+                tr.querySelector('.dash-open').addEventListener('click', function () {
+                    closeDashboard();
+                    refreshCustomerList(name);
+                    $('customerSelect').value = name;
+                    loadCustomerMonth(name, mv);
+                    status('کھول دیا: ' + name + ' — ' + monthLabel(mv));
+                });
+                body.appendChild(tr);
+            });
+
+            $('dashEmpty').style.display = shown ? 'none' : 'block';
+            $('dashCount').textContent = 'کلائنٹس: ' + shown;
+            $('dashTotal').textContent = formatCurrency(grandSum);
+        }
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+        function getNum(txt) {
+            return parseFloat(String(txt || '').replace(/Rs\.?\s*/g, '').replace(/,/g, '')) || 0;
+        }
+        function baqayaColor(v) {
+            const n = getNum(v);
+            if (n > 0) return '#b91c1c';
+            if (n < 0) return '#15803d';
+            return 'inherit';
+        }
+
+        function openDashboard() {
+            persistCurrentMonth();          /* screen wala bill pehle mehfooz */
+            fillDashMonths();
+            buildDashboard();
+            $('dashboardOverlay').classList.add('active');
+        }
+        function closeDashboard() {
+            $('dashboardOverlay').classList.remove('active');
+        }
+
+        $('dashboardBtn').addEventListener('click', openDashboard);
+        $('dashClose').addEventListener('click', closeDashboard);
+        $('dashMonth').addEventListener('change', buildDashboard);
+        $('dashSearch').addEventListener('input', buildDashboard);
+        $('dashboardOverlay').addEventListener('click', function (e) {
+            if (e.target === this) closeDashboard();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && $('dashboardOverlay').classList.contains('active')) closeDashboard();
+        });
+
+        /* ═══════════ QUICK FILL — UNDO ═══════════ */
+        let qfUndoStack = [];
+
+        function pushUndo() {
+            qfUndoStack.push(JSON.stringify(collectKg()));
+            if (qfUndoStack.length > 10) qfUndoStack.shift();
+            refreshUndoBtn();
+        }
+
+        function refreshUndoBtn() {
+            const b = $('undoFillBtn');
+            if (!b) return;
+            const on = qfUndoStack.length > 0;
+            b.style.opacity = on ? '1' : '.45';
+            b.style.cursor = on ? 'pointer' : 'not-allowed';
+            b.textContent = on ? ('واپس (' + qfUndoStack.length + ')') : 'واپس';
+        }
+
+        function applyKgValues(vals) {
+            document.querySelectorAll('.kg-input').forEach(c => {
+                const v = vals[c.dataset.day];
+                if (v === undefined || v === '') c.innerHTML = '';
+                else c.textContent = v;
+            });
+        }
+
+        $('undoFillBtn').addEventListener('click', function () {
+            if (!qfUndoStack.length) { status('واپس کرنے کے لیے کچھ نہیں', '#b91c1c'); return; }
+            applyKgValues(JSON.parse(qfUndoStack.pop()));
+            refreshUndoBtn();
+            saveDraft();
+            status('واپس کر دیا — اب Calculate دبائیں', '#b45309');
+        });
+
+        /* ═══════════ پچھلا مہینہ کاپی ═══════════ */
+        $('copyPrevBtn').addEventListener('click', function () {
+            const name = $('clientName').textContent.trim();
+            const mv = monthPicker.value;
+            if (!name || !mv) { status('پہلے کلائنٹ اور مہینہ منتخب کریں', '#b91c1c'); return; }
+
+            const db = getCustomers();
+            if (!db[name]) { status('یہ کلائنٹ ابھی محفوظ نہیں — پہلے Save کریں', '#b91c1c'); return; }
+
+            const months = db[name].months || {};
+            let src = prevMonthValue(mv);
+            if (!months[src]) {                       /* بالکل پچھلا نہ ہو تو اس سے پہلے والا قریب ترین */
+                const older = Object.keys(months).filter(k => k < mv).sort();
+                if (!older.length) { status('پچھلے کسی مہینے کا ریکارڈ نہیں ملا', '#b91c1c'); return; }
+                src = older[older.length - 1];
+            }
+
+            const d = months[src];
+            const kg = d.kg || {};
+            const daysCopied = Object.keys(kg).filter(k => +k <= monthDays).length;
+            if (!daysCopied) { status(monthLabel(src) + ' میں کوئی مقدار درج نہیں', '#b91c1c'); return; }
+
+            if (!confirm(monthLabel(src) + ' والا شیڈول ' + monthLabel(mv) + ' میں لے آئیں؟\n(' + daysCopied + ' دن — موجودہ مقدار بدل جائے گی، Undo موجود ہے)')) return;
+
+            pushUndo();
+            const out = {};
+            Object.keys(kg).forEach(k => { if (+k <= monthDays) out[k] = kg[k]; });
+            applyKgValues(out);
+
+            /* ریٹ / ڈلیوری خالی ہوں تو وہ بھی ساتھ آ جائیں */
+            if (!$('milkRate').textContent.trim() && d.rate) $('milkRate').textContent = d.rate;
+            if (!$('displayRate').textContent.trim() && d.displayRate) $('displayRate').textContent = d.displayRate;
+            if (d.delivery) $('deliveryTime').textContent = d.delivery;
+            if (!$('clientMobile').textContent.trim() && d.mobile) $('clientMobile').textContent = d.mobile;
+
+            saveDraft();
+            status(monthLabel(src) + ' سے ' + daysCopied + ' دن آ گئے — اب Calculate دبائیں');
+        });
+
+        /* ═══════════ PIN LOCK ═══════════
+           Note: ye "casual" taala hai — data encrypt nahi hota, sirf
+           screen chhup jati hai. PIN plain text mein save nahi hota,
+           sirf uska SHA-256 hash (salt ke sath) rakha jata hai.        */
+        const LS_PIN = 'rams_pin_v1';
+        const IDLE_LOCK_MS = 10 * 60 * 1000;      /* 10 minute be-kaar => khud lock */
+        let wrongTries = 0, lockTimer = null, idleTimer = null;
+
+        function pinStored() {
+            try { return JSON.parse(localStorage.getItem(LS_PIN) || 'null'); } catch (e) { return null; }
+        }
+
+        async function hashPin(pin, salt) {
+            const txt = salt + '|' + pin;
+            if (window.crypto && crypto.subtle && crypto.subtle.digest) {
+                try {
+                    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
+                    return 'sha256:' + Array.from(new Uint8Array(buf))
+                        .map(b => b.toString(16).padStart(2, '0')).join('');
+                } catch (e) { }
+            }
+            let a = 0x811c9dc5, b = 0x1000193;     /* file:// ya purane browser ke liye fallback */
+            for (let i = 0; i < txt.length; i++) {
+                const c = txt.charCodeAt(i);
+                a = Math.imul(a ^ c, 16777619) >>> 0;
+                b = Math.imul(b ^ c, 2654435761) >>> 0;
+            }
+            return 'fb:' + a.toString(16) + b.toString(16);
+        }
+
+        function showLock() {
+            if (!pinStored()) return;
+            document.documentElement.classList.add('pin-armed');
+            document.documentElement.classList.remove('pin-open');
+            $('lockScreen').classList.add('active');
+            $('lockInput').value = '';
+            $('lockError').textContent = '';
+            wrongTries = 0;
+            $('lockBtn').disabled = false;
+            setTimeout(() => $('lockInput').focus(), 60);
+        }
+
+        function hideLock() {
+            $('lockScreen').classList.remove('active');
+            document.documentElement.classList.remove('pin-armed');
+            document.documentElement.classList.add('pin-open');
+            $('lockInput').value = '';
+            $('lockError').textContent = '';
+            resetIdle();
+        }
+
+        async function tryUnlock() {
+            const rec = pinStored();
+            if (!rec) { hideLock(); return; }
+            const pin = ($('lockInput').value || '').trim();
+            if (!pin) return;
+            const h = await hashPin(pin, rec.salt);
+            if (h === rec.hash) { hideLock(); return; }
+
+            wrongTries++;
+            $('lockInput').value = '';
+            if (wrongTries >= 5) {
+                let left = 30;
+                $('lockBtn').disabled = true;
+                $('lockError').textContent = 'بہت زیادہ غلط کوششیں — ' + left + ' سیکنڈ انتظار کریں';
+                clearInterval(lockTimer);
+                lockTimer = setInterval(() => {
+                    left--;
+                    if (left <= 0) {
+                        clearInterval(lockTimer);
+                        wrongTries = 0;
+                        $('lockBtn').disabled = false;
+                        $('lockError').textContent = '';
+                        $('lockInput').focus();
+                    } else {
+                        $('lockError').textContent = 'بہت زیادہ غلط کوششیں — ' + left + ' سیکنڈ انتظار کریں';
+                    }
+                }, 1000);
+            } else {
+                $('lockError').textContent = 'غلط PIN — ' + (5 - wrongTries) + ' کوششیں باقی';
+                $('lockInput').focus();
+            }
+        }
+
+        $('lockBtn').addEventListener('click', tryUnlock);
+        $('lockInput').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') { e.preventDefault(); tryUnlock(); }
+        });
+
+        $('lockNowBtn').addEventListener('click', function () {
+            if (!pinStored()) { status('پہلے PIN سیٹ کریں', '#b91c1c'); return; }
+            showLock();
+        });
+
+        function refreshPinBtn() {
+            $('pinSetBtn').textContent = pinStored() ? 'PIN تبدیل کریں' : 'PIN سیٹ کریں';
+        }
+
+        $('pinSetBtn').addEventListener('click', async function () {
+            const rec = pinStored();
+
+            if (rec) {                                  /* پہلے سے PIN موجود */
+                const old = prompt('موجودہ PIN درج کریں:');
+                if (old === null) return;
+                if (await hashPin(old.trim(), rec.salt) !== rec.hash) {
+                    status('موجودہ PIN غلط ہے', '#b91c1c'); return;
+                }
+                const nw = prompt('نیا PIN لکھیں (کم از کم 4 ہندسے).\nPIN ہٹانے کے لیے خالی چھوڑ کر OK دبائیں:');
+                if (nw === null) return;
+                if (nw.trim() === '') {
+                    localStorage.removeItem(LS_PIN);
+                    refreshPinBtn();
+                    status('PIN ہٹا دیا گیا', '#b45309');
+                    return;
+                }
+                if (nw.trim().length < 4) { status('PIN کم از کم 4 ہندسے کا ہو', '#b91c1c'); return; }
+                const salt = String(Date.now()) + Math.random().toString(36).slice(2);
+                localStorage.setItem(LS_PIN, JSON.stringify({ salt: salt, hash: await hashPin(nw.trim(), salt) }));
+                refreshPinBtn();
+                status('PIN تبدیل ہو گیا');
+                return;
+            }
+
+            const p1 = prompt('نیا PIN لکھیں (کم از کم 4 ہندسے):');
+            if (p1 === null) return;
+            if (p1.trim().length < 4) { status('PIN کم از کم 4 ہندسے کا ہو', '#b91c1c'); return; }
+            const p2 = prompt('تصدیق کے لیے دوبارہ وہی PIN لکھیں:');
+            if (p2 === null) return;
+            if (p1.trim() !== p2.trim()) { status('دونوں PIN ایک جیسے نہیں', '#b91c1c'); return; }
+
+            const salt = String(Date.now()) + Math.random().toString(36).slice(2);
+            localStorage.setItem(LS_PIN, JSON.stringify({ salt: salt, hash: await hashPin(p1.trim(), salt) }));
+            refreshPinBtn();
+            alert('PIN لگ گیا ✅\n\nیاد رکھیں: PIN بھول جانے پر کھولنے کا کوئی طریقہ نہیں — براؤزر کا ڈیٹا صاف کرنا پڑے گا اور سارا ریکارڈ ضائع ہو جائے گا۔');
+            status('PIN لگ گیا');
+        });
+
+        /* be-kaar wakt guzre to khud lock */
+        function resetIdle() {
+            clearTimeout(idleTimer);
+            if (!pinStored()) return;
+            idleTimer = setTimeout(function () {
+                if (!$('lockScreen').classList.contains('active')) showLock();
+            }, IDLE_LOCK_MS);
+        }
+        ['mousedown', 'keydown', 'touchstart', 'scroll'].forEach(ev => {
+            document.addEventListener(ev, resetIdle, { passive: true });
+        });
+
+        /* ═══════════ READOUT + TABS ═══════════ */
+        function updateReadout() {
+            const kg = $('totalMilkKg');
+            const amt = $('grandTotalAmount');
+            if (!$('roKg')) return;
+            $('roKg').textContent = (kg && kg.textContent.trim()) || '—';
+            $('roAmt').textContent = (amt && amt.textContent.trim()) || '—';
+        }
+
+        const LS_TAB = 'rams_tab_v1';
+        function showTab(name) {
+            document.querySelectorAll('.cp-tab').forEach(b => b.classList.toggle('is-on', b.dataset.tab === name));
+            document.querySelectorAll('.cp-pane').forEach(p => p.classList.toggle('is-on', p.dataset.pane === name));
+            try { localStorage.setItem(LS_TAB, name); } catch (e) { }
+        }
+        document.querySelectorAll('.cp-tab').forEach(b => {
+            b.addEventListener('click', function () { showTab(this.dataset.tab); });
         });
 
         /* ═══════════ ڈلیوری toggle ═══════════ */
@@ -1573,8 +3101,7 @@
             $('ledgerContent').classList.toggle('dark-bill', dark);
             const btn = $('darkModeBtn');
             if (btn) {
-                btn.innerHTML = dark ? '☀️ Light Mode' : '🌙 Dark Mode';
-                btn.style.backgroundColor = dark ? '#b45309' : '#111827';
+                btn.textContent = dark ? 'لائٹ موڈ' : 'ڈارک موڈ';
             }
             updateBaqayaLabel();
             updateOutstanding();
@@ -1697,14 +3224,30 @@
         /* ═══════════ INIT ═══════════ */
         $('issueDateTime').innerText = "Issued: " + new Date().toLocaleString('en-GB');
 
-        function newInvoiceNumber() {
+        /* ── Bill number: sirf "preview" banta hai. Counter tab barhta hai
+              jab bill Save hota hai — is liye number mein gaps nahi aate. ── */
+        function invoiceKeyParts() {
             const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const key = `invoice_serial_${year}_${month}`;
-            let serial = parseInt(localStorage.getItem(key) || '100') + 1;
-            localStorage.setItem(key, serial);
-            return `RAMS-${month}${year}-${serial}`;
+            return {
+                key: `invoice_serial_${now.getFullYear()}_${String(now.getMonth() + 1).padStart(2, '0')}`,
+                mm: String(now.getMonth() + 1).padStart(2, '0'),
+                yyyy: now.getFullYear()
+            };
+        }
+
+        function newInvoiceNumber() {          /* preview — counter ko haath nahi lagata */
+            const p = invoiceKeyParts();
+            const serial = parseInt(localStorage.getItem(p.key) || '100') + 1;
+            return `RAMS-${p.mm}${p.yyyy}-${serial}`;
+        }
+
+        function commitInvoiceNumber(num) {    /* Save par number pakka kar do */
+            if (!num) return;
+            const p = invoiceKeyParts();
+            const cur = parseInt(localStorage.getItem(p.key) || '100');
+            if (num.trim() === `RAMS-${p.mm}${p.yyyy}-${cur + 1}`) {
+                localStorage.setItem(p.key, cur + 1);
+            }
         }
 
         (function init() {
@@ -1722,6 +3265,17 @@
                 applyMonth(mv, {});
                 updateOutstanding();
             }
+
+            activeMonth = monthPicker.value;
+            refreshMonthList($('clientName').textContent.trim());
+            refreshUndoBtn();
+            refreshPinBtn();
+            updateReadout();
+            let savedTab = 'client';
+            try { savedTab = localStorage.getItem(LS_TAB) || 'client'; } catch (e) { }
+            showTab(savedTab);
+            if (pinStored()) { showLock(); } else { document.documentElement.classList.remove('pin-armed'); }
+            resetIdle();
 
             /* theme restore (light default) */
             let savedTheme = '0';
