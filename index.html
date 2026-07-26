@@ -524,6 +524,56 @@
             z-index: 1;
         }
 
+        /* ── ناغہ ki ginti — din 32 wale hamesha-khali khane mein.
+              Row pehle se mojood hai, is liye oonchai zero badalti hai. ── */
+        #ledgerBody td.attend-cell {
+            background-color: rgba(200, 159, 94, 0.10);
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #5c3f1e;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 0 2px;
+        }
+
+        /* letter-spacing yahan HARGIZ nahi — html2canvas us par text ko
+           harf-ba-harf banata hai aur Urdu ke harf jurna chhor dete hain. */
+        #ledgerBody td.attend-cell,
+        #ledgerBody td.attend-cell span {
+            letter-spacing: normal;
+            word-spacing: normal;
+        }
+
+        #ledgerBody td.attend-cell .att-num {
+            direction: ltr;
+            unicode-bidi: isolate;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #ledgerBody td.attend-cell .att-sep {
+            color: #c89f5e;
+            padding: 0 4px;
+        }
+
+        #ledgerBody td.attend-cell .att-red {
+            color: #b91c1c;
+        }
+
+        .dark-bill #ledgerBody td.attend-cell {
+            background-color: rgba(224, 189, 127, 0.14) !important;
+            color: #eccf92;
+        }
+
+        .dark-bill #ledgerBody td.attend-cell .att-red {
+            color: #f87171;
+        }
+
+        .dark-bill #ledgerBody td.attend-cell .att-sep {
+            color: #b7873f;
+        }
+
+
         /* ── ZEBRA ROWS — transparent tints taake watermark bhi nazar aaye ── */
         #ledgerBody td {
             background-color: transparent;
@@ -1904,6 +1954,11 @@
                 <button id="lockNowBtn" class="cp-btn cp-btn-ghost">لاک کریں</button>
                 <button id="pinSetBtn" class="cp-btn cp-btn-ghost">PIN سیٹ کریں</button>
             </div>
+
+            <div class="cp-lbl">بیک اپ</div>
+            <button id="backupBtn" class="cp-btn cp-btn-primary">بیک اپ فائل محفوظ کریں</button>
+            <button id="restoreBtn" class="cp-btn cp-btn-ghost">بیک اپ واپس لائیں</button>
+            <input type="file" id="restoreFile" accept="application/json,.json" style="display:none">
         </section>
 
         <div class="cp-foot">
@@ -2073,9 +2128,9 @@
             <thead>
                 <tr>
                     <th class="w-[20%]">تاریخ</th>
-                    <th class="w-[30%]">کلو</th>
+                    <th class="w-[30%]">لیٹر</th>
                     <th class="w-[20%]">تاریخ</th>
-                    <th class="w-[30%]">کلو</th>
+                    <th class="w-[30%]">لیٹر</th>
                 </tr>
             </thead>
             <tbody id="ledgerBody"></tbody>
@@ -2271,18 +2326,42 @@
             tbody.innerHTML = '';
             for (let i = 1; i <= HALF_ROWS; i++) {
                 const row = document.createElement('tr');
-                row.innerHTML = cellPair(i, values) + cellPair(i + HALF_ROWS, values);
+                /* din 32 kabhi wujood mein nahi aata — us hamesha-khali jorre
+                   mein ناغہ ki ginti rakh dete hain. Row wahi, oonchai wahi. */
+                const second = (i === HALF_ROWS)
+                    ? '<td colspan="2" class="attend-cell" id="attendCell"></td>'
+                    : cellPair(i + HALF_ROWS, values);
+                row.innerHTML = cellPair(i, values) + second;
                 tbody.appendChild(row);
             }
             document.querySelectorAll('.kg-input').forEach(cell => {
-                cell.addEventListener('input', scheduleDraft);
+                cell.addEventListener('input', function () { updateAttendance(); scheduleDraft(); });
                 cell.addEventListener('keydown', kgKeyNav);
                 cell.addEventListener('focus', function () { selectCellText(this); });
                 cell.addEventListener('blur', function () {
                     if (this.textContent.trim() === '') { this.innerHTML = ''; }  /* dash wapas aa jaye */
+                    updateAttendance();
                     saveDraft();
                 });
             });
+            updateAttendance();
+        }
+
+        /* ═══════════ ناغہ / حاضری ═══════════ */
+        function updateAttendance() {
+            const el = document.getElementById('attendCell');
+            if (!el) return;
+            let taken = 0;
+            document.querySelectorAll('.kg-input').forEach(c => {
+                if (c.textContent.trim() !== '') taken++;
+            });
+            const missed = Math.max(0, monthDays - taken);
+            /* har span mein sirf ek hi tarah ka text (Urdu ya hindse) —
+               is se export ke waqt tarteeb nahi badalti. */
+            el.innerHTML =
+                '<span>دن</span>&nbsp;<span class="att-num">' + taken + '</span>' +
+                '<span class="att-sep">·</span>' +
+                '<span class="att-red">ناغہ</span>&nbsp;<span class="att-num att-red">' + missed + '</span>';
         }
 
         function collectKg() {
@@ -2339,13 +2418,14 @@
             setTimeout(function () {
                 let totalKg = 0;
                 const rateValue = parseFloat(document.getElementById('milkRate').textContent) || 0;
-                document.getElementById('displayRate').textContent = rateValue > 0 ? 'Rs. ' + rateValue : '';
+                document.getElementById('displayRate').textContent = rateValue > 0 ? 'Rs. ' + rateValue + '/Ltr' : '';
                 document.querySelectorAll('.kg-input').forEach(input => { totalKg += parseFloat(input.textContent.trim()) || 0; });
                 const totalMilkAmount = totalKg * rateValue;
                 document.getElementById('totalMilkKg').textContent = (totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)) + ' Ltr';
                 document.getElementById('totalCalculatedAmount').textContent = formatCurrency(totalMilkAmount);
                 autoRecalculate();
                 updateOutstanding();
+                updateAttendance();
                 saveDraft();
                 overlay.classList.remove('active');
             }, 1200);
@@ -2676,7 +2756,7 @@
             if (this.value.trim() !== '') status(n + ' کلائنٹ ملے', n ? '#0f766e' : '#b91c1c');
         });
 
-        /* ═══════════ KEYBOARD NAVIGATION (کلو خانے) ═══════════ */
+        /* ═══════════ KEYBOARD NAVIGATION (لیٹر خانے) ═══════════ */
         function selectCellText(el) {
             try {
                 const r = document.createRange();
@@ -2730,6 +2810,7 @@
                 else if (mode === 'all') { c.textContent = raw; n++; }
                 else if (mode === 'empty' && empty) { c.textContent = raw; n++; }
             });
+            updateAttendance();
             saveDraft();
             status(mode === 'clear' ? 'سارے دن خالی کر دیے' : (n + ' دن بھر دیے — اب Calculate دبائیں'));
         }
@@ -2868,6 +2949,7 @@
                 if (v === undefined || v === '') c.innerHTML = '';
                 else c.textContent = v;
             });
+            updateAttendance();
         }
 
         $('undoFillBtn').addEventListener('click', function () {
@@ -3085,6 +3167,70 @@
             b.addEventListener('click', function () { showTab(this.dataset.tab); });
         });
 
+        /* ═══════════ BACKUP / RESTORE ═══════════ */
+        function backupPayload() {
+            const data = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k && (k.indexOf('rams_') === 0 || k.indexOf('invoice_serial_') === 0)) {
+                    data[k] = localStorage.getItem(k);
+                }
+            }
+            return { app: 'RanaAhmadMilkShop', version: 1, savedAt: new Date().toISOString(), data: data };
+        }
+
+        function countCustomers(data) {
+            try {
+                const db = JSON.parse(data['rams_customers_v2'] || '{}');
+                let names = Object.keys(db), months = 0;
+                names.forEach(n => months += Object.keys((db[n] && db[n].months) || {}).length);
+                return names.length + ' کلائنٹ · ' + months + ' مہینے کے بل';
+            } catch (e) { return 'نامعلوم'; }
+        }
+
+        $('backupBtn').addEventListener('click', function () {
+            persistCurrentMonth();
+            saveDraft();
+            const payload = backupPayload();
+            const blob = new Blob([JSON.stringify(payload, null, 1)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'RanaAhmad_Backup_' + new Date().toISOString().slice(0, 10) + '.json';
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+            status('بیک اپ محفوظ ہو گیا — ' + countCustomers(payload.data));
+        });
+
+        $('restoreBtn').addEventListener('click', function () {
+            $('restoreFile').value = '';
+            $('restoreFile').click();
+        });
+
+        $('restoreFile').addEventListener('change', function () {
+            const f = this.files && this.files[0];
+            if (!f) return;
+            const rd = new FileReader();
+            rd.onload = function () {
+                let p = null;
+                try { p = JSON.parse(rd.result); } catch (e) { }
+                if (!p || p.app !== 'RanaAhmadMilkShop' || !p.data) {
+                    alert('یہ فائل اس ایپ کا بیک اپ نہیں لگتی۔');
+                    return;
+                }
+                const when = (p.savedAt || '').slice(0, 10);
+                if (!confirm('بیک اپ ' + when + ' کا ہے\n' + countCustomers(p.data) +
+                    '\n\nموجودہ سارا ریکارڈ اس سے بدل جائے گا۔ جاری رکھیں؟')) return;
+
+                Object.keys(localStorage).forEach(k => {
+                    if (k.indexOf('rams_') === 0 || k.indexOf('invoice_serial_') === 0) localStorage.removeItem(k);
+                });
+                Object.keys(p.data).forEach(k => localStorage.setItem(k, p.data[k]));
+                alert('بیک اپ واپس آ گیا ✅\nصفحہ دوبارہ کھل رہا ہے۔');
+                location.reload();
+            };
+            rd.readAsText(f);
+        });
+
         /* ═══════════ ڈلیوری toggle ═══════════ */
         (function () {
             const el = $('deliveryTime');
@@ -3271,6 +3417,7 @@
             refreshUndoBtn();
             refreshPinBtn();
             updateReadout();
+            updateAttendance();
             let savedTab = 'client';
             try { savedTab = localStorage.getItem(LS_TAB) || 'client'; } catch (e) { }
             showTab(savedTab);
