@@ -1,14 +1,12 @@
 /* ══════════════════════════════════════════════════════════════════════
-   RANA AHMAD MILK SHOP — SMART ENGINE  (v1.1)
+   RANA AHMAD MILK SHOP — SMART ENGINE  (v1.2)
    ──────────────────────────────────────────────────────────────────────
-   v1 hi hai — sirf TEEN cheezein badli hain:
-     1. CLIENT RAIL ab BILKUL DAAYEN taraf (RTL ka pehla column)
-     2. LIVE WATCH (ghari) rail ke upar — sirf waqt aur tareekh
-     3. Har client par DELETE (🗑) — ghalat client foran hat jaye
+   v1.1 hi hai — sirf TEEN cheezein barhi hain:
+     1. Client list mein NAAM ab hamesha BOLD (gehra) — door se parh lo
+     2. BILL ke andar client ka naam bhi BOLD — PNG/PDF mein bhi
+     3. Client list ki WIDTH aur LENGTH ab BILL ke barabar — sab standard
 
-   Graph / calendar / layout ki koi tabdeeli NAHI.
-   BILL (#ledgerContent) ko haath nahi lagaya — size, style, PNG, PDF
-   sab bilkul pehle jaisa.
+   Bill (#ledgerContent) ka size, style, PNG aur PDF sab pehle jaisa.
    ══════════════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -60,6 +58,17 @@
     }
     toast(msg, bad);
   }
+
+  /* ═══════════════════ 0b. BILL KA NAAM HAMESHA BOLD ═══════════════════
+     Ye alag <style> hai — export ke waqt bhi band nahi hota,
+     is liye PNG aur PDF mein bhi naam gehra hi aayega.            */
+
+  var boldEl = document.createElement('style');
+  boldEl.id = 'rams-bill-bold';
+  boldEl.textContent =
+    '#ledgerContent #clientName{ font-weight:900 !important; letter-spacing:.01em; }' +
+    'body.app-dark #ledgerContent #clientName{ color:#f0e7d6 !important; }';
+  document.head.appendChild(boldEl);
 
   /* ═══════════════════ 1. STYLES ═══════════════════ */
 
@@ -130,9 +139,15 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 #rsToast.bad{ border-color:#a13a2a; color:#ffd7cf; }
 
 /* ─────── CLIENT RAIL (ab SAB SE DAAYEN) ─────── */
-.app-layout{ max-width:1150px; }
+:root{
+  --rs-rail-w: 300px;   /* width — bill ke sath khud set ho jayegi */
+  --rs-rail-h: 820px;   /* length — bill ke sath khud set ho jayegi */
+}
+.app-layout{ max-width:1240px; }
 #rsRail{
-  flex:0 0 236px; position:sticky; top:10px; max-height:calc(100vh - 20px);
+  flex:0 0 var(--rs-rail-w); width:var(--rs-rail-w);
+  position:sticky; top:10px; align-self:flex-start;
+  height:var(--rs-rail-h); max-height:var(--rs-rail-h);
   display:flex; flex-direction:column; direction:rtl; overflow:hidden;
   background:linear-gradient(180deg,#fffdf9,#fbf4e8);
   border:1px solid #c89f5e; border-radius:11px; box-shadow:0 3px 14px rgba(124,45,18,.09);
@@ -187,18 +202,18 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 #rsSug .rs-sg{ padding:7px 9px; cursor:pointer; border-bottom:1px solid #f2e6d2; }
 #rsSug .rs-sg:last-child{ border-bottom:0; }
 #rsSug .rs-sg:hover, #rsSug .rs-sg.hi{ background:#f9e8d2; }
-#rsSug .rs-sg-n{ display:block; font-size:12.5px; font-weight:800; color:#5c3f1e; }
+#rsSug .rs-sg-n{ display:block; font-size:13px; font-weight:900; color:#3c2810; }
 #rsSug .rs-sg-m{ display:block; font-size:9.5px; color:#a1794a; direction:ltr; text-align:right; margin-top:1px; }
 #rsSug .rs-sg-new{ color:#0f766e; font-weight:800; font-size:12px; }
 
-#rsRail .rs-list{ flex:1; overflow-y:auto; overflow-x:hidden; padding:0 7px 7px; }
+#rsRail .rs-list{ flex:1 1 auto; min-height:0; overflow-y:auto; overflow-x:hidden; padding:0 7px 7px; }
 #rsRail .rs-list::-webkit-scrollbar{ width:6px; }
 #rsRail .rs-list::-webkit-scrollbar-thumb{ background:#c89f5e; border-radius:3px; }
 
-/* ─────── CLIENT ROW (ab delete bhi) ─────── */
+/* ─────── CLIENT ROW ─────── */
 .rs-item{ position:relative; display:flex; align-items:center; gap:6px; width:100%;
   background:#fff; border:1px solid #ecd9bd; border-right:3px solid transparent; border-radius:7px;
-  padding:7px 9px; margin-bottom:5px; direction:rtl; font-family:'Segoe UI',sans-serif;
+  padding:8px 10px; margin-bottom:5px; direction:rtl; font-family:'Segoe UI',sans-serif;
   transition:background-color .15s, border-color .15s, transform .12s, box-shadow .18s;
   animation: rsRow .28s ease both; }
 @keyframes rsRow{ from{opacity:0; transform:translateY(5px)} to{opacity:1; transform:none} }
@@ -209,14 +224,18 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 @keyframes rsGone{ to{ opacity:0; transform:translateX(40px); } }
 .rs-open{ flex:1; min-width:0; background:none; border:0; padding:0; cursor:pointer;
   text-align:right; direction:rtl; font-family:inherit; }
-.rs-n{ display:block; font-size:12.5px; font-weight:800; color:#5c3f1e; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis; }
+
+/* ★ NAAM — hamesha BOLD */
+.rs-n{ display:block; font-size:13.5px; font-weight:900; color:#3c2810; letter-spacing:.01em;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.rs-item.on .rs-n{ color:#7c2d12; }
+
 .rs-meta{ display:flex; align-items:center; justify-content:space-between; gap:6px; margin-top:3px; }
-.rs-mob{ font-size:9px; color:#a1794a; font-weight:600; direction:ltr; }
-.rs-amt{ font-size:11px; font-weight:800; color:#3c2810; direction:ltr;
+.rs-mob{ font-size:9.5px; color:#a1794a; font-weight:700; direction:ltr; }
+.rs-amt{ font-size:11.5px; font-weight:900; color:#3c2810; direction:ltr;
   font-family:'Segoe UI',Consolas,monospace; white-space:nowrap; }
 .rs-amt.due{ color:#b91c1c; } .rs-amt.clr{ color:#15803d; }
-.rs-tag{ display:inline-block; font-size:8px; font-weight:700; color:#7c2d12; background:#f4e6d0;
+.rs-tag{ display:inline-block; font-size:8px; font-weight:800; color:#7c2d12; background:#f4e6d0;
   border-radius:4px; padding:1px 5px; margin-right:4px; }
 .rs-del{ flex-shrink:0; width:25px; height:25px; border:1px solid #ecd9bd; border-radius:6px;
   background:#fff; color:#b0806a; font-size:12px; line-height:1; cursor:pointer; opacity:.5;
@@ -259,7 +278,7 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 #rsWaTable td{ border:1px solid #e8d5c4; padding:4px 5px; text-align:center; }
 #rsWaTable td[contenteditable]{ background:#fff; }
 #rsWaTable td[contenteditable]:focus{ outline:1px dashed #7c2d12; background:#fffbeb; }
-#rsWaTable td.nm{ text-align:right; font-weight:700; color:#5c3f1e; }
+#rsWaTable td.nm{ text-align:right; font-weight:900; color:#3c2810; }
 #rsWaTable td.n{ direction:ltr; font-family:'Segoe UI',Consolas,monospace; }
 #rsWaTable tbody tr.dup td{ background:#fdf3e3; }
 .rs-bf{ border-top:1px solid #e8d5c4; background:#f9f0e2; padding:9px 12px;
@@ -278,7 +297,9 @@ body.app-dark .rs-b-ghost:hover{ background:#2f2617; border-color:#b7873f; }
 body.app-dark .rs-item{ background:#241d14; border-color:#4a3c28; }
 body.app-dark .rs-item:hover{ background:#2f2617; border-right-color:#b7873f; }
 body.app-dark .rs-item.on{ background:#3a2c17; border-color:#b7873f; border-right-color:#eccf92; }
-body.app-dark .rs-n{ color:#eccf92; } body.app-dark .rs-mob{ color:#a4917a; }
+body.app-dark .rs-n{ color:#ffdca0; }
+body.app-dark .rs-item.on .rs-n{ color:#ffe4ae; }
+body.app-dark .rs-mob{ color:#a4917a; }
 body.app-dark .rs-amt{ color:#f0e7d6; }
 body.app-dark .rs-amt.due{ color:#f87171; } body.app-dark .rs-amt.clr{ color:#4ade80; }
 body.app-dark .rs-tag{ background:#3a2c17; color:#e0bd7f; }
@@ -290,7 +311,7 @@ body.app-dark .rs-empty{ color:#7a6a52; }
 body.app-dark #rsSug{ background:#1d1710; border-color:#6b5330; }
 body.app-dark #rsSug .rs-sg{ border-bottom-color:#3a2f1e; }
 body.app-dark #rsSug .rs-sg:hover, body.app-dark #rsSug .rs-sg.hi{ background:#2f2617; }
-body.app-dark #rsSug .rs-sg-n{ color:#eccf92; } body.app-dark #rsSug .rs-sg-m{ color:#a4917a; }
+body.app-dark #rsSug .rs-sg-n{ color:#ffdca0; } body.app-dark #rsSug .rs-sg-m{ color:#a4917a; }
 body.app-dark .rs-box{ background:#17130e; border-color:#6b5330; color:#ece3d3; }
 body.app-dark .rs-ta{ background:#241d14; border-color:#6f5734; color:#f6efe0; }
 body.app-dark .rs-hint{ background:#241d14; border-color:#4a3c28; color:#b08f5c; }
@@ -299,7 +320,7 @@ body.app-dark .rs-lb{ color:#b08f5c; }
 body.app-dark .rs-prev{ border-color:#6b5330; }
 body.app-dark #rsWaTable th{ background:#3a2c17; color:#eccf92; border-color:#6b5330; }
 body.app-dark #rsWaTable td{ background:#1d1710; color:#f0e7d6; border-color:#6b5330; }
-body.app-dark #rsWaTable td.nm{ color:#e0bd7f; }
+body.app-dark #rsWaTable td.nm{ color:#ffdca0; }
 body.app-dark #rsWaTable tbody tr.dup td{ background:#2a2114; }
 body.app-dark .rs-bf{ background:#241d14; border-top-color:#4a3c28; }
 body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
@@ -310,11 +331,11 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
   background:linear-gradient(135deg,#7c2d12,#c89f5e); box-shadow:0 6px 18px rgba(124,45,18,.35);
   transition:transform .15s; }
 #rsToggle:active{ transform:scale(.94); }
-@media (max-width:1200px){
+@media (max-width:1300px){
   #rsToggle{ display:block; }
   .app-layout{ max-width:880px; }
-  #rsRail{ position:fixed; top:0; right:0; bottom:0; z-index:9992; flex:none; width:262px;
-    max-height:none; border-radius:0; border-left:1px solid #c89f5e; border-right:0;
+  #rsRail{ position:fixed; top:0; right:0; bottom:0; z-index:9992; flex:none; width:272px;
+    height:auto; max-height:none; border-radius:0; border-left:1px solid #c89f5e; border-right:0;
     box-shadow:-8px 0 26px rgba(0,0,0,.22); transform:translateX(105%);
     transition:transform .3s cubic-bezier(.2,.9,.3,1); animation:none; }
   #rsRail.open{ transform:none; }
@@ -470,7 +491,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
 
     if (typeof window.refreshCustomerList === 'function') window.refreshCustomerList(name);
     var sel = $('customerSelect'); if (sel) { try { sel.value = name; } catch (e) { } }
-    if (window.innerWidth <= 1200) rail.classList.remove('open');
+    if (window.innerWidth <= 1300) rail.classList.remove('open');
     buildList();
   }
 
@@ -539,10 +560,32 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
   document.body.appendChild(toggle);
   toggle.addEventListener('click', function () { rail.classList.toggle('open'); });
   document.addEventListener('click', function (e) {
-    if (window.innerWidth > 1200 || !rail.classList.contains('open')) return;
+    if (window.innerWidth > 1300 || !rail.classList.contains('open')) return;
     if (rail.contains(e.target) || toggle.contains(e.target)) return;
     rail.classList.remove('open');
   });
+
+  /* ═══ RAIL KA SIZE — BILL KE BARABAR (khud set hota hai) ═══ */
+  function syncRailSize() {
+    if (window.innerWidth <= 1300) return;
+    var bill = $('ledgerContent');
+    if (!bill) return;
+    var r = bill.getBoundingClientRect();
+    if (r.height > 220) {
+      document.documentElement.style.setProperty('--rs-rail-h', Math.round(r.height) + 'px');
+    }
+    if (r.width > 240) {
+      /* width bill ka taqreeban 40% — kam se kam 260, zyada se zyada 340 */
+      var w = Math.max(260, Math.min(340, Math.round(r.width * 0.40)));
+      document.documentElement.style.setProperty('--rs-rail-w', w + 'px');
+    }
+  }
+  syncRailSize();
+  setTimeout(syncRailSize, 300);
+  window.addEventListener('resize', syncRailSize);
+  if (window.ResizeObserver && $('ledgerContent')) {
+    try { new ResizeObserver(syncRailSize).observe($('ledgerContent')); } catch (e) { }
+  }
 
   /* ── LIVE WATCH ── */
   function tickClock() {
@@ -927,7 +970,11 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
   ['refreshCustomerList', 'loadCustomerMonth', 'clearBill'].forEach(function (fn) {
     if (typeof window[fn] !== 'function') return;
     var o = window[fn];
-    window[fn] = function () { var r = o.apply(this, arguments); setTimeout(buildList, 0); return r; };
+    window[fn] = function () {
+      var r = o.apply(this, arguments);
+      setTimeout(function () { buildList(); syncRailSize(); }, 0);
+      return r;
+    };
   });
 
   /* ═══════════════════ 9. ANIMATION KA KAAM ═══════════════════ */
@@ -1001,7 +1048,9 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     var self = this, lbl = self.textContent;
     self.classList.add('rs-busy');
     self.textContent = 'حساب ہو رہا ہے…';
-    setTimeout(function () { self.classList.remove('rs-busy'); self.textContent = lbl; }, 1260);
+    setTimeout(function () {
+      self.classList.remove('rs-busy'); self.textContent = lbl; syncRailSize();
+    }, 1260);
   });
 
   /* tabs — slide direction + Alt+1..4 */
@@ -1056,7 +1105,8 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     };
   }
 
-  /* EXPORT ke waqt saari animation band — PNG/PDF bilkul saaf */
+  /* EXPORT ke waqt saari animation band — PNG/PDF bilkul saaf
+     (bold wala style alag hai, wo band nahi hota) */
   ['exportBtn', 'pdfBtn', 'whatsappBtn'].forEach(function (id) {
     var b = $(id);
     if (b) b.addEventListener('click', function () {
@@ -1073,5 +1123,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     lastVal[id] = p ? p.num : 0;
   });
   buildList();
+  setTimeout(syncRailSize, 600);
 
 })();
