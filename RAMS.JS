@@ -1,16 +1,14 @@
 /* ══════════════════════════════════════════════════════════════════════
-   RANA AHMAD MILK SHOP — SMART ENGINE  (v1)
+   RANA AHMAD MILK SHOP — SMART ENGINE  (v1.1)
    ──────────────────────────────────────────────────────────────────────
-   Is aik file mein sab kuch hai:
-     1. VIP animations (control panel)
-     2. Side par CLIENT LIST
-     3. WhatsApp se data paste kar ke customers import
-     4. Naam likhte hi sab kuch AUTO — number, rate, delivery, roze ka dodh
-     5. Naya client add karne ka form
+   v1 hi hai — sirf TEEN cheezein badli hain:
+     1. CLIENT RAIL ab BILKUL DAAYEN taraf (RTL ka pehla column)
+     2. LIVE WATCH (ghari) rail ke upar — sirf waqt aur tareekh
+     3. Har client par DELETE (🗑) — ghalat client foran hat jaye
 
-   BILL (#ledgerContent) ka design bilkul nahi chhera gaya. Sirf uske
-   KHAANON MEIN VALUE bharti hai (jo maqsad hi hai). Size / layout /
-   PNG / PDF sab pehle jaisa.
+   Graph / calendar / layout ki koi tabdeeli NAHI.
+   BILL (#ledgerContent) ko haath nahi lagaya — size, style, PNG, PDF
+   sab bilkul pehle jaisa.
    ══════════════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -21,6 +19,9 @@
   var LS_PROFILES = 'rams_profiles_v1';
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
+  var UR_MONTHS = ['جنوری', 'فروری', 'مارچ', 'اپریل', 'مئی', 'جون',
+    'جولائی', 'اگست', 'ستمبر', 'اکتوبر', 'نومبر', 'دسمبر'];
+  var UR_DAYS = ['اتوار', 'پیر', 'منگل', 'بدھ', 'جمعرات', 'جمعہ', 'ہفتہ'];
 
   function $(id) { return document.getElementById(id); }
   function q(sel) { return document.querySelector(sel); }
@@ -128,7 +129,7 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 #rsToast.on{ opacity:1; transform:translateX(-50%) translateY(0); }
 #rsToast.bad{ border-color:#a13a2a; color:#ffd7cf; }
 
-/* ─────── CLIENT RAIL (panel ke side) ─────── */
+/* ─────── CLIENT RAIL (ab SAB SE DAAYEN) ─────── */
 .app-layout{ max-width:1150px; }
 #rsRail{
   flex:0 0 236px; position:sticky; top:10px; max-height:calc(100vh - 20px);
@@ -145,6 +146,18 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 #rsRail .rs-t{ display:block; font-size:14px; font-weight:800; color:#5c3f1e; }
 #rsRail .rs-s{ display:block; font-size:8px; letter-spacing:.16em; text-transform:uppercase;
   color:#a1794a; direction:ltr; margin-top:2px; }
+
+/* ─────── LIVE WATCH ─────── */
+.rs-clock{ flex-shrink:0; background:linear-gradient(180deg,#2a2015,#191309);
+  border-bottom:1px solid #7c5f34; padding:8px 11px 9px; text-align:center; direction:rtl; }
+.rs-clk-time{ display:block; font-family:'Segoe UI',Consolas,monospace; font-size:24px;
+  font-weight:800; color:#ffd894; direction:ltr; letter-spacing:.02em; line-height:1.15;
+  font-variant-numeric:tabular-nums; }
+.rs-clk-time .rs-sec{ font-size:13.5px; color:#c89f5e; }
+.rs-clk-time .rs-mer{ font-size:11.5px; color:#9b7c4e; margin-inline-start:3px; }
+.rs-clk-date{ display:block; font-size:11px; font-weight:700; color:#e8c07a; margin-top:2px; }
+.rs-clk-en{ display:block; font-size:8.5px; letter-spacing:.13em; text-transform:uppercase;
+  color:#9b7c4e; direction:ltr; margin-top:1px; }
 
 #rsRail .rs-tools{ padding:9px 9px 7px; display:grid; gap:6px; flex-shrink:0; position:relative; }
 .rs-inp{ width:100%; height:34px; border:1px solid #d8bd91; border-radius:7px; background:#fff;
@@ -181,8 +194,10 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 #rsRail .rs-list{ flex:1; overflow-y:auto; overflow-x:hidden; padding:0 7px 7px; }
 #rsRail .rs-list::-webkit-scrollbar{ width:6px; }
 #rsRail .rs-list::-webkit-scrollbar-thumb{ background:#c89f5e; border-radius:3px; }
-.rs-item{ display:block; width:100%; text-align:right; cursor:pointer; background:#fff;
-  border:1px solid #ecd9bd; border-right:3px solid transparent; border-radius:7px;
+
+/* ─────── CLIENT ROW (ab delete bhi) ─────── */
+.rs-item{ position:relative; display:flex; align-items:center; gap:6px; width:100%;
+  background:#fff; border:1px solid #ecd9bd; border-right:3px solid transparent; border-radius:7px;
   padding:7px 9px; margin-bottom:5px; direction:rtl; font-family:'Segoe UI',sans-serif;
   transition:background-color .15s, border-color .15s, transform .12s, box-shadow .18s;
   animation: rsRow .28s ease both; }
@@ -190,6 +205,10 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 .rs-item:hover{ background:#fdf6ea; border-right-color:#c89f5e; transform:translateX(-2px);
   box-shadow:0 2px 8px rgba(124,45,18,.10); }
 .rs-item.on{ background:#f9e8d2; border-color:#c89f5e; border-right-color:#7c2d12; }
+.rs-item.gone{ animation: rsGone .3s ease forwards; }
+@keyframes rsGone{ to{ opacity:0; transform:translateX(40px); } }
+.rs-open{ flex:1; min-width:0; background:none; border:0; padding:0; cursor:pointer;
+  text-align:right; direction:rtl; font-family:inherit; }
 .rs-n{ display:block; font-size:12.5px; font-weight:800; color:#5c3f1e; white-space:nowrap;
   overflow:hidden; text-overflow:ellipsis; }
 .rs-meta{ display:flex; align-items:center; justify-content:space-between; gap:6px; margin-top:3px; }
@@ -199,6 +218,12 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 .rs-amt.due{ color:#b91c1c; } .rs-amt.clr{ color:#15803d; }
 .rs-tag{ display:inline-block; font-size:8px; font-weight:700; color:#7c2d12; background:#f4e6d0;
   border-radius:4px; padding:1px 5px; margin-right:4px; }
+.rs-del{ flex-shrink:0; width:25px; height:25px; border:1px solid #ecd9bd; border-radius:6px;
+  background:#fff; color:#b0806a; font-size:12px; line-height:1; cursor:pointer; opacity:.5;
+  display:flex; align-items:center; justify-content:center;
+  transition:opacity .15s, background-color .15s, color .15s, border-color .15s, transform .12s; }
+.rs-item:hover .rs-del{ opacity:1; }
+.rs-del:hover{ background:#b91c1c; border-color:#b91c1c; color:#fff; transform:scale(1.07); }
 .rs-empty{ text-align:center; padding:24px 12px; color:#a89684; font-size:12px; line-height:1.8; }
 #rsRail .rs-foot{ flex-shrink:0; border-top:1px solid #e8d5c4; background:#f9f0e2; padding:7px 10px;
   font-size:10.5px; font-weight:700; color:#8a7560; display:flex; justify-content:space-between; gap:6px; }
@@ -257,6 +282,8 @@ body.app-dark .rs-n{ color:#eccf92; } body.app-dark .rs-mob{ color:#a4917a; }
 body.app-dark .rs-amt{ color:#f0e7d6; }
 body.app-dark .rs-amt.due{ color:#f87171; } body.app-dark .rs-amt.clr{ color:#4ade80; }
 body.app-dark .rs-tag{ background:#3a2c17; color:#e0bd7f; }
+body.app-dark .rs-del{ background:#241d14; border-color:#4a3c28; color:#b08f5c; }
+body.app-dark .rs-del:hover{ background:#b91c1c; border-color:#b91c1c; color:#fff; }
 body.app-dark #rsRail .rs-foot{ background:#241d14; border-top-color:#4a3c28; color:#a4917a; }
 body.app-dark #rsRail .rs-foot b{ color:#e0bd7f; }
 body.app-dark .rs-empty{ color:#7a6a52; }
@@ -318,10 +345,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     toastT = setTimeout(function () { toastEl.classList.remove('on'); }, 2600);
   }
 
-  /* ═══════════════════ 3. PROFILE STORE ═══════════════════
-     Profile = client ki mustaqil maloomat (number, rate, rozana, delivery).
-     Ye customers-database se alag hai, aur naye mahine ka bill banate
-     waqt sab kuch khud bhar deta hai.                                    */
+  /* ═══════════════════ 3. PROFILE STORE ═══════════════════ */
 
   function getProfiles() {
     try { return JSON.parse(localStorage.getItem(LS_PROFILES) || '{}') || {}; }
@@ -376,8 +400,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     };
   }
 
-  /* ═══════════════════ 4. BILL MEIN VALUE BHARNA ═══════════════════
-     Sirf khaanon ki VALUE badalti hai — koi style/layout nahi.          */
+  /* ═══════════════════ 4. BILL MEIN VALUE BHARNA ═══════════════════ */
 
   function fillDays(qty) {
     var cells = qa('.kg-input');
@@ -423,11 +446,9 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     var info = infoFor(name);
 
     if (db[name] && typeof window.loadCustomerMonth === 'function') {
-      /* purana client — uska mahina kholo */
       var months = Object.keys(db[name].months || {}).sort();
       var target = months.indexOf(mv) !== -1 ? mv : (months[months.length - 1] || mv);
       window.loadCustomerMonth(name, target);
-      /* khaali mahina ho to profile se rate/number bhar do */
       if (!$('clientMobile').textContent.trim() && info.mobile) $('clientMobile').textContent = info.mobile;
       if (!$('milkRate').textContent.trim() && info.rate) {
         $('milkRate').textContent = info.rate;
@@ -442,7 +463,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
         note('کھول دیا: ' + name + ' — ' + mLabel(target));
       }
     } else {
-      /* naya client — bill saaf kar ke profile se sab bhar do */
       if (typeof window.clearBill === 'function') window.clearBill();
       var n = applyToBill(info, { days: opts.autoDays !== false, calc: true });
       note(n ? (name + ' تیار — ' + n + ' دن، ریٹ ' + (info.rate || '—')) : (name + ' تیار ہے'));
@@ -454,6 +474,37 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     buildList();
   }
 
+  /* ═══════════════════ 4b. CLIENT DELETE ═══════════════════ */
+
+  function deleteClient(name, rowEl) {
+    var db = customers();
+    var monthsCount = (db[name] && db[name].months) ? Object.keys(db[name].months).length : 0;
+    var msg = '«' + name + '» کو مکمل ڈیلیٹ کریں؟\n\n' +
+      (monthsCount ? (monthsCount + ' مہینے کے بل بھی ختم ہو جائیں گے۔\n') : '') +
+      'یہ عمل واپس نہیں ہو سکتا۔';
+    if (!confirm(msg)) return;
+
+    var prof = getProfiles();
+    delete prof[name];
+    setProfiles(prof);
+
+    if (db[name] && typeof window.setCustomers === 'function') {
+      delete db[name];
+      window.setCustomers(db);
+    }
+
+    if (activeName() === name && typeof window.clearBill === 'function') window.clearBill();
+    if (typeof window.refreshCustomerList === 'function') window.refreshCustomerList();
+    if (typeof window.refreshMonthList === 'function') window.refreshMonthList('');
+
+    if (rowEl) {
+      rowEl.classList.add('gone');
+      setTimeout(buildList, 300);
+    } else { buildList(); }
+
+    note('ڈیلیٹ ہو گیا: ' + name, true);
+  }
+
   /* ═══════════════════ 5. RAIL (side list) ═══════════════════ */
 
   var layout = q('.app-layout');
@@ -461,6 +512,11 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
   rail.id = 'rsRail';
   rail.innerHTML =
     '<div class="rs-head"><span class="rs-t">کلائنٹس</span><span class="rs-s">Smart Customer List</span></div>' +
+    '<div class="rs-clock">' +
+      '<span class="rs-clk-time" id="rsClkTime">--:--</span>' +
+      '<span class="rs-clk-date" id="rsClkDate">—</span>' +
+      '<span class="rs-clk-en" id="rsClkEn">—</span>' +
+    '</div>' +
     '<div class="rs-tools">' +
       '<input type="text" id="rsName" class="rs-inp" dir="rtl" placeholder="نام لکھیں — سب کچھ آٹو" autocomplete="off">' +
       '<div id="rsSug"></div>' +
@@ -472,7 +528,8 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     '<div class="rs-list" id="rsList"></div>' +
     '<div class="rs-foot"><span id="rsCount">0 کلائنٹ</span><b id="rsTotal">Rs. 0</b></div>';
 
-  if (layout) layout.insertBefore(rail, q('.app-main') || null);
+  /* RTL mein pehla child sab se DAAYEN aata hai */
+  if (layout) layout.insertBefore(rail, layout.firstChild);
   else document.body.appendChild(rail);
 
   var toggle = document.createElement('button');
@@ -487,6 +544,26 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     rail.classList.remove('open');
   });
 
+  /* ── LIVE WATCH ── */
+  function tickClock() {
+    var n = new Date();
+    var h = n.getHours(), m = n.getMinutes(), s = n.getSeconds();
+    var mer = h >= 12 ? 'PM' : 'AM';
+    var h12 = h % 12; if (h12 === 0) h12 = 12;
+    var t = $('rsClkTime');
+    if (t) {
+      t.innerHTML = String(h12).padStart(2, '0') + ':' + String(m).padStart(2, '0') +
+        '<span class="rs-sec">:' + String(s).padStart(2, '0') + '</span>' +
+        '<span class="rs-mer">' + mer + '</span>';
+    }
+    var d = $('rsClkDate');
+    if (d) d.textContent = UR_DAYS[n.getDay()] + '، ' + n.getDate() + ' ' + UR_MONTHS[n.getMonth()] + ' ' + n.getFullYear();
+    var e = $('rsClkEn');
+    if (e) e.textContent = n.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
   function activeName() {
     var el = $('clientName');
     return el ? el.textContent.trim() : '';
@@ -494,6 +571,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
 
   function buildList() {
     var list = $('rsList');
+    if (!list) return;
     var qy = ($('rsName').value || '').trim().toLowerCase();
     var cur = activeName();
     var names = allNames();
@@ -508,18 +586,27 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
       total += g;
       shown++;
       var cls = g > 0 ? 'due' : (info.grand ? 'clr' : '');
-      var it = document.createElement('button');
-      it.className = 'rs-item' + (name === cur ? ' on' : '');
-      it.style.animationDelay = Math.min(i, 18) * 22 + 'ms';
-      it.innerHTML =
-        '<span class="rs-n">' + esc(name) +
-          (info.saved ? '' : '<span class="rs-tag">نیا</span>') + '</span>' +
-        '<span class="rs-meta">' +
-          '<span class="rs-mob">' + esc(info.mobile || '—') + '</span>' +
-          '<span class="rs-amt ' + cls + '">' + esc(info.grand || '—') + '</span>' +
-        '</span>';
-      it.addEventListener('click', function () { openClient(name); });
-      list.appendChild(it);
+
+      var row = document.createElement('div');
+      row.className = 'rs-item' + (name === cur ? ' on' : '');
+      row.style.animationDelay = Math.min(i, 18) * 22 + 'ms';
+      row.innerHTML =
+        '<button class="rs-open" type="button">' +
+          '<span class="rs-n">' + esc(name) +
+            (info.saved ? '' : '<span class="rs-tag">نیا</span>') + '</span>' +
+          '<span class="rs-meta">' +
+            '<span class="rs-mob">' + esc(info.mobile || '—') + '</span>' +
+            '<span class="rs-amt ' + cls + '">' + esc(info.grand || '—') + '</span>' +
+          '</span>' +
+        '</button>' +
+        '<button class="rs-del" type="button" title="ڈیلیٹ کریں">🗑</button>';
+
+      row.querySelector('.rs-open').addEventListener('click', function () { openClient(name); });
+      row.querySelector('.rs-del').addEventListener('click', function (e) {
+        e.stopPropagation();
+        deleteClient(name, row);
+      });
+      list.appendChild(row);
     });
 
     if (!shown) {
@@ -669,39 +756,32 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     var t = String(line || '').trim();
     if (!t) return null;
 
-    /* WhatsApp export: [12/07/2026, 9:15 PM] Rana Aslam: matn */
     t = t.replace(/^\[[^\]]*\]\s*/, '');
-    /* 12/07/2026, 9:15 PM - Rana Aslam: matn */
     t = t.replace(/^\d{1,2}[\/.]\d{1,2}[\/.]\d{2,4},?\s*\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)?\s*[-–]\s*/, '');
     if (!t.trim()) return null;
 
     var rest = t;
 
-    /* mobile */
     var mob = '';
     var mm = rest.match(/(?:\+?92|0)?\s?3\d{2}[\s\-.]?\d{7}\b/);
     if (mm) { mob = normMobile(mm[0]); rest = rest.replace(mm[0], ' '); }
 
-    /* rate */
     var rate = '';
-    var rm = rest.match(/(?:ریٹ|ریٹ|rate|ریٹ:|قیمت)\s*[:=]?\s*(\d{2,4})/i)
+    var rm = rest.match(/(?:ریٹ|rate|قیمت)\s*[:=]?\s*(\d{2,4})/i)
           || rest.match(/(\d{2,4})\s*(?:\/\s*)?(?:per\s*)?(?:ltr|ltrs|litre|liter|لیٹر|لٹر)\s*(?:ریٹ|rate)?/i)
           || rest.match(/rs\.?\s*(\d{2,4})/i);
     if (rm) { rate = rm[1]; rest = rest.replace(rm[0], ' '); }
 
-    /* rozana miqdar */
     var daily = '';
     var dm = rest.match(/(\d+(?:\.\d+)?)\s*(?:ل|لیٹر|لٹر|کلو|kg|ltr|liter|litre|l)\b/i);
     if (dm) { daily = dm[1]; rest = rest.replace(dm[0], ' '); }
 
-    /* delivery */
     var del = '';
     if (/صبح\s*(?:و|اور|\+|&)\s*شام|دونوں|both/i.test(rest)) del = 'صبح و شام';
     else if (/شام|evening|sham/i.test(rest)) del = 'شام';
     else if (/صبح|morning|subah/i.test(rest)) del = 'صبح';
     rest = rest.replace(/صبح\s*(?:و|اور|\+|&)\s*شام|دونوں|both|شام|evening|sham|صبح|morning|subah/gi, ' ');
 
-    /* naam — jo bacha */
     var name = rest
       .replace(/[:،,\-–|.\/\\()\[\]#*_]+/g, ' ')
       .replace(/\b(?:ph|mob|mobile|no|number|contact|cell|whatsapp|wa)\b/gi, ' ')
@@ -711,7 +791,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
 
     if (!name) return null;
     if (name.length > 40) name = name.slice(0, 40).trim();
-    if (!mob && !rate && !daily && name.split(' ').length > 6) return null;  /* jumla lagta hai, naam nahi */
+    if (!mob && !rate && !daily && name.split(' ').length > 6) return null;
 
     return { name: name, mobile: mob, rate: rate, daily: daily, delivery: del || 'صبح' };
   }
@@ -763,7 +843,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
       var p = parseLine(l);
       if (!p) return;
       var key = p.name.toLowerCase();
-      if (seen[key]) {                       /* aik hi naam do baar — behtar wala rakho */
+      if (seen[key]) {
         var old = rows[seen[key] - 1];
         old.mobile = old.mobile || p.mobile;
         old.rate = old.rate || p.rate;
