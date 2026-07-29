@@ -1,12 +1,14 @@
 /* ══════════════════════════════════════════════════════════════════════
-   RANA AHMAD MILK SHOP — SMART ENGINE  (v1.2)
+   RANA AHMAD MILK SHOP — SMART ENGINE  (v1.3)
    ──────────────────────────────────────────────────────────────────────
-   v1.1 hi hai — sirf TEEN cheezein barhi hain:
-     1. Client list mein NAAM ab hamesha BOLD (gehra) — door se parh lo
-     2. BILL ke andar client ka naam bhi BOLD — PNG/PDF mein bhi
-     3. Client list ki WIDTH aur LENGTH ab BILL ke barabar — sab standard
+   v1.2 hi hai — sirf EK badi cheez barhi hai:
 
-   Bill (#ledgerContent) ka size, style, PNG aur PDF sab pehle jaisa.
+     ★ URDU ↔ ENGLISH SEARCH
+       Client ka naam Urdu mein save hai, lekin ab aap English
+       keyboard se "abbas", "abas", "wqs", "rana" likh kar bhi
+       usay dhoond sakte hain. Search box aur suggestions dono mein.
+
+   Baqi sab — bill ka size, style, PNG, PDF, bold naam — pehle jaisa.
    ══════════════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -59,9 +61,7 @@
     toast(msg, bad);
   }
 
-  /* ═══════════════════ 0b. BILL KA NAAM HAMESHA BOLD ═══════════════════
-     Ye alag <style> hai — export ke waqt bhi band nahi hota,
-     is liye PNG aur PDF mein bhi naam gehra hi aayega.            */
+  /* ═══════════════════ 0b. BILL KA NAAM HAMESHA BOLD ═══════════════════ */
 
   var boldEl = document.createElement('style');
   boldEl.id = 'rams-bill-bold';
@@ -69,6 +69,63 @@
     '#ledgerContent #clientName{ font-weight:900 !important; letter-spacing:.01em; }' +
     'body.app-dark #ledgerContent #clientName{ color:#f0e7d6 !important; }';
   document.head.appendChild(boldEl);
+
+  /* ═══════════════════ 0c. URDU ↔ ROMAN SEARCH ═══════════════════
+     Urdu naam ko English harf mein badal kar match karta hai.
+     Vowels (a e i o u) nazar-andaaz — is liye "abas", "abbas",
+     "aabaas" sab «عباس» par lag jate hain.                        */
+
+  var UR2EN = {
+    'ا': 'a', 'آ': 'a', 'أ': 'a', 'إ': 'a',
+    'ب': 'b', 'پ': 'p', 'ت': 't', 'ٹ': 't', 'ث': 's',
+    'ج': 'j', 'چ': 'ch', 'ح': 'h', 'خ': 'kh',
+    'د': 'd', 'ڈ': 'd', 'ذ': 'z', 'ر': 'r', 'ڑ': 'r',
+    'ز': 'z', 'ژ': 'zh', 'س': 's', 'ش': 'sh',
+    'ص': 's', 'ض': 'z', 'ط': 't', 'ظ': 'z',
+    'ع': 'a', 'غ': 'gh', 'ف': 'f', 'ق': 'q',
+    'ک': 'k', 'ك': 'k', 'گ': 'g', 'ل': 'l', 'م': 'm',
+    'ن': 'n', 'ں': 'n', 'ٹھ': 'th',
+    'و': 'w', 'ؤ': 'w', 'ہ': 'h', 'ه': 'h', 'ھ': 'h', 'ۃ': 'h', 'ة': 'h',
+    'ء': '', 'ی': 'y', 'ي': 'y', 'ئ': 'y', 'ے': 'e',
+    'ٰ': '', 'َ': '', 'ِ': '', 'ُ': '', 'ّ': '', 'ْ': '', 'ً': '', 'ٍ': '', 'ٌ': '',
+    '\u200c': '', '\u200d': ''
+  };
+
+  function urToRoman(s) {
+    var out = '';
+    String(s || '').split('').forEach(function (ch) {
+      out += (UR2EN[ch] !== undefined) ? UR2EN[ch] : ch;
+    });
+    return out;
+  }
+
+  /* loose key — vowels aur dohre harf hata do */
+  function loose(s) {
+    return String(s || '')
+      .toLowerCase()
+      .replace(/[^a-z\u0600-\u06FF]/g, '')
+      .replace(/[aeiou]/g, '')
+      .replace(/(.)\1+/g, '$1');
+  }
+
+  function keysFor(name) {
+    var n = String(name || '').toLowerCase();
+    return [n, loose(n), loose(urToRoman(n))];
+  }
+
+  /* asal match — Urdu se bhi chalta hai, English se bhi */
+  function nameMatches(name, qy) {
+    if (!qy) return true;
+    var q1 = String(qy).toLowerCase().trim();
+    if (!q1) return true;
+    var q2 = loose(q1);
+    var q3 = loose(urToRoman(q1));
+    var ks = keysFor(name);
+    if (ks[0].indexOf(q1) !== -1) return true;
+    if (q2 && (ks[1].indexOf(q2) !== -1 || ks[2].indexOf(q2) !== -1)) return true;
+    if (q3 && ks[2].indexOf(q3) !== -1) return true;
+    return false;
+  }
 
   /* ═══════════════════ 1. STYLES ═══════════════════ */
 
@@ -140,8 +197,8 @@ body.app-dark .cp-btn-ghost .rs-rp, body.app-dark .cp-tab .rs-rp{ background:rgb
 
 /* ─────── CLIENT RAIL (ab SAB SE DAAYEN) ─────── */
 :root{
-  --rs-rail-w: 300px;   /* width — bill ke sath khud set ho jayegi */
-  --rs-rail-h: 820px;   /* length — bill ke sath khud set ho jayegi */
+  --rs-rail-w: 300px;
+  --rs-rail-h: 820px;
 }
 .app-layout{ max-width:1240px; }
 #rsRail{
@@ -449,7 +506,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
 
     if (opts.calc && info.rate) {
       var b = $('calculateBtn');
-      if (b) b.click();                       /* app ka apna hisaab chalega */
+      if (b) b.click();
     } else if (typeof window.updateReadout === 'function') {
       window.updateReadout();
     }
@@ -539,7 +596,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
       '<span class="rs-clk-en" id="rsClkEn">—</span>' +
     '</div>' +
     '<div class="rs-tools">' +
-      '<input type="text" id="rsName" class="rs-inp" dir="rtl" placeholder="نام لکھیں — سب کچھ آٹو" autocomplete="off">' +
+      '<input type="text" id="rsName" class="rs-inp" dir="auto" placeholder="نام لکھیں — اردو یا English دونوں" autocomplete="off">' +
       '<div id="rsSug"></div>' +
       '<div class="rs-2">' +
         '<button id="rsNewBtn" class="rs-b rs-b-ghost">+ نیا کلائنٹ</button>' +
@@ -549,7 +606,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     '<div class="rs-list" id="rsList"></div>' +
     '<div class="rs-foot"><span id="rsCount">0 کلائنٹ</span><b id="rsTotal">Rs. 0</b></div>';
 
-  /* RTL mein pehla child sab se DAAYEN aata hai */
   if (layout) layout.insertBefore(rail, layout.firstChild);
   else document.body.appendChild(rail);
 
@@ -565,7 +621,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     rail.classList.remove('open');
   });
 
-  /* ═══ RAIL KA SIZE — BILL KE BARABAR (khud set hota hai) ═══ */
+  /* ═══ RAIL KA SIZE — BILL KE BARABAR ═══ */
   function syncRailSize() {
     if (window.innerWidth <= 1300) return;
     var bill = $('ledgerContent');
@@ -575,7 +631,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
       document.documentElement.style.setProperty('--rs-rail-h', Math.round(r.height) + 'px');
     }
     if (r.width > 240) {
-      /* width bill ka taqreeban 40% — kam se kam 260, zyada se zyada 340 */
       var w = Math.max(260, Math.min(340, Math.round(r.width * 0.40)));
       document.documentElement.style.setProperty('--rs-rail-w', w + 'px');
     }
@@ -615,10 +670,12 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
   function buildList() {
     var list = $('rsList');
     if (!list) return;
-    var qy = ($('rsName').value || '').trim().toLowerCase();
+    var qy = ($('rsName').value || '').trim();
     var cur = activeName();
     var names = allNames();
-    if (qy) names = names.filter(function (n) { return n.toLowerCase().indexOf(qy) !== -1; });
+
+    /* ★ Urdu ya English — dono se search */
+    if (qy) names = names.filter(function (n) { return nameMatches(n, qy); });
 
     list.innerHTML = '';
     var total = 0, shown = 0;
@@ -668,9 +725,12 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
   function showSug() {
     var v = (nameBox.value || '').trim();
     var names = allNames();
-    var matches = v ? names.filter(function (n) { return n.toLowerCase().indexOf(v.toLowerCase()) !== -1; }) : names.slice(0, 8);
+
+    /* ★ yahan bhi Urdu ↔ English dono */
+    var found = v ? names.filter(function (n) { return nameMatches(n, v); }) : names.slice(0, 8);
+
     var html = '';
-    matches.slice(0, 8).forEach(function (n, i) {
+    found.slice(0, 8).forEach(function (n, i) {
       var info = infoFor(n);
       html += '<div class="rs-sg" data-n="' + esc(n) + '" data-i="' + i + '">' +
         '<span class="rs-sg-n">' + esc(n) + '</span>' +
@@ -678,7 +738,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
         (info.rate ? ' · Rs. ' + esc(info.rate) + '/L' : '') +
         (info.daily ? ' · ' + esc(info.daily) + ' L' : '') + '</span></div>';
     });
-    if (v && matches.indexOf(v) === -1) {
+    if (v && found.indexOf(v) === -1) {
       html += '<div class="rs-sg" data-new="1"><span class="rs-sg-new">+ «' + esc(v) + '» نیا کلائنٹ بنائیں</span></div>';
     }
     sug.innerHTML = html;
@@ -794,7 +854,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     return d;
   }
 
-  /* ek line se maloomat nikalna */
   function parseLine(line) {
     var t = String(line || '').trim();
     if (!t) return null;
@@ -979,7 +1038,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
 
   /* ═══════════════════ 9. ANIMATION KA KAAM ═══════════════════ */
 
-  /* ripple */
   document.addEventListener('click', function (e) {
     var b = e.target.closest('#calculationBox .cp-btn, #calculationBox .cp-tab, #rsRail .rs-b, .rs-bf .rs-b');
     if (!b || reduced) return;
@@ -995,7 +1053,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     setTimeout(function () { s.remove(); }, 600);
   }, true);
 
-  /* readout ke hindse chal kar baithte hain */
   var lastVal = {};
   function splitVal(txt) {
     var m = String(txt || '').match(/^(\D*?)(-?[\d.,]+)(.*)$/);
@@ -1042,7 +1099,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     };
   }
 
-  /* calculate — busy state */
   var cb = $('calculateBtn');
   if (cb) cb.addEventListener('click', function () {
     var self = this, lbl = self.textContent;
@@ -1053,7 +1109,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     }, 1260);
   });
 
-  /* tabs — slide direction + Alt+1..4 */
   var panel = $('calculationBox');
   var tabOrder = ['client', 'entry', 'bill', 'settings'];
   var onTab = q('#calculationBox .cp-tab.is-on');
@@ -1076,7 +1131,6 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     }
   });
 
-  /* status → toast + pop */
   var stEl = $('saveStatus');
   if (stEl) new MutationObserver(function () {
     var t = stEl.textContent.trim();
@@ -1084,14 +1138,12 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     stEl.classList.remove('rs-pop'); void stEl.offsetWidth; stEl.classList.add('rs-pop');
   }).observe(stEl, { childList: true, characterData: true, subtree: true });
 
-  /* lock screen shake */
   var le = $('lockError'), li = $('lockInput');
   if (le && li) new MutationObserver(function () {
     if (!le.textContent.trim() || reduced) return;
     li.classList.remove('rs-shake'); void li.offsetWidth; li.classList.add('rs-shake');
   }).observe(le, { childList: true, characterData: true, subtree: true });
 
-  /* dashboard rows stagger */
   if (typeof window.buildDashboard === 'function') {
     var oD = window.buildDashboard;
     window.buildDashboard = function () {
@@ -1105,8 +1157,7 @@ body.app-dark .rs-bf .rs-cnt{ color:#a4917a; }
     };
   }
 
-  /* EXPORT ke waqt saari animation band — PNG/PDF bilkul saaf
-     (bold wala style alag hai, wo band nahi hota) */
+  /* EXPORT ke waqt saari animation band — PNG/PDF bilkul saaf */
   ['exportBtn', 'pdfBtn', 'whatsappBtn'].forEach(function (id) {
     var b = $(id);
     if (b) b.addEventListener('click', function () {
